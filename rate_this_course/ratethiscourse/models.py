@@ -85,7 +85,7 @@ class Rating(models.Model):
 
     date = models.DateTimeField(default=datetime.now, blank=True)
 
-    #writer = models.ForeignKey(User)
+    #writer = models.OneToOneField(User)
     course = models.ForeignKey(Course) 
 
     def __unicode__(self):
