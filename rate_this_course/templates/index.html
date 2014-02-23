@@ -5,14 +5,22 @@
 <html>
 
     <head>
-        <title>Rango</title>
+        <title>Rate This Course</title>
     </head>
 
     <body>
-        <h1>Rango says...</h1>
-        hello world! <strong>{{ boldmessage }}</strong><br />
-        <a href="/rango/about/">About</a><br />
-        <img src="{% static "pic.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
-    </body>
+        <img src="{% static "headerLogo.png" %}" alt="Rate This Course, page logo" /> <!-- New line -->
+		<br>
+	{% if courses %}
+            <ul>
+                {% for course in courses %}
+                <li>{{ course.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+	
+	</body>
 
 </html>
