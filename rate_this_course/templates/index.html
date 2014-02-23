@@ -11,10 +11,10 @@
     <body>
         <img src="{% static "headerLogo.png" %}" alt="Rate This Course, page logo" /> <!-- New line -->
 		<br>
-	{% if courses %}
+	{% if universities %}
             <ul>
-                {% for course in courses %}
-                <li>{{ course.name }}</li>
+                {% for university in universities %}
+                <li>{{ university.name }}</li>
                 {% endfor %}
             </ul>
         {% else %}
