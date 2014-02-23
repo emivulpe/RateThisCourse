@@ -14,7 +14,8 @@
 	{% if universities %}
             <ul>
                 {% for university in universities %}
-                <li>{{ university.name }}</li>
+                <!-- Following line changed to add an HTML hyperlink -->
+                <li><a href="/ratethiscourse/university/{{ university.url }}">{{ university.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
