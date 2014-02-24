@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from ratethiscourse.models import Course, University, Rating, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm
+from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm
 
 	
 def university(request, uni_name_url):
@@ -152,7 +152,15 @@ def course(request, uni_name_url, course_name_url):
     
     if request.method == 'POST':
         
+        commentform = CommentForm(request.POST)
         ratingform =  RatingForm(request.POST)
+        
+        if commentform.is_valid():
+            comment = commentform.save(commit=False)
+            comment.course = course
+            comment.save()
+        else:
+            print commentform.errors
         
         if ratingform.is_valid():
             rating = ratingform.save(commit=False)
@@ -160,9 +168,13 @@ def course(request, uni_name_url, course_name_url):
             rating.save()
         else:
             print ratingform.errors
-    
+
     else:
+        commentform = CommentForm()
         ratingform = RatingForm()
+    
+    comments = Comment.objects.filter(course=course)
+    context_dict['comments'] = comments
     
     ratings = Rating.objects.filter(course=course)
     avg_rating = 0.0
@@ -173,5 +185,6 @@ def course(request, uni_name_url, course_name_url):
     avg_rating = avg_rating/i
     context_dict['rating'] = avg_rating
     
+    context_dict['comment_form'] = commentform
     context_dict['rating_form'] = ratingform
     return render_to_response('ratethiscourse/course.html', context_dict, context)
