@@ -13,22 +13,38 @@
             <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/">
 
                 {% csrf_token %}
-                {% for hidden in rating_form.hidden_fields %}
-                    {{ hidden }}
+                {% for hiddenrating in rating_form.hidden_fields %}
+                    {{ hiddenrating }}
                 {% endfor %}
 
-                {% for field in rating_form.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text}}
-                    {{ field }}
+                {% for hiddencomment in comment_form.hidden_fields %}
+                    {{ hiddencomment }}
                 {% endfor %}
-
+                
+                {% for fieldcomment in comment_form.visible_fields %}
+                    {{ fieldcomment.errors }}
+                    {{ fieldcomment.help_text }}
+                    {{ fieldcomment }}
+                {% endfor %}
+                <br>
+                {% for fieldrating in rating_form.value %}
+                <span class="ratingradio">
+                    {{ fieldrating.errors }}
+                    {{ fieldrating.help_text}}
+                    {{ fieldrating }}
+                </span>
+                {% endfor %}
+                <br>
                 <input type="submit" name="submit" value="Add Rating" />
             </form>
                 
             <h2> Avg Rating </h2>
                 {{ rating }}
-            
+            <h2> Comments </h2>
+            {% for comment in comments %}
+                {{ comment }}
+                <br>
+            {% endfor %}
         {% endif %}
 
     </body>
