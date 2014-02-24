@@ -92,3 +92,12 @@ class Rating(models.Model):
         return str(self.value)
 
 
+
+
+
+
+
+
+
+
+

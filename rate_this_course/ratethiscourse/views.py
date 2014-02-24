@@ -4,6 +4,9 @@ from django.shortcuts import render_to_response
 # Import the Category Model
 from ratethiscourse.models import Course
 from ratethiscourse.models import University
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from ratethiscourse.forms import UserForm, UserProfileForm
 
 	
 def university(request, uni_name_url):
@@ -40,7 +43,7 @@ def university(request, uni_name_url):
         pass
 
     # Go render the response and return it to the client.
-    return render_to_response('./university.html', context_dict, context)
+    return render_to_response('ratethiscourse/university.html', context_dict, context)
 
 
 def index(request):
@@ -59,3 +62,84 @@ def index(request):
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
     return render_to_response('./index.html', context_dict, context)
+
+def register(request):
+
+	context = RequestContext(request)
+
+	#boolean for telling the template whether the registration was successful
+	#set to False initially
+	registered = False
+
+	#if http post, process form data
+	if request.method == 'POST':
+		#attempt to grab info from form
+		user_form = UserForm(data=request.POST)
+		profile_form = UserProfileForm(data=request.POST)
+
+		#if the 2 forms are valid
+		if user_form.is_valid() and profile_form.is_valid():
+			#save user form data to db
+			user=user_form.save()
+
+			#hash pwd with set_password with the set_password method
+			user.set_password(user.password)
+			user.save()
+
+			profile = profile_form.save(commit=False)
+			profile.user=user
+
+			#process profile photo if user provides one
+			#if 'picture' in request.FILES:
+			#	profile.picture = request.FILES['picture']
+			#profile.save()
+	
+			registered = True
+		#invalid form
+		else:
+			print user_form.errors, profile_form.errors
+
+	#not http, render form with 2 model form instances
+	#forms will be blank, ready for input
+
+	else:
+		user_form = UserForm()
+		profile_form = UserProfileForm()
+
+	#render template depending on context
+	return render_to_response('ratethiscourse/register.html', {'user_form':user_form, 'profile_form':profile_form, 'registered':registered}, 			context)
+
+def user_login(request):
+	
+	context = RequestContext(request)
+	
+	if request.method == 'POST':
+
+		username = request.POST['username']
+		password = request.POST['password']
+
+		#use Django to see if user + pass is valid, return object if it is
+		user = authenticate(username=username, password=password)
+
+		#if object, the details are correct
+		if user is not None:
+			#is account active?
+			if user.is_active:
+				login(request, user)
+				return HttpResponseRedirect('/ratethiscourse/')
+			else:
+				return HttpResponse("Your Rango account is disabled")
+		else:
+			#bad login details
+			print "Invalid login details: {0}, {1}".format(username, password)
+			return HttpResponse("Invalid login details provided.")
+	else:
+		return render_to_response('ratethiscourse/login.html', {}, context)
+
+def user_logout(request):
+
+	#we know user is logged in, we can just logout
+	logout(request)
+
+	return HttpResponseRedirect('/ratethiscourse/')		
+
