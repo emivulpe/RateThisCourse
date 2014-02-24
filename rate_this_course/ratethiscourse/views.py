@@ -19,6 +19,7 @@ def university(request, uni_name_url):
     # Create a context dictionary which we can pass to the template rendering engine.
     # We start by containing the name of the category passed by the user.
     context_dict = {'uni_name': uni_name}
+    context_dict['uni_name_url'] = uni_name_url
 
     try:
         # Can we find a category with the given name?
@@ -177,13 +178,16 @@ def course(request, uni_name_url, course_name_url):
     context_dict['comments'] = comments
     
     ratings = Rating.objects.filter(course=course)
-    avg_rating = 0.0
-    i = 0
-    for rating in ratings:
-        avg_rating = avg_rating + int(str(rating))
-        i = i+1
-    avg_rating = avg_rating/i
-    context_dict['rating'] = avg_rating
+    if len(ratings) > 0:
+        avg_rating = 0.0
+        i = 0
+        for rating in ratings:
+            avg_rating = avg_rating + int(str(rating))
+            i = i+1
+        avg_rating = avg_rating/i
+        context_dict['rating'] = avg_rating
+    else:
+        context_dict['rating'] = "No Ratings"
     
     context_dict['comment_form'] = commentform
     context_dict['rating_form'] = ratingform

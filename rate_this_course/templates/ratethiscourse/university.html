@@ -14,7 +14,7 @@
             {% if courses %}
             <ul>
                 {% for course in courses %}
-                <li><a href="{{ page.url }}">{{ course.name }}</a></li>
+                <li><a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.name }}/">{{ course.name }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}
