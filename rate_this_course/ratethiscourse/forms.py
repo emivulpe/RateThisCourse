@@ -17,8 +17,8 @@ class UserProfileForm(forms.ModelForm):
 
 
 class RatingForm(forms.ModelForm):
-	value = forms.ChoiceField(widget = forms.RadioSelect(), initial=3, choice=( (1, 'One Star'), (2, 'Two Stars'), (3, 'Three Stars'), (4, 'Four Stars'), (5, 'Five Stars') ))
+	value = forms.ChoiceField(widget = forms.RadioSelect(), initial=3, choices=( (1, 'One Star'), (2, 'Two Stars'), (3, 'Three Stars'), (4, 'Four Stars'), (5, 'Five Stars') ))
 	
 	class Meta:
 		model = Rating
-		fields = ('value')
+		fields = ('value',)
