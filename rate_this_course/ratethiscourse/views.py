@@ -1,11 +1,10 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from ratethiscourse.models import Course
-from ratethiscourse.models import University
+from ratethiscourse.models import Course, University, Rating, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from ratethiscourse.forms import UserForm, UserProfileForm
+from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm
 
 	
 def university(request, uni_name_url):
@@ -147,7 +146,7 @@ def course(request, uni_name_url, course_name_url):
     context = RequestContext(request)
     course_name = course_name_url.replace('_', ' ')
     uni_name = uni_name_url.replace('_', ' ')
-    context_dict = {'uni_name': uni_name, 'course_name': course_name}
+    context_dict = {'uni_name': uni_name, 'course_name': course_name, 'uni_name_url': uni_name_url, 'course_name_url': course_name_url}
     
     course = Course.objects.get(name=course_name)
     
@@ -156,12 +155,23 @@ def course(request, uni_name_url, course_name_url):
         ratingform =  RatingForm(request.POST)
         
         if ratingform.is_valid():
-
             rating = ratingform.save(commit=False)
             rating.course = course
             rating.save()
-            
-        ratings = Ratings.objects.get(course=course)
-        context_dict['ratings'] = ratings
-        
+        else:
+            print ratingform.errors
+    
+    else:
+        ratingform = RatingForm()
+    
+    ratings = Rating.objects.filter(course=course)
+    avg_rating = 0.0
+    i = 0
+    for rating in ratings:
+        avg_rating = avg_rating + int(str(rating))
+        i = i+1
+    avg_rating = avg_rating/i
+    context_dict['rating'] = avg_rating
+    
+    context_dict['rating_form'] = ratingform
     return render_to_response('ratethiscourse/course.html', context_dict, context)
