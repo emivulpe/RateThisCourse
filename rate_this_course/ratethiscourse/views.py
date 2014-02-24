@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-# Import the Category Model
 from ratethiscourse.models import Course
 from ratethiscourse.models import University
 from django.contrib.auth import authenticate, login, logout
@@ -107,7 +106,7 @@ def register(request):
 		profile_form = UserProfileForm()
 
 	#render template depending on context
-	return render_to_response('ratethiscourse/register.html', {'user_form':user_form, 'profile_form':profile_form, 'registered':registered}, 			context)
+	return render_to_response('ratethiscourse/register.html', {'user_form':user_form, 'profile_form':profile_form, 'registered':registered}, context)
 
 def user_login(request):
 	
@@ -143,3 +142,26 @@ def user_logout(request):
 
 	return HttpResponseRedirect('/ratethiscourse/')		
 
+def course(request, uni_name_url, course_name_url):
+    
+    context = RequestContext(request)
+    course_name = course_name_url.replace('_', ' ')
+    uni_name = uni_name_url.replace('_', ' ')
+    context_dict = {'uni_name': uni_name, 'course_name': course_name}
+    
+    course = Course.objects.get(name=course_name)
+    
+    if request.method == 'POST':
+        
+        ratingform =  RatingForm(request.POST)
+        
+        if ratingform.is_valid():
+
+            rating = ratingform.save(commit=False)
+            rating.course = course
+            rating.save()
+            
+        ratings = Ratings.objects.get(course=course)
+        context_dict['ratings'] = ratings
+        
+    return render_to_response('ratethiscourse/course.html', context_dict, context)
