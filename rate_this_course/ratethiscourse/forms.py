@@ -22,3 +22,10 @@ class RatingForm(forms.ModelForm):
 	class Meta:
 		model = Rating
 		fields = ('value',)
+		
+class CommentForm(forms.ModelForm):
+	message = forms.CharField(widget=forms.Textarea())
+	
+	class Meta:
+		model = Comment
+		fields = ('message', )
