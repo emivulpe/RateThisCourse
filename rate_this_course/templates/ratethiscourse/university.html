@@ -5,7 +5,7 @@
 <html>
 
     <head>
-        <title>Rate This Course - Category Page</title>
+        <title>Rate This Course - University Page</title>
     </head>
 
     <body>
@@ -14,14 +14,14 @@
             {% if courses %}
             <ul>
                 {% for course in courses %}
-                <li><a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.name }}/">{{ course.name }}</a></li>
+                <li><a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.1 }}/">{{ course.0 }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}
-                <strong>No courses currently in {{ category_name }}.</strong>
+                <strong>No courses currently in {{ uni_name }}.</strong>
             {% endif %}
         {% else %}
-            The specified category {{ category_name }} does not exist!
+            The specified category {{ uni_name }} does not exist!
         {% endif %}
 	</body>
 

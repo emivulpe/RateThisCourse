@@ -18,7 +18,7 @@ class University(models.Model):
 
 class Course(models.Model):
 
-    name = models.CharField(max_length = 128, unique = True)
+    name = models.CharField(max_length = 128)
     
     university = models.ForeignKey(University)
 
