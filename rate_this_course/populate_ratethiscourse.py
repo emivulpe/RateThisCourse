@@ -1,7 +1,7 @@
 import os
 
 def populate():
-    glasgow_university = add_university(name = "University of Glasgow", location = "Glasgow")
+    glasgow_university = add_university(name = "University of Glasgow", location = "Glasgow", uni_domain_code = "gla")
 
     computing_science = add_course(university = glasgow_university,
         name = "Computing Science")
@@ -29,7 +29,7 @@ def populate():
     add_rating(value = 5, module = dim)
 
 
-    strathclyde_university = add_university(name = "University of Strathclyde", location = "Glasgow")
+    strathclyde_university = add_university(name = "University of Strathclyde", location = "Glasgow", uni_domain_code = "strath")
 
     add_course(university = strathclyde_university,
         name = "Management")
@@ -55,16 +55,16 @@ def add_course(university, name):
     c = Course.objects.get_or_create(university = university, name = name)[0]
     return c
 
-def add_university(name,location):
-    u = University.objects.get_or_create(name = name, location = location)[0]
+def add_university(name, location, uni_domain_code):
+    u = University.objects.get_or_create(name = name, location = location, uni_domain_code=uni_domain_code)[0]
     return u
 
-def add_comment(message,module):
+def add_comment(message, module):
     com = Comment.objects.get_or_create(message = message, module = module)[0]
     return com
 
 
-def add_rating(value,module):
+def add_rating(value, module):
     r = Rating.objects.get_or_create(value = value, module = module)[0]
     return r
 

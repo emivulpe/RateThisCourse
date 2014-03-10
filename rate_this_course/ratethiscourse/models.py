@@ -6,8 +6,9 @@ from datetime import datetime
 
 class University(models.Model):
 
-    name = models.CharField(max_length=128,unique=True)
-    location = models.CharField(max_length=256)
+    name = models.CharField(max_length = 128, unique = True)
+    location = models.CharField(max_length = 256)
+    uni_domain_code = models.CharField(max_length = 128)
 
     def __unicode__(self):
         return self.name
@@ -17,7 +18,7 @@ class University(models.Model):
 
 class Course(models.Model):
 
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length = 128, unique = True)
     
     university = models.ForeignKey(University)
 
@@ -25,9 +26,9 @@ class Course(models.Model):
         return self.name
         
 class Module(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+    name = models.CharField(max_length = 128, unique = True)
     year = models.IntegerField()
-    lecturer = models.CharField(max_length=128)
+    lecturer = models.CharField(max_length = 128)
 
     university = models.ForeignKey(University)
     course = models.ForeignKey(Course)
@@ -49,8 +50,8 @@ class UserProfile(models.Model):
 
 class Comment(models.Model):
 
-    message = models.CharField(max_length=7000)
-    date = models.DateTimeField(default=datetime.now, blank=True)
+    message = models.CharField(max_length = 7000)
+    date = models.DateTimeField(default = datetime.now, blank = True)
 
     #writer = models.ForeignKey(User)
     module = models.ForeignKey(Module) 
@@ -61,7 +62,7 @@ class Comment(models.Model):
 class Rating(models.Model):
 
     value = models.IntegerField()
-    date = models.DateTimeField(default=datetime.now, blank=True)
+    date = models.DateTimeField(default = datetime.now, blank = True)
 
     #writer = models.OneToOneField(User)
     module = models.ForeignKey(Module) 
