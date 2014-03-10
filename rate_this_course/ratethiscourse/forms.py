@@ -28,9 +28,16 @@ class CommentForm(forms.ModelForm):
 	
 	class Meta:
 		model = Comment
-		fields = ('message', )
+		fields = ('message',)
 		
 class CourseForm(forms.ModelForm):
 	
 	class Meta:
 		model = Course
+		
+class ModuleForm(forms.ModelForm):
+	
+	
+	class Meta:
+		model = Module
+		fields = ('name', 'year', 'lecturer', 'university', 'course',)
