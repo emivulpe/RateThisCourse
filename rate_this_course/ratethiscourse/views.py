@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from ratethiscourse.models import Course, University, Rating, Comment, Module
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm
+from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm
 
 
 def index(request):
@@ -228,3 +228,28 @@ def module(request, uni_name_url, course_name_url, module_name_url):
     context_dict['comment_form'] = commentform
     context_dict['rating_form'] = ratingform
     return render_to_response('ratethiscourse/module.html', context_dict, context)
+    
+def add_course(request):
+    
+    context = RequestContext(request)
+    context_dict = {}
+    
+    if request.method == 'POST':
+
+        name = request.POST['name']
+        university = request.POST['university']
+        
+        courseform = CourseForm(request.POST)
+        
+        if courseform.is_valid():
+            course = courseform.save()
+            context_dict['name'] = name
+        else:
+            print courseform.errors
+
+    else:
+        context_dict['name'] = 'NotPosted'
+        courseform = CourseForm()
+        
+    context_dict['courseform'] = courseform
+    return render_to_response('ratethiscourse/add_course.html', context_dict, context)

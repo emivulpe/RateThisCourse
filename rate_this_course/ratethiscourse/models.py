@@ -25,6 +25,9 @@ class Course(models.Model):
     def __unicode__(self):
         return self.name
         
+    class Meta:
+        unique_together = ("name", "university")
+        
 class Module(models.Model):
     name = models.CharField(max_length = 128, unique = True)
     year = models.IntegerField()
@@ -36,6 +39,9 @@ class Module(models.Model):
     
     def __unicode__(self):
         return self.name
+    
+    class Meta:
+        unique_together = ("name", "university", "course")
     
     
 class UserProfile(models.Model):

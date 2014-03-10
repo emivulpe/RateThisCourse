@@ -1,5 +1,5 @@
 from django import forms
-from ratethiscourse.models import University, Course, Comment, Rating, UserProfile
+from ratethiscourse.models import University, Course, Comment, Rating, UserProfile, Module
 from django.contrib.auth.models import User
  
 class UserForm(forms.ModelForm):
@@ -29,3 +29,8 @@ class CommentForm(forms.ModelForm):
 	class Meta:
 		model = Comment
 		fields = ('message', )
+		
+class CourseForm(forms.ModelForm):
+	
+	class Meta:
+		model = Course
