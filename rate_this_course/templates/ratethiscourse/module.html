@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rate My Course</title>
+    </head>
+
+    <body>
+        {% if not module_name %}
+            <div style="color: red;">The specified category does not exist!</div>
+        {% else %}
+        <h1>{{ module_name }}</h1>
+
+            <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
+
+                {% csrf_token %}
+                {% for hiddenrating in rating_form.hidden_fields %}
+                    {{ hiddenrating }}
+                {% endfor %}
+
+                {% for hiddencomment in comment_form.hidden_fields %}
+                    {{ hiddencomment }}
+                {% endfor %}
+                
+                {% for fieldcomment in comment_form.visible_fields %}
+                    {{ fieldcomment.errors }}
+                    {{ fieldcomment.help_text }}
+                    {{ fieldcomment }}
+                {% endfor %}
+                <br>
+                {% for fieldrating in rating_form.value %}
+                <span class="ratingradio">
+                    {{ fieldrating.errors }}
+                    {{ fieldrating.help_text}}
+                    {{ fieldrating }}
+                </span>
+                {% endfor %}
+                <br>
+                <input type="submit" name="submit" value="Add Rating" />
+            </form>
+                
+            <h2> Avg Rating </h2>
+                {{ rating }}
+            <h2> Comments </h2>
+            {% for comment in comments %}
+                {{ comment }}
+                <br>
+            {% endfor %}
+        {% endif %}
+
+    </body>
+
+</html>
