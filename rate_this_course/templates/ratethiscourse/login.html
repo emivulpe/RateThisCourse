@@ -5,7 +5,10 @@
 {% block body_block %}
 
 {% load bootstrap %}
-
+<ol class="breadcrumb">
+    <li><a href="/ratethiscourse/">Home</a></li>
+    <li class="active">Sign In</li>
+</ol>
 <h1>Login to Rate This Course</h1>
 	<form id = "login_form" method="post" action = "/ratethiscourse/login/" class="form-horizontal">
 		{% csrf_token %}

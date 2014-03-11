@@ -3,6 +3,10 @@
 {% block title %}Universities{% endblock %}
 
 {% block body_block %}
+<ol class="breadcrumb">
+    <li><a href="/ratethiscourse/">Home</a></li>
+    <li class="active">Universities</li>
+</ol>
 	<div class="list-group">
 	{% for university in universities %}
     			<a href="/ratethiscourse/university/{{university.1}}/" class="list-group-item"> 

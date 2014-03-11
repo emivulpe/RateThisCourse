@@ -279,11 +279,14 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	course = Course.objects.get(name=course_name, university=uni)
 	module = Module.objects.get(name=module_name, course=course, university=uni)
 	context_dict['module'] = module
-	user = User.objects.get(username=request.user.get_username())
-	user_profile = UserProfile.objects.get(user=user)
-	context_dict['userprofile'] = user_profile
-	auth = str(user_profile.course) == course_name
-	context_dict['auth'] = auth
+	try:
+		user = User.objects.get(username=request.user.get_username())
+		user_profile = UserProfile.objects.get(user=user)
+		auth = str(user_profile.course) == course_name
+		context_dict['auth'] = auth
+	except (UserProfile.DoesNotExist, AttributeError) as e:
+		context_dict['auth'] = False
+
 	
 	if request.method == 'POST':
 		

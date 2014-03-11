@@ -3,6 +3,11 @@
 {% block title %}{{uni_name}}{% endblock %}
 
 {% block body_block %}
+<ol class="breadcrumb">
+    <li><a href="/ratethiscourse/">Home</a></li>
+    <li><a href="/ratethiscourse/university/">Universities</a></li>
+    <li class="active">{{uni_name}}</li>
+</ol>
     <h1>{{ uni_name }}</h1>
     {% if university %}
         {% if courses %}

@@ -3,6 +3,12 @@
 {% block title %}{{course_name}}{% endblock %}
 
 {% block body_block %}
+<ol class="breadcrumb">
+    <li><a href="/ratethiscourse/">Home</a></li>
+    <li><a href="/ratethiscourse/university/">Universities</a></li>
+    <li><a href="/ratethiscourse/university/{{uni_name_url}}/">{{uni_name}}</a></li>
+    <li class="active">{{course_name}}</li>
+</ol>
     <h1>{{ uni_name }}</h1>
     {% if course_name %}
         {% if modules %}
