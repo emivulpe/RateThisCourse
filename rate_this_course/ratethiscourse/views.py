@@ -266,25 +266,31 @@ def module(request, uni_name_url, course_name_url, module_name_url):
     uni = University.objects.get(name=uni_name)
     course = Course.objects.get(name=course_name, university=uni)
     module = Module.objects.get(name=module_name, course=course, university=uni)
+    context_dict['module'] = module
     
     if request.method == 'POST':
         
         commentform = CommentForm(request.POST)
         ratingform =  RatingForm(request.POST)
+
+        commentformdata = commentform.data
+        ratingformdata = ratingform.data
         
-        if commentform.is_valid():
-            comment = commentform.save(commit=False)
-            comment.module = module
-            comment.save()
-        else:
-            print commentform.errors
+        if commentform.data['message']:
+            if commentform.is_valid():
+                comment = commentform.save(commit=False)
+                comment.module = module
+                comment.save()
+            else:
+                print commentform.errors
         
-        if ratingform.is_valid():
-            rating = ratingform.save(commit=False)
-            rating.module = module
-            rating.save()
-        else:
-            print ratingform.errors
+        if ratingform.data.has_key('value'):
+            if ratingform.is_valid():
+                rating = ratingform.save(commit=False)
+                rating.module = module
+                rating.save()
+            else:
+                print ratingform.errors
 
     else:
         commentform = CommentForm()

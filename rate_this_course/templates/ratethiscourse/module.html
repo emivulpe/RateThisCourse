@@ -1,52 +1,80 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rate My Course</title>
-    </head>
+{% extends 'ratethiscourse/base.html' %}
 
-    <body>
-        {% if not module_name %}
-            <div style="color: red;">The specified category does not exist!</div>
-        {% else %}
-        <h1>{{ module_name }}</h1>
+{% block title %}{{module_name}}{% endblock %}
 
-            <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
+{% block body_block %}
 
-                {% csrf_token %}
-                {% for hiddenrating in rating_form.hidden_fields %}
-                    {{ hiddenrating }}
-                {% endfor %}
+{% load bootstrap %}
 
-                {% for hiddencomment in comment_form.hidden_fields %}
-                    {{ hiddencomment }}
-                {% endfor %}
-                
-                {% for fieldcomment in comment_form.visible_fields %}
-                    {{ fieldcomment.errors }}
-                    {{ fieldcomment.help_text }}
-                    {{ fieldcomment }}
-                {% endfor %}
-                <br>
-                {% for fieldrating in rating_form.value %}
-                <span class="ratingradio">
-                    {{ fieldrating.errors }}
-                    {{ fieldrating.help_text}}
-                    {{ fieldrating }}
-                </span>
-                {% endfor %}
-                <br>
-                <input type="submit" name="submit" value="Add Rating" />
-            </form>
-                
-            <h2> Avg Rating </h2>
-                {{ rating }}
-            <h2> Comments </h2>
-            {% for comment in comments %}
-                {{ comment }}
-                <br>
-            {% endfor %}
-        {% endif %}
+{% if not module_name %}
+    <div style="color: red;">The specified category does not exist!</div>
+{% else %}
+<h1>{{ module_name }}</h1>
+    <div class="row">
+        <div class="col-lg-3">
+            <h4> Module Name </h4>
+        </div>
+        <div class="col-lg-4">
+            <h4> {{ module.name }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <h4> Module Year </h4>
+        </div>
+        <div class="col-lg-4">
+            <h4> {{ module.year }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <h4> Module Lecturer </h4>
+        </div>
+        <div class="col-lg-4">
+            <h4> {{ module.lecturer }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <h4> Average Rating </h4>
+        </div>
+        <div class="col-lg-4">
+            <h4> {{ rating }}
+        </div>
+    </div>
+    
+    <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
+        
 
-    </body>
+        {% csrf_token %}
+        {% for hiddenrating in rating_form.hidden_fields %}
+            {{ hiddenrating }}
+        {% endfor %}
 
-</html>
+        {% for hiddencomment in comment_form.hidden_fields %}
+            {{ hiddencomment }}
+        {% endfor %}
+        
+        {% for fieldcomment in comment_form.visible_fields %}
+        <div class="form-group">
+            {{ fieldcomment|bootstrap }}
+        </div>
+        {% endfor %}
+        
+        {% for fieldrating in rating_form.value %}
+        <label class="radio-inline">
+            {{ fieldrating }}
+        </label>
+        {% endfor %}
+        <br>
+        <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+    </form>
+        
+    <h2> Comments </h2>
+    <div class="list-group">
+    {% for comment in comments %}
+        <li class="list-group-item"> {{ comment }} </li>
+    {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

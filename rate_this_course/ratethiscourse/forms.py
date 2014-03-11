@@ -17,14 +17,14 @@ class UserProfileForm(forms.ModelForm):
 
 
 class RatingForm(forms.ModelForm):
-	value = forms.ChoiceField(widget = forms.RadioSelect(), initial=3, choices=( (1, 'One Star'), (2, 'Two Stars'), (3, 'Three Stars'), (4, 'Four Stars'), (5, 'Five Stars') ))
+	value = forms.ChoiceField(widget = forms.RadioSelect(), choices=( (1, 'One Star'), (2, 'Two Stars'), (3, 'Three Stars'), (4, 'Four Stars'), (5, 'Five Stars') ), required=False)
 	
 	class Meta:
 		model = Rating
 		fields = ('value',)
 		
 class CommentForm(forms.ModelForm):
-	message = forms.CharField(widget=forms.Textarea())
+	message = forms.CharField(widget=forms.Textarea(), required=False)
 	
 	class Meta:
 		model = Comment
