@@ -1,25 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rate My Course</title>
-    </head>
+{% extends 'ratethiscourse/base.html' %}
 
-    <body>
-        {% if not course_name %}
-            <div style="color: red;">The specified course does not exist!</div>
+{% block title %}{{course_name}}{% endblock %}
+
+{% block body_block %}
+    <h1>{{ uni_name }}</h1>
+    {% if course_name %}
+        {% if modules %}
+        <div class="list-group">
+            {% for module in modules %}
+            <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course_name_url }}/{{ module.1 }}" class="list-group-item">
+                <h4>
+                    {{ module.0 }}
+                    {% if module.2 == "No Ratings" %}
+                    <span class="badge">{{module.2}}</span> 
+                    {% else %}
+                    <span class="badge">{{module.2}}/5</span> 
+                    {% endif %}
+                </h4>
+            </a>
+            {% endfor %}
+        </div>
         {% else %}
-        <h1>{{ course_name }}</h1>
-
-            {% if modules %}
-            <ul>
-                {% for module in modules %}
-                <li><a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course_name_url }}/{{ module.1 }}/">{{ module.0 }} - {{ module.2 }}/5</a></li>
-                {% endfor %}
-            </ul>
-            {% else %}
-                <strong>No modules currently in {{ category_name }}.</strong>
-            {% endif %}
+            <div class="alert alert-warning">
+                No modules currently in {{ course_name }}.
+            </div>
         {% endif %}
-    </body>
-
-</html>
+    {% else %}
+    <div class="alert alert-danger">
+        The specified course, {{ course_name }}, does not exist!
+    </div>
+    {% endif %}
+{% endblock %}
