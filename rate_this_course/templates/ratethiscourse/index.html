@@ -1,36 +1,86 @@
-<!DOCTYPE html>
+{% extends 'ratethiscourse/base.html' %}
 
-{% load static %} <!-- New line -->
+{% block title %}Index{% endblock %}
 
-<html>
-
-    <head>
-        <title>Rate This Course</title>
-    </head>
-
-    <body>
-        <img src="{% static "headerLogo.png" %}" alt="Rate This Course, page logo" /> <!-- New line -->
-		<br>
-		{% if user.is_authenticated %}
-        <h1>Team H says .. hello {{user.username}}!</h1>
-	<a href="/ratethiscourse/logout/">Logout</a><br />
-	{% else %}
-	<h1>Team H says .. </h1>
-        hello world! <strong>{{ boldmessage }}</strong><br />
-	<a href="/ratethiscourse/login/">Login</a><br />
-	<a href="/ratethiscourse/register/">Register here</a><br />
-	{% endif %}
-	{% if universities %}
-            <ul>
-                {% for university in universities %}
-                <!-- Following line changed to add an HTML hyperlink -->
-                <li><a href="/ratethiscourse/university/{{ university.url }}">{{ university.name }}</a></li>
+{% block body_block %}
+    <div class="jumbotron">
+        <h1> Welcome </h1>
+        <p> // put stuff here about the website, and how to use it and prerequisites \\ </p>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <h1>Latest Ratings</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th> Rating </th>
+                    <th> Module </th>
+                    <th> Date </th>
+                </tr>
+            {% for rating in ratings %}
+                <tr>
+                    <td>
+                        {{ rating.value }}
+                    </td>
+                    <td>
+                        {{ rating.module }}
+                    </td>
+                    <td>
+                        {{ rating.date }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <h1>Latest Comments</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th> Comment </th>
+                    <th> Module </th>
+                    <th> Date </th>
+                </tr>
+                {% for comment in comments %}
+                <tr>
+                    <td>
+                        {{ comment.message }}
+                    </td>
+                    <td>
+                        {{ comment.module }}
+                    </td>
+                    <td>
+                        {{ comment.date }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <h1>Top Rated Courses</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th> Course </th>
+                    <th> Avg Rating </th>
+                </tr>
+                {% for top in topfive %}
+                <tr>
+                    <td>{{ top.0 }}</td>
+                    <td>{{ top.1 }}</td>
+                </tr>
                 {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no categories present.</strong>
-        {% endif %}
-	
-	</body>
-
-</html>
+            </table>
+            <h1>Worst Rated Courses</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th> Course </th>
+                    <th> Avg Rating </th>
+                </tr>
+                {% for bottom in bottomfive %}
+                <tr>
+                    <td>{{ bottom.0 }}</td>
+                    <td>{{ bottom.1 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

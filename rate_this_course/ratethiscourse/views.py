@@ -19,6 +19,44 @@ def index(request):
     context_dict = {'universities': uni_list}
     for university in uni_list:
         university.url = university.name.replace(' ', '_')
+        
+    ratings = Rating.objects.all().order_by('-date')[:10]
+    context_dict['ratings'] = ratings;
+    
+    comments = Comment.objects.all().order_by('-date')[:10]
+    context_dict['comments'] = comments;
+    
+    courses = Course.objects.all()
+    ratedCourses = []
+    for course in courses:
+        ratedCourse = [course]
+        course_rating = 0
+        j = 0
+        modules = Module.objects.filter(course=course)
+        if len(modules) > 0:
+            for module in modules:
+                avg_rating = 0
+                i = 0
+                ratings = Rating.objects.filter(module=module)
+                if len(ratings) > 0:
+                    for rating in ratings:
+                        avg_rating = avg_rating + int(str(rating))
+                        i = i+1
+                    avg_rating = avg_rating/i
+                    course_rating = course_rating + avg_rating
+                    j = j+1
+                else:
+                    continue
+            course_rating = course_rating/j
+            ratedCourse.append(course_rating)
+            ratedCourses.append(ratedCourse)
+    ratedCourses.sort()
+    topFive = ratedCourses[:5]
+    bottomFive = ratedCourses[-1:-6]
+    
+    context_dict['topfive'] = topFive
+    context_dict['bottomfive'] = bottomFive
+        
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
