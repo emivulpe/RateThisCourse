@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Rate My Course</title>
-	</head>
-	<body>
-		<h1>Register with Rate My Course</h1>
-		{% if registered %}
-		Team H says : <strong>thank you for registering</strong>
-		<a href "/ratethiscourse/">Return to homepage.</a><br />
-		{% else %}
-		Team H says : <strong> register here </strong><br />
+{% extends 'ratethiscourse/base.html' %}
 
-		<form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data">
-			{% csrf_token %}
-			<!-- Display each form; as_p method wraps each element in <p> element; ensures each el 				appears on a new line -->
-			{{ user_form.as_p }}
-			{{profile_form.as_p}}
+{% block title %} Sign Up {% endblock %}
 
-			<!-- provide submit button -->
-			<input type="submit" name="submit" value="Register"/>
-		</form>
-		{% endif %}
-	</body>
-</html>
+{% block body_block %}
+
+{% load bootstrap %}
+<h1>Register with Rate My Course</h1>
+{% if registered %}
+<div class="alert alert-success"> Registration Successful </div>
+<a href "/ratethiscourse/">Return to homepage.</a><br />
+{% else %}
+<form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data" class="form-horizontal">
+	{% csrf_token %}
+	<div class="col-lg-5 col-lg-offset-1">
+	{{ user_form|bootstrap_horizontal }}
+	{{ profile_form|bootstrap_horizontal }}
+	<!-- provide submit button -->
+	<input type="submit" name="submit" value="Register" class="btn btn-primary"/>
+	</div>
+</form>
+{% endif %}
+{% endblock %}

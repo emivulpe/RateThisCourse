@@ -47,7 +47,10 @@ def index(request):
 					j = j+1
 				else:
 					continue
-			course_rating = course_rating/j
+			if j>0:
+				course_rating = course_rating/j
+			else:
+				course_rating = "No Ratings"
 			ratedCourse.append(course_rating)
 			ratedCourses.append(ratedCourse)
 	ratedCourses.sort()
@@ -210,9 +213,14 @@ def university(request, uni_name_url):
 						j = j+1
 					else:
 						continue
-				course_rating = course_rating/j
-				ratedCourse.append(course_rating)
-				ratedCourses.append(ratedCourse)
+				if j>0:
+					course_rating = course_rating/j
+				else:
+					course_rating = "No ratings"
+			else:
+				course_rating = "No ratings"
+			ratedCourse.append(course_rating)
+			ratedCourses.append(ratedCourse)
 			
 		# Adds our results list to the template context under name pages.
 		context_dict['courses'] = ratedCourses

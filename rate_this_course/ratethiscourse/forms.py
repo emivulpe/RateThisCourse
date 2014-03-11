@@ -21,7 +21,7 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('university',) #must have comma after, otherwise error (weird)
+        fields = ('university', 'course', ) #must have comma after, otherwise error (weird)
 
 
 class RatingForm(forms.ModelForm):
