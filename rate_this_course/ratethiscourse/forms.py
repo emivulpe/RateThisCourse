@@ -37,7 +37,6 @@ class CourseForm(forms.ModelForm):
 		
 class ModuleForm(forms.ModelForm):
 	
-	
 	class Meta:
 		model = Module
 		fields = ('name', 'year', 'lecturer', 'university', 'course',)
