@@ -1,21 +1,25 @@
-<!DOCTYPE html>
-<html>
+{% extends 'ratethiscourse/base.html' %}
 
-    <head>
-        <title>Rate this course</title>
-    </head>
+{% block title %} Sign In {% endblock %}
 
-    <body>
-        <h1>Login to Rate This Course</h1>
-	<form id = "login_form" method="post" action = "/ratethiscourse/login/">
+{% block body_block %}
+
+{% load bootstrap %}
+
+<h1>Login to Rate This Course</h1>
+	<form id = "login_form" method="post" action = "/ratethiscourse/login/" class="form-horizontal">
 		{% csrf_token %}
-		Username: <input type="text" name="username" value="" size="50" />
-		<br />
-		Password: <input type="password" name="password" value="", size="50">
-		<br />
+		{% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+		{% for field in form.visible_fields %}
+		<div class="form-group">
+			<div class="col-lg-5 col-lg-offset-1">
+				{{ field|bootstrap_horizontal }}
+			</div>
+		</div>
+		{% endfor %}
 
 		<input type = "submit" value="submit" />
 	</form>
-    </body> 
-
-</html>
+{% endblock %}

@@ -1,7 +1,15 @@
 from django import forms
 from ratethiscourse.models import University, Course, Comment, Rating, UserProfile, Module
 from django.contrib.auth.models import User
- 
+
+class LoginForm(forms.ModelForm):
+	username = forms.CharField(required	= True)
+	password = forms.CharField(widget=forms.PasswordInput(), required = True)
+	
+	class Meta:
+		model = User
+		fields = ('username', 'password', )
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
