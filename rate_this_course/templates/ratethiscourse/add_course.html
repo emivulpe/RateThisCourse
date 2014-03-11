@@ -1,41 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rate My Course</title>
-    </head>
+{% extends 'ratethiscourse/base.html' %}
 
-    <body>
-    
+{% block title %}Add Course{% endblock %}
+
+{% block body_block %}
+
+{% load bootstrap %}
+<h1> Add a course </h1>
     	{% if not name %}
-    		<div style="color: red;">The course addition was unsuccessful</div>
+            <div class="alert alert-warning">
+                The course addition was unsuccessful
+            </div>
 		{% elif name == "NotPosted" %}
     	
     	{% else %}
-    		<div style="color: blue;">The course addition was successful</div>	
+            <div class="alert alert-success">The course addition was successful</div>
     	{% endif %}
-    	
-    	 <form id="add_course_form" method="post" action="/ratethiscourse/add_course/">
+
+    	 <form id="add_course_form" method="post" action="/ratethiscourse/add_course/" class="form-horizontal">
 
                 {% csrf_token %}
                 {% for hidden in courseform.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
 
-                
                 {% for field in courseform.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text }}
-                    {{ field.name }}
-                    {{ field }}
-                    <br>
-                {% endfor %}
-
-                </span>
-                <br>
-                <input type="submit" name="submit" value="Add Course" />
+                <div class="form-group">
+                    <div class="col-lg-5 col-lg-offset-1">
+                    {{ field|bootstrap_horizontal }}
+                    </div>
+                </div>
+                {% endfor %}    
+                <input type="submit" name="submit" value="Add Course" class="btn btn-primary"/>
             </form>
-
-    
-    </body>
-
-</html>
+{% endblock %}

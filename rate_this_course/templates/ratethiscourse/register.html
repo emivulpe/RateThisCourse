@@ -6,18 +6,18 @@
 
 {% load bootstrap %}
 <h1>Register with Rate My Course</h1>
-{% if registered %}
-<div class="alert alert-success"> Registration Successful </div>
-<a href "/ratethiscourse/">Return to homepage.</a><br />
-{% else %}
-<form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data" class="form-horizontal">
-	{% csrf_token %}
-	<div class="col-lg-5 col-lg-offset-1">
-	{{ user_form|bootstrap_horizontal }}
-	{{ profile_form|bootstrap_horizontal }}
-	<!-- provide submit button -->
-	<input type="submit" name="submit" value="Register" class="btn btn-primary"/>
-	</div>
-</form>
+	{% if registered %}
+	<div class="alert alert-success"> Registration Successful </div>
+	<a href "/ratethiscourse/">Return to homepage.</a><br />
+	{% else %}
+	<form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data" class="form-horizontal">
+		{% csrf_token %}
+		<div class="col-lg-5 col-lg-offset-1">
+		{{ user_form|bootstrap_horizontal }}
+		{{ profile_form|bootstrap_horizontal }}
+		<!-- provide submit button -->
+		<input type="submit" name="submit" value="Register" class="btn btn-primary"/>
+		</div>
+	</form>
 {% endif %}
 {% endblock %}
