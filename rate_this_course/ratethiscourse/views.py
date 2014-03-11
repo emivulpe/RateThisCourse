@@ -142,6 +142,22 @@ def user_logout(request):
 
 	return HttpResponseRedirect('/ratethiscourse/')		
 
+def universities(request):
+    context = RequestContext(request)
+    context_dict = {}
+    
+    universities = University.objects.all().order_by('name')
+    univerisityList = []
+    for uni in universities:
+        university = [uni]
+        university.append(str(uni).replace(' ', '_'))
+        univerisityList.append(university)
+    context_dict['universities'] = univerisityList
+    print context_dict
+    
+    return render_to_response('ratethiscourse/universities.html', context_dict, context)
+    
+
 def university(request, uni_name_url):
     # Request our context from the request passed to us.
     context = RequestContext(request)

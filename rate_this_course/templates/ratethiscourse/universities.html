@@ -1,0 +1,15 @@
+{% extends 'ratethiscourse/base.html' %}
+
+{% block title %}Universities{% endblock %}
+
+{% block body_block %}
+	<table class="table table-hover">
+	{% for university in universities %}
+		<tr>
+			<td> <a href="/ratethiscourse/university/{{university.1}}/"> {{ university.0.name }} </a> </td>
+			<td><a href="/ratethiscourse/university/{{university.1}}/"> {{ university.0.location }} </a></td>
+		</tr>
+	{% endfor %}
+	</table>
+
+{% endblock %}
