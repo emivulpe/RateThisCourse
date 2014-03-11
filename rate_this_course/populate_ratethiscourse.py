@@ -1,4 +1,5 @@
 import os
+from random import randint
 
 def populate():
     glasgow_university = add_university(name = "University of Glasgow", location = "Glasgow", uni_domain_code = "gla")
@@ -12,34 +13,80 @@ def populate():
         year = 3,
 	lecturer = "Leif")
 
-    add_module(university = glasgow_university,
+    psd = add_module(university = glasgow_university,
         course = computing_science,
         name = "PSD",
         year = 3,
 	lecturer = "Jeremy")
 
 
-    add_module(university = glasgow_university,
+    db = add_module(university = glasgow_university,
         course = computing_science,
         name = "DB",
         year = 3,
 	lecturer = "Iadh")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
-    add_rating(value = 5, module = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = psd)
 
 
     strathclyde_university = add_university(name = "University of Strathclyde", location = "Glasgow", uni_domain_code = "strath")
 
-    add_course(university = strathclyde_university,
-        name = "Management")
+    computing = add_course(university = strathclyde_university,
+        name = "Computing")
+    
+    ap3 = add_module(university = strathclyde_university,
+        course = computing,
+        name = "AP3",
+        year = 3,
+    lecturer = "Joe")
+
+    alg = add_module(university = strathclyde_university,
+        course = computing,
+        name = "Alg3",
+        year = 3,
+    lecturer = "Gethin")
+
+
+    ns = add_module(university = strathclyde_university,
+        course = computing,
+        name = "NS",
+        year = 3,
+    lecturer = "Colin")
 
     add_course(university = strathclyde_university,
         name = "Marketing")
 
     add_course(university = strathclyde_university,
         name = "Psychology")
-
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = ap3)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = alg)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = ns)
 
     # Print out what we have added to the user.
     for u in University.objects.all():
