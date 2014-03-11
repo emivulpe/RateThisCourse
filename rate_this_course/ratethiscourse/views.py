@@ -186,8 +186,34 @@ def university(request, uni_name_url):
             details.append(str(course).replace(' ', '_'))
             courseList.append(details)
             
+        courses = Course.objects.filter(university=university)
+        ratedCourses = []
+        for course in courses:
+            ratedCourse = [course]
+            ratedCourse.append(str(course).replace(' ', '_'))
+            course_rating = 0
+            j = 0
+            modules = Module.objects.filter(course=course)
+            if len(modules) > 0:
+                for module in modules:
+                    avg_rating = 0
+                    i = 0
+                    ratings = Rating.objects.filter(module=module)
+                    if len(ratings) > 0:
+                        for rating in ratings:
+                            avg_rating = avg_rating + int(str(rating))
+                            i = i+1
+                        avg_rating = avg_rating/i
+                        course_rating = course_rating + avg_rating
+                        j = j+1
+                    else:
+                        continue
+                course_rating = course_rating/j
+                ratedCourse.append(course_rating)
+                ratedCourses.append(ratedCourse)
+            
         # Adds our results list to the template context under name pages.
-        context_dict['courses'] = courseList
+        context_dict['courses'] = ratedCourses
         # We also add the category object from the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
         context_dict['university'] = university
