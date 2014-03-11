@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response 
-from ratethiscourse.models import Course, University, Rating, Comment, Module 
+from ratethiscourse.models import Course, University, Rating, Comment, Module, UserProfile
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm, ModuleForm, LoginForm
@@ -82,7 +83,7 @@ def register(request):
 		#if the 2 forms are valid
 		if user_form.is_valid() and profile_form.is_valid():
 			#save user form data to db
-			user=user_form.save()
+			user = user_form.save()
 
 			#hash pwd with set_password with the set_password method
 			user.set_password(user.password)
@@ -90,6 +91,7 @@ def register(request):
 
 			profile = profile_form.save(commit=False)
 			profile.user=user
+			profile.save()
 
 			#process profile photo if user provides one
 			#if 'picture' in request.FILES:
@@ -277,6 +279,11 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	course = Course.objects.get(name=course_name, university=uni)
 	module = Module.objects.get(name=module_name, course=course, university=uni)
 	context_dict['module'] = module
+	user = User.objects.get(username=request.user.get_username())
+	user_profile = UserProfile.objects.get(user=user)
+	context_dict['userprofile'] = user_profile
+	auth = str(user_profile.course) == course_name
+	context_dict['auth'] = auth
 	
 	if request.method == 'POST':
 		
