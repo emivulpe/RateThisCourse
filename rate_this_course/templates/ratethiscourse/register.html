@@ -5,6 +5,8 @@
 {% block body_block %}
 
 {% load bootstrap %}
+{% load static %}
+
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li class="active">Register</li>
@@ -24,4 +26,8 @@
 		</div>
 	</form>
 {% endif %}
+{% endblock %}
+
+{% block page_specific_javascript %}
+	<script src="{% static 'js/ratethiscourse_register_page.js' %}"></script>
 {% endblock %}

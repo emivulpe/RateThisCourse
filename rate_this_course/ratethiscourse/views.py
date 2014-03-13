@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm, ModuleForm, LoginForm
+import json
 
 
 def index(request):
@@ -383,3 +384,41 @@ def add_module(request):
 		
 	context_dict['moduleform'] = moduleform
 	return render_to_response('ratethiscourse/add_module.html', context_dict, context)    
+
+def get_courses(request):
+	
+	context = RequestContext(request)
+	university_id = None
+	
+	if request.method == 'GET':
+		university_id = request.GET['university_id']
+		
+	courses = [["", "---------"]]
+	
+	if university_id:
+		for course in Course.objects.filter(university=university_id).values('id', 'name'):
+			courses.append([course['id'], course['name']])
+		
+	return HttpResponse(json.dumps(courses), content_type="application/json")
+	
+def get_user_course(request):
+	
+	context = RequestContext(request)
+	
+	university_id = None
+	university = None
+	
+	if request.method == 'GET':
+		try:
+			user = User.objects.filter(username=request.user.get_username())
+			user_profile = UserProfile.objects.filter(user=user).values('university')
+			university_id = user_profile[0]['university']
+		except (UserProfile.DoesNotExist) as e:
+			university_id = None
+	
+	if university_id:
+		university_id = str(university_id)
+	else:
+		university_id = ""
+		
+	return HttpResponse(university_id)

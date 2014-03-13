@@ -49,7 +49,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     university = models.ForeignKey(University)
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, blank = True, null = True)
 
     def __unicode__(self):  
         return self.user.username

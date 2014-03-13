@@ -12,4 +12,6 @@ urlpatterns = patterns('',
     url(r'^university/(?P<uni_name_url>\w+)/?$', views.university, name='university'),
     url(r'^university/(?P<uni_name_url>\w+)/(?P<course_name_url>\w+)/?$', views.course, name='course'),
     url(r'^university/(?P<uni_name_url>\w+)/(?P<course_name_url>\w+)/(?P<module_name_url>\w+)/?$', views.module, name='module'),
+    url(r'^get_courses/?$', views.get_courses, name='get_courses'),
+    url(r'^get_user_course/?$', views.get_user_course, name='get_user_course'),
     )
