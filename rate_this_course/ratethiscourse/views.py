@@ -102,7 +102,7 @@ def register(request):
 			profile.save()
 			
 			token = token_generator.make_token(user)
-			url = 'localhost:8000/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
+			url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
 			
 			send_mail('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com', [user.email], fail_silently=False)
 			#process profile photo if user provides one
@@ -166,7 +166,7 @@ def resend_validation_email(request):
 	if(userprofile.isActive == False):
 		token_generator = PasswordResetTokenGenerator()
 		token = token_generator.make_token(user)
-		url = 'localhost:8000/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
+		url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
 		user.email_user('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com')
 		context_dict['sent'] = True
 	else:
