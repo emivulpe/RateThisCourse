@@ -2,8 +2,11 @@ import os
 from random import randint
 
 def populate():
+    ## GLASGOW UNI
     glasgow_university = add_university(name = "University of Glasgow", location = "Glasgow", uni_domain_code = "gla")
 
+
+    ## COMPUTING SCIENCE
     computing_science = add_course(university = glasgow_university,
         name = "Computing Science")
     
@@ -33,6 +36,134 @@ def populate():
     add_comment(message = "Learning lots in this module!", module  = dim)
     add_comment(message = "Django is amazing!", module  = dim)
     
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = psd)
+    
+    
+    ## PSYCHOLOGY
+    psychology = add_course(university = glasgow_university,
+        name = "Psychology")
+    
+    dim = add_module(university = glasgow_university,
+        course = psychology,
+        name = "DIM",
+        year = 3,
+    lecturer = "Leif")
+
+    psd = add_module(university = glasgow_university,
+        course = psychology,
+        name = "PSD",
+        year = 3,
+    lecturer = "Jeremy")
+
+
+    db = add_module(university = glasgow_university,
+        course = psychology,
+        name = "DB",
+        year = 3,
+    lecturer = "Iadh")
+
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = psd)
+        
+        
+    ## BUSINESS
+    BUSINESS = add_course(university = glasgow_university,
+        name = "Business")
+    
+    dim = add_module(university = glasgow_university,
+        course = BUSINESS,
+        name = "DIM",
+        year = 3,
+    lecturer = "Leif")
+
+    psd = add_module(university = glasgow_university,
+        course = BUSINESS,
+        name = "PSD",
+        year = 3,
+    lecturer = "Jeremy")
+
+
+    db = add_module(university = glasgow_university,
+        course = BUSINESS,
+        name = "DB",
+        year = 3,
+    lecturer = "Iadh")
+
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
     for i in range(10):
         rating = randint(1,5)
         add_rating(value = rating, module = dim)
@@ -46,47 +177,295 @@ def populate():
         add_rating(value = rating, module = psd)
 
 
+    ## Maths
+    Maths = add_course(university = glasgow_university,
+        name = "Maths")
+    
+    dim = add_module(university = glasgow_university,
+        course = Maths,
+        name = "DIM",
+        year = 3,
+    lecturer = "Leif")
+
+    psd = add_module(university = glasgow_university,
+        course = Maths,
+        name = "PSD",
+        year = 3,
+    lecturer = "Jeremy")
+
+
+    db = add_module(university = glasgow_university,
+        course = Maths,
+        name = "DB",
+        year = 3,
+    lecturer = "Iadh")
+
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = psd)
+        
+
+
+    ## STRATHCLYDE UNI
     strathclyde_university = add_university(name = "University of Strathclyde", location = "Glasgow", uni_domain_code = "strath")
 
-    computing = add_course(university = strathclyde_university,
-        name = "Computing")
+
+    ## COMPUTING SCIENCE
+    computing_science = add_course(university = strathclyde_university,
+        name = "Computing Science")
     
-    ap3 = add_module(university = strathclyde_university,
-        course = computing,
-        name = "AP3",
+    dim = add_module(university = strathclyde_university,
+        course = computing_science,
+        name = "DIM",
         year = 3,
-    lecturer = "Joe")
+    lecturer = "Leif")
 
-    alg = add_module(university = strathclyde_university,
-        course = computing,
-        name = "Alg3",
+    psd = add_module(university = strathclyde_university,
+        course = computing_science,
+        name = "PSD",
         year = 3,
-    lecturer = "Gethin")
+    lecturer = "Jeremy")
 
 
-    ns = add_module(university = strathclyde_university,
-        course = computing,
-        name = "NS",
+    db = add_module(university = strathclyde_university,
+        course = computing_science,
+        name = "DB",
         year = 3,
-    lecturer = "Colin")
+    lecturer = "Iadh")
 
-    add_course(university = strathclyde_university,
-        name = "Marketing")
-
-    add_course(university = strathclyde_university,
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = psd)
+    
+    
+    ## PSYCHOLOGY
+    psychology = add_course(university = strathclyde_university,
         name = "Psychology")
     
+    dim = add_module(university = strathclyde_university,
+        course = psychology,
+        name = "DIM",
+        year = 3,
+    lecturer = "Leif")
+
+    psd = add_module(university = strathclyde_university,
+        course = psychology,
+        name = "PSD",
+        year = 3,
+    lecturer = "Jeremy")
+
+
+    db = add_module(university = strathclyde_university,
+        course = psychology,
+        name = "DB",
+        year = 3,
+    lecturer = "Iadh")
+
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
     for i in range(10):
         rating = randint(1,5)
-        add_rating(value = rating, module = ap3)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
         
     for i in range(10):
         rating = randint(1,5)
-        add_rating(value = rating, module = alg)
+        add_rating(value = rating, module = psd)
+        
+    
+    ## BUSINESS
+    BUSINESS = add_course(university = strathclyde_university,
+        name = "Business")
+    
+    dim = add_module(university = strathclyde_university,
+        course = BUSINESS,
+        name = "DIM",
+        year = 3,
+    lecturer = "Leif")
+
+    psd = add_module(university = strathclyde_university,
+        course = BUSINESS,
+        name = "PSD",
+        year = 3,
+    lecturer = "Jeremy")
+
+
+    db = add_module(university = strathclyde_university,
+        course = BUSINESS,
+        name = "DB",
+        year = 3,
+    lecturer = "Iadh")
+
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
         
     for i in range(10):
         rating = randint(1,5)
-        add_rating(value = rating, module = ns)
+        add_rating(value = rating, module = psd)
+
+
+    ## Maths
+    Maths = add_course(university = strathclyde_university,
+        name = "Maths")
+    
+    dim = add_module(university = strathclyde_university,
+        course = Maths,
+        name = "DIM",
+        year = 3,
+    lecturer = "Leif")
+
+    psd = add_module(university = strathclyde_university,
+        course = Maths,
+        name = "PSD",
+        year = 3,
+    lecturer = "Jeremy")
+
+
+    db = add_module(university = strathclyde_university,
+        course = Maths,
+        name = "DB",
+        year = 3,
+    lecturer = "Iadh")
+
+    add_comment(message = "Very good course. Love the lecturer", module  = dim)
+    add_comment(message = "Fun course!", module  = dim)
+    add_comment(message = "It's very good and entertaining", module  = dim)
+    add_comment(message = "I really like this course", module  = dim)
+    add_comment(message = "Learning lots in this module!", module  = dim)
+    add_comment(message = "Django is amazing!", module  = dim)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = psd)
+    add_comment(message = "Fun course!", module  = psd)
+    add_comment(message = "It's very good and entertaining", module  = psd)
+    add_comment(message = "I really like this course", module  = psd)
+    add_comment(message = "Learning lots in this module!", module  = psd)
+    add_comment(message = "Django is amazing!", module  = psd)
+    
+    add_comment(message = "Very good course. Love the lecturer", module  = db)
+    add_comment(message = "Fun course!", module  = db)
+    add_comment(message = "It's very good and entertaining", module  = db)
+    add_comment(message = "I really like this course", module  = db)
+    add_comment(message = "Learning lots in this module!", module  = db)
+    add_comment(message = "Django is amazing!", module  = db)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = dim)
+    
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = db)
+        
+    for i in range(10):
+        rating = randint(1,5)
+        add_rating(value = rating, module = psd)
+
 
     # Print out what we have added to the user.
     for u in University.objects.all():

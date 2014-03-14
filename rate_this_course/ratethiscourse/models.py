@@ -30,7 +30,7 @@ class Course(models.Model):
         
 class Module(models.Model):
     
-    name = models.CharField(max_length = 128, unique = True)
+    name = models.CharField(max_length = 128)
     year = models.IntegerField()
     lecturer = models.CharField(max_length = 128)
 
