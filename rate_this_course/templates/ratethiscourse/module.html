@@ -76,18 +76,22 @@
                 {% endfor %}
                 <br>
                 <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
-            </form>   
-            {% endif %}
-            <h2> Comments </h2>
-            <div class="list-group">
-            {% for comment in comments %}
-                <li class="list-group-item"> {{ comment }} </li>
-            {% endfor %}
-            </div>
+            </form> 
         {% else %}
             <div class="alert alert-warning">
                 You must be verified to add comments or ratings. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
-            </div>
+            </div> 
         {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            You must be signed in to comment or rate.
+        </div>
     {% endif %}
+    <h2> Comments </h2>
+    <div class="list-group">
+    {% for comment in comments %}
+        <li class="list-group-item"> {{ comment }} </li>
+    {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}

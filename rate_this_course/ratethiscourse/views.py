@@ -339,15 +339,14 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	course = Course.objects.get(name=course_name, university=uni)
 	module = Module.objects.get(name=module_name, course=course, university=uni)
 	context_dict['module'] = module
-	try:
-		user = request.user
-		user_profile = UserProfile.objects.get(user=user)
-		context_dict['userprofile'] = user_profile
-		auth = str(user_profile.course) == course_name
+	user = request.user
+	if not user.is_anonymous():
+		userprofile = UserProfile.objects.get(user=user)
+		context_dict['userprofile'] = userprofile
+		auth = str(userprofile.course) == course_name
 		context_dict['auth'] = auth
-	except (UserProfile.DoesNotExist, AttributeError) as e:
+	else:
 		context_dict['auth'] = False
-
 	
 	if request.method == 'POST':
 		
@@ -471,9 +470,8 @@ def change_course(request):
 		
 		if userprofileform.is_valid():
 			user = request.user
-			user_profile = UserProfile.objects.get(user=user)
-			user_profile.course = userprofileform.cleaned_data['course']
-			user_profile.save()
+			userprofile.course = userprofileform.cleaned_data['course']
+			userprofile.save()
 			context_dict['success'] = True
 		else:
 			context_dict['success'] = False
@@ -534,14 +532,15 @@ def get_user_course(request):
 	course = None
 	
 	if request.method == 'GET':
-		try:
+		user = request.user
+		if not user.is_anonymous():
 			user = request.user
 			user_profile = UserProfile.objects.filter(user=user).values('course')
 			if (len(user_profile) > 0):
 				course_id = user_profile[0]['course']
 			else:
 				course_id = None
-		except (UserProfile.DoesNotExist) as e:
+		else:
 			course_id = None
 	
 	if course_id:
