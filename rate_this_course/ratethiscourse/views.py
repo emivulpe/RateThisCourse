@@ -162,6 +162,7 @@ def resend_validation_email(request):
 		return render_to_response('ratethiscourse/resend_validation_email.html', context_dict, context)
 	
 	if(userprofile.isActive == False):
+		token_generator = PasswordResetTokenGenerator()
 		token = token_generator.make_token(user)
 		url = 'localhost:8000/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
 		user.email_user('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com')
@@ -340,6 +341,7 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	try:
 		user = request.user
 		user_profile = UserProfile.objects.get(user=user)
+		context_dict['userprofile'] = user_profile
 		auth = str(user_profile.course) == course_name
 		context_dict['auth'] = auth
 	except (UserProfile.DoesNotExist, AttributeError) as e:
@@ -398,6 +400,11 @@ def add_course(request):
 	context = RequestContext(request)
 	context_dict = {}
 	
+	user = request.user
+	if not user.is_anonymous():
+		userprofile = UserProfile.objects.get(user=user)
+		context_dict['userprofile'] = userprofile
+		
 	if request.method == 'POST':
 
 		name = request.POST['name']
@@ -421,6 +428,11 @@ def add_module(request):
 	
 	context = RequestContext(request)
 	context_dict = {}
+	
+	user = request.user
+	if not user.is_anonymous():
+		userprofile = UserProfile.objects.get(user=user)
+		context_dict['userprofile'] = userprofile
 	
 	if request.method == 'POST':
 
@@ -446,6 +458,11 @@ def change_course(request):
 	
 	context = RequestContext(request)
 	context_dict = {}
+	
+	user = request.user
+	if not user.is_anonymous():
+		userprofile = UserProfile.objects.get(user=user)
+		context_dict['userprofile'] = userprofile
 	
 	if request.method == 'POST':
 		context_dict['posted'] = True
