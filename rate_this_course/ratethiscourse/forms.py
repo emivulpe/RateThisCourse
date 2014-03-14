@@ -29,7 +29,6 @@ class UserProfileForm(forms.ModelForm):
 		model = UserProfile
 		fields = ('university', 'course', ) #must have comma after, otherwise error (weird)
 
-
 class RatingForm(forms.ModelForm):
 	value = forms.ChoiceField(widget = forms.RadioSelect(), choices = ( (1, 'One Star'), (2, 'Two Stars'), (3, 'Three Stars'), (4, 'Four Stars'), (5, 'Five Stars') ), required = False)
 	

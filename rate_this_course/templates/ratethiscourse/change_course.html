@@ -1,0 +1,46 @@
+{% extends 'ratethiscourse/base.html' %}
+
+{% block title %}Add Module{% endblock %}
+
+{% block body_block %}
+
+{% load bootstrap %}
+{% load static %}
+
+<ol class="breadcrumb">
+    <li><a href="/ratethiscourse/">Home</a></li>
+    <li class="active">Change Course</li>
+</ol>
+<h1> Add a module </h1>
+        {% if posted and success %}
+        	<div class="alert alert-success">
+        		Your course was successfully changed
+        	</div>
+
+        {% elif posted and not sucess %}
+        	<div class="alert alert-warning">
+            	There was an error and your course was not changed
+            </div>
+        {% endif %}
+
+         <form id="change_course_form" method="post" action="/ratethiscourse/change_course/" class="form-horizontal">
+
+                {% csrf_token %}
+                {% for hidden in userprofileform.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+                {% for field in userprofileform.visible_fields %}
+                <div class="form-group">
+                    <div class="col-lg-5 col-lg-offset-1">
+                    {{ field|bootstrap_horizontal }}
+                    </div>
+                </div>
+                {% endfor %}    
+                <input type="submit" name="submit" value="Change course" class="btn btn-primary"/>
+            </form>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    <script src="{% static 'js/ratethiscourse_add_course_dropdown_validation.js' %}"></script>
+{% endblock %}

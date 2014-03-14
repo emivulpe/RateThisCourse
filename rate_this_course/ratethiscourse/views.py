@@ -385,6 +385,33 @@ def add_module(request):
 	context_dict['moduleform'] = moduleform
 	return render_to_response('ratethiscourse/add_module.html', context_dict, context)    
 
+def change_course(request):
+	
+	context = RequestContext(request)
+	context_dict = {}
+	
+	if request.method == 'POST':
+		context_dict['posted'] = True
+		userprofileform = UserProfileForm(request.POST)
+		
+		if userprofileform.is_valid():
+			user = User.objects.get(username=request.user.get_username())
+			user_profile = UserProfile.objects.get(user=user)
+			user_profile.course = userprofileform.cleaned_data['course']
+			user_profile.save()
+			context_dict['success'] = True
+		else:
+			context_dict['success'] = False
+			print userprofileform.errors
+	
+	else:
+		context_dict['posted'] = False
+		userprofileform = UserProfileForm()
+	
+	context_dict['userprofileform'] = userprofileform
+	return render_to_response('ratethiscourse/change_course.html', context_dict, context)
+		
+
 def get_courses(request):
 	
 	context = RequestContext(request)

@@ -29,6 +29,7 @@ class Course(models.Model):
         unique_together = ("name", "university")
         
 class Module(models.Model):
+    
     name = models.CharField(max_length = 128, unique = True)
     year = models.IntegerField()
     lecturer = models.CharField(max_length = 128)
