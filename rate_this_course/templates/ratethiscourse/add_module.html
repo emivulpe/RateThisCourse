@@ -12,32 +12,38 @@
     <li class="active">Add Module</li>
 </ol>
 <h1> Add a module </h1>
-        {% if not name %}
-            <div class="alert alert-warning">
-                The module addition was unsuccessful
-            </div>
-        {% elif name == "NotPosted" %}
-        
-        {% else %}
-            <div class="alert alert-success">The module addition was successful</div>
-        {% endif %}
-
-         <form id="add_module_form" method="post" action="/ratethiscourse/add_module/" class="form-horizontal">
-
-                {% csrf_token %}
-                {% for hidden in moduleform.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-
-                {% for field in moduleform.visible_fields %}
-                <div class="form-group">
-                    <div class="col-lg-5 col-lg-offset-1">
-                    {{ field|bootstrap_horizontal }}
-                    </div>
+        {% if userprofile.isActive %}
+            {% if not name %}
+                <div class="alert alert-warning">
+                    The module addition was unsuccessful
                 </div>
-                {% endfor %}    
-                <input type="submit" name="submit" value="Add module" class="btn btn-primary"/>
-            </form>
+            {% elif name == "NotPosted" %}
+            
+            {% else %}
+                <div class="alert alert-success">The module addition was successful</div>
+            {% endif %}
+
+             <form id="add_module_form" method="post" action="/ratethiscourse/add_module/" class="form-horizontal">
+
+                    {% csrf_token %}
+                    {% for hidden in moduleform.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in moduleform.visible_fields %}
+                    <div class="form-group">
+                        <div class="col-lg-5 col-lg-offset-1">
+                        {{ field|bootstrap_horizontal }}
+                        </div>
+                    </div>
+                    {% endfor %}    
+                    <input type="submit" name="submit" value="Add module" class="btn btn-primary"/>
+                </form>
+        {% else %}
+            <div class="alert alert-warning">
+                You must be verified to add modules. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
+            </div>
+        {% endif %}
 {% endblock %}
 
 {% block page_specific_javascript %}
