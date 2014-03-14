@@ -63,7 +63,7 @@
                 </tr>
                 {% for top in topfive %}
                 <tr>
-                    <td>{{ top.0 }}</td>
+                    <td>{{ top.0 }}:{{ top.0.university }}</td>
                     <td>{{ top.1 }}</td>
                 </tr>
                 {% endfor %}
@@ -76,7 +76,7 @@
                 </tr>
                 {% for bottom in bottomfive %}
                 <tr>
-                    <td>{{ bottom.0 }}</td>
+                    <td>{{ bottom.0 }}:{{ bottom.0.university }}</td>
                     <td>{{ bottom.1 }}</td>
                 </tr>
                 {% endfor %}

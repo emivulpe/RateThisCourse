@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm, ModuleForm, LoginForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
+from operator import itemgetter
 import json
 
 
@@ -57,9 +58,10 @@ def index(request):
 				course_rating = "No Ratings"
 			ratedCourse.append(course_rating)
 			ratedCourses.append(ratedCourse)
-	ratedCourses.sort()
+	ratedCourses.sort(key=itemgetter(1))
+	ratedCourses.reverse()
 	topFive = ratedCourses[:5]
-	bottomFive = ratedCourses[-1:-6]
+	bottomFive = ratedCourses[:-6:-1]
 	
 	context_dict['topfive'] = topFive
 	context_dict['bottomfive'] = bottomFive
@@ -219,7 +221,6 @@ def universities(request):
 		university.append(str(uni).replace(' ', '_'))
 		univerisityList.append(university)
 	context_dict['universities'] = univerisityList
-	print context_dict
 	
 	return render_to_response('ratethiscourse/universities.html', context_dict, context)
 	
