@@ -131,9 +131,10 @@ def validate_user(request):
 	context_dict = {}
 	
 	if request.method == 'GET':
-		if request.GET.has_key('user') and request.has_key('token'):
-			userid = request.GET['user']
-			token = request.GET['token']
+		userid = request.GET.get('user')
+		token = request.GET.get('token')
+		
+		if userid and token:
 			user = User.objects.get(id=userid)
 			
 			token_generator = PasswordResetTokenGenerator()
