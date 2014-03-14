@@ -5,6 +5,8 @@
 {% block body_block %}
 
 {% load bootstrap %}
+{% load static %}
+
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li class="active">Add Module</li>
@@ -36,4 +38,9 @@
                 {% endfor %}    
                 <input type="submit" name="submit" value="Add module" class="btn btn-primary"/>
             </form>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    <script src="{% static 'js/ratethiscourse_user_uni_validation.js' %}"></script>
+    <script src="{% static 'js/ratethiscourse_user_course_validation.js' %}"></script>
 {% endblock %}

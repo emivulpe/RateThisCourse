@@ -8,7 +8,7 @@ class University(models.Model):
 
     name = models.CharField(max_length = 128, unique = True)
     location = models.CharField(max_length = 256)
-    uni_domain_code = models.CharField(max_length = 128)
+    uni_domain_code = models.CharField(max_length = 128, unique = True)
 
     def __unicode__(self):
         return self.name
@@ -70,7 +70,7 @@ class Rating(models.Model):
     value = models.IntegerField()
     date = models.DateTimeField(default = datetime.now, blank = True)
 
-    #writer = models.OneToOneField(User)
+    #writer = models.ForeignKey(User)
     module = models.ForeignKey(Module) 
 
     def __unicode__(self):

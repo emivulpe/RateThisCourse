@@ -401,8 +401,7 @@ def get_courses(request):
 		
 	return HttpResponse(json.dumps(courses), content_type="application/json")
 	
-def get_user_course(request):
-	
+def get_user_uni(request):
 	context = RequestContext(request)
 	
 	university_id = None
@@ -412,7 +411,10 @@ def get_user_course(request):
 		try:
 			user = User.objects.filter(username=request.user.get_username())
 			user_profile = UserProfile.objects.filter(user=user).values('university')
-			university_id = user_profile[0]['university']
+			if (len(user_profile) > 0):
+				university_id = user_profile[0]['university']
+			else:
+				university_id = None
 		except (UserProfile.DoesNotExist) as e:
 			university_id = None
 	
@@ -422,3 +424,27 @@ def get_user_course(request):
 		university_id = ""
 		
 	return HttpResponse(university_id)
+
+def get_user_course(request):
+	context = RequestContext(request)
+	
+	course_id = None
+	course = None
+	
+	if request.method == 'GET':
+		try:
+			user = User.objects.filter(username=request.user.get_username())
+			user_profile = UserProfile.objects.filter(user=user).values('course')
+			if (len(user_profile) > 0):
+				course_id = user_profile[0]['course']
+			else:
+				course_id = None
+		except (UserProfile.DoesNotExist) as e:
+			course_id = None
+	
+	if course_id:
+		course_id = str(course_id)
+	else:
+		course_id = ""
+		
+	return HttpResponse(course_id)
