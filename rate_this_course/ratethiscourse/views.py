@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm, ModuleForm, LoginForm
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import send_mail
 import json
 
 
@@ -77,6 +79,8 @@ def register(request):
 
 	#if http post, process form data
 	if request.method == 'POST':
+		token_generator = PasswordResetTokenGenerator()
+		
 		#attempt to grab info from form
 		user_form = UserForm(data=request.POST)
 		profile_form = UserProfileForm(data=request.POST)
@@ -91,9 +95,14 @@ def register(request):
 			user.save()
 
 			profile = profile_form.save(commit=False)
-			profile.user=user
+			profile.user = user
+			profile.isActive = False
 			profile.save()
-
+			
+			token = token_generator.make_token(user)
+			url = 'localhost:8000/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
+			
+			send_mail('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com', [user.email], fail_silently=False)
 			#process profile photo if user provides one
 			#if 'picture' in request.FILES:
 			#   profile.picture = request.FILES['picture']
@@ -114,6 +123,54 @@ def register(request):
 	#render template depending on context
 	return render_to_response('ratethiscourse/register.html', {'user_form':user_form, 'profile_form':profile_form, 'registered':registered}, context)
 
+def validate_user(request):
+	
+	context = RequestContext(request)
+	context_dict = {}
+	
+	if request.method == 'GET':
+		if request.GET.has_key('user') and request.has_key('token'):
+			userid = request.GET['user']
+			token = request.GET['token']
+			user = User.objects.get(id=userid)
+			
+			token_generator = PasswordResetTokenGenerator()
+			
+			verify = token_generator.check_token(user, token)
+			
+			if verify:
+				userprofile = UserProfile.objects.get(user=userid)
+				userprofile.isActive = True
+				userprofile.save()
+		
+			context_dict['verify'] = verify
+		else:
+			context_dict['malformed'] = True
+		
+		return render_to_response('ratethiscourse/validate_user.html', context_dict, context)
+	
+def resend_validation_email(request):
+	
+	context = RequestContext(request)
+	context_dict = {}
+	
+	user = request.user
+	if not user.is_anonymous():
+		userprofile = UserProfile.objects.get(user=user)
+	else:
+		context_dict['userauth'] = 'anon'
+		return render_to_response('ratethiscourse/resend_validation_email.html', context_dict, context)
+	
+	if(userprofile.isActive == False):
+		token = token_generator.make_token(user)
+		url = 'localhost:8000/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
+		user.email_user('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com')
+		context_dict['sent'] = True
+	else:
+		context_dict['sent'] = False
+		
+	return render_to_response('ratethiscourse/resend_validation_email.html', context_dict, context)
+	
 def user_login(request):
 	
 	context = RequestContext(request)
@@ -281,7 +338,7 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	module = Module.objects.get(name=module_name, course=course, university=uni)
 	context_dict['module'] = module
 	try:
-		user = User.objects.get(username=request.user.get_username())
+		user = request.user
 		user_profile = UserProfile.objects.get(user=user)
 		auth = str(user_profile.course) == course_name
 		context_dict['auth'] = auth
@@ -395,7 +452,7 @@ def change_course(request):
 		userprofileform = UserProfileForm(request.POST)
 		
 		if userprofileform.is_valid():
-			user = User.objects.get(username=request.user.get_username())
+			user = request.user
 			user_profile = UserProfile.objects.get(user=user)
 			user_profile.course = userprofileform.cleaned_data['course']
 			user_profile.save()
@@ -436,7 +493,7 @@ def get_user_uni(request):
 	
 	if request.method == 'GET':
 		try:
-			user = User.objects.filter(username=request.user.get_username())
+			user = request.user
 			user_profile = UserProfile.objects.filter(user=user).values('university')
 			if (len(user_profile) > 0):
 				university_id = user_profile[0]['university']
@@ -460,7 +517,7 @@ def get_user_course(request):
 	
 	if request.method == 'GET':
 		try:
-			user = User.objects.filter(username=request.user.get_username())
+			user = request.user
 			user_profile = UserProfile.objects.filter(user=user).values('course')
 			if (len(user_profile) > 0):
 				course_id = user_profile[0]['course']

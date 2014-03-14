@@ -47,8 +47,9 @@ class Module(models.Model):
     
 class UserProfile(models.Model):
 
+    isActive = models.BooleanField()
+    
     user = models.OneToOneField(User)
-
     university = models.ForeignKey(University)
     course = models.ForeignKey(Course, blank = True, null = True)
 
