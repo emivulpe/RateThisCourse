@@ -52,6 +52,7 @@ function syncGetCourseAndBlock() {
 function asyncFilterCourses() {
     var uni_id = $('#id_university').find(":selected").attr("value");
     var $course = $("#id_course");
+    $course.prop('disabled', true);
     $.get('/ratethiscourse/get_courses/', {university_id: uni_id}, function(data) {
     	console.log("second");
     	console.log(data);
@@ -60,11 +61,13 @@ function asyncFilterCourses() {
             $course.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
         });
     });
+    $course.prop('disabled', false);
 };
 
 function syncFilterCourses() {
     var uni_id = $('#id_university').find(":selected").attr("value");
     var $course = $("#id_course");
+    $course.prop('disabled', true);
     var result = null;
     $.ajax({
     	url: '/ratethiscourse/get_courses/',
@@ -79,4 +82,11 @@ function syncFilterCourses() {
         	});
         } 
     });
+    $course.prop('disabled', false);
 };
+
+function emptyList() {
+    var $course = $('#id_course');
+    $course.empty();
+    $course.append($("<option></option>").attr("value", "").text("---------"));
+}

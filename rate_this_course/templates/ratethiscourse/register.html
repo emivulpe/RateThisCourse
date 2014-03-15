@@ -16,6 +16,8 @@
 	<div class="alert alert-success"> Registration Successful </div>
 	<a href "/ratethiscourse/">Return to homepage.</a><br />
 	{% else %}
+	<div class="alert alert-info"> Please provide a valid email address as a verification email will be sent to this address and you will not be able to add ratings or comments until it is verified. </div>
+	<div class="row">
 	<form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data" class="form-horizontal">
 		{% csrf_token %}
 		<div class="col-lg-5 col-lg-offset-1">
@@ -25,6 +27,7 @@
 		<input type="submit" name="submit" value="Register" class="btn btn-primary"/>
 		</div>
 	</form>
+	</div>
 {% endif %}
 {% endblock %}
 
