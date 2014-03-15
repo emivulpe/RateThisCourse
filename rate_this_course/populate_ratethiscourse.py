@@ -12,22 +12,28 @@ def populate():
     
     dim = add_module(university = glasgow_university,
         course = computing_science,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-	lecturer = "Leif")
+	lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = glasgow_university,
         course = computing_science,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-	lecturer = "Jeremy")
+	lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = glasgow_university,
         course = computing_science,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-	lecturer = "Iadh")
+	lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -69,22 +75,28 @@ def populate():
     
     dim = add_module(university = glasgow_university,
         course = psychology,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = glasgow_university,
         course = psychology,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = glasgow_university,
         course = psychology,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -126,22 +138,28 @@ def populate():
     
     dim = add_module(university = glasgow_university,
         course = BUSINESS,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = glasgow_university,
         course = BUSINESS,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = glasgow_university,
         course = BUSINESS,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -183,22 +201,28 @@ def populate():
     
     dim = add_module(university = glasgow_university,
         course = Maths,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = glasgow_university,
         course = Maths,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = glasgow_university,
         course = Maths,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -245,22 +269,28 @@ def populate():
     
     dim = add_module(university = strathclyde_university,
         course = computing_science,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = strathclyde_university,
         course = computing_science,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = strathclyde_university,
         course = computing_science,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -302,22 +332,28 @@ def populate():
     
     dim = add_module(university = strathclyde_university,
         course = psychology,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = strathclyde_university,
         course = psychology,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = strathclyde_university,
         course = psychology,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -359,22 +395,28 @@ def populate():
     
     dim = add_module(university = strathclyde_university,
         course = BUSINESS,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = strathclyde_university,
         course = BUSINESS,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = strathclyde_university,
         course = BUSINESS,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -416,22 +458,28 @@ def populate():
     
     dim = add_module(university = strathclyde_university,
         course = Maths,
-        name = "DIM",
+        code = "DIM3",
+        name = "Distributed Information Management",
         year = 3,
-    lecturer = "Leif")
+    lecturer = "Leif",
+    description = "A course designed to teach you django or something")
 
     psd = add_module(university = strathclyde_university,
         course = Maths,
-        name = "PSD",
+        code = "PSD3",
+        name = "Professional Software Development 3",
         year = 3,
-    lecturer = "Jeremy")
+    lecturer = "Jeremy",
+    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
 
 
     db = add_module(university = strathclyde_university,
         course = Maths,
-        name = "DB",
+        code = "DB3",
+        name = "Database Systems 3",
         year = 3,
-    lecturer = "Iadh")
+    lecturer = "Iadh",
+    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
 
     add_comment(message = "Very good course. Love the lecturer", module  = dim)
     add_comment(message = "Fun course!", module  = dim)
@@ -473,8 +521,8 @@ def populate():
             for m in Module.objects.filter(course=c, university=u):
                 print "-{0} -{1} -{2}".format(str(u), str(c), str(m))
 
-def add_module(university, course, name, year, lecturer):
-    m = Module.objects.get_or_create(university = university, course = course, name = name, year = year, lecturer = lecturer)[0]
+def add_module(university, code, course, name, year, lecturer, description):
+    m = Module.objects.get_or_create(university = university,code = code, course = course, name = name, year = year, lecturer = lecturer, description = description)[0]
     return m
 
 def add_course(university, name):

@@ -30,9 +30,11 @@ class Course(models.Model):
         
 class Module(models.Model):
     
+    code = models.CharField(max_length = 32)
     name = models.CharField(max_length = 128)
     year = models.IntegerField()
     lecturer = models.CharField(max_length = 128)
+    description = models.CharField(max_length = 1024)
 
     university = models.ForeignKey(University)
     course = models.ForeignKey(Course)

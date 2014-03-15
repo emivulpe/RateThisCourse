@@ -51,12 +51,14 @@ class CourseForm(forms.ModelForm):
 		model = Course
 		
 class ModuleForm(forms.ModelForm):
+	code = forms.CharField(required = True)
 	name = forms.CharField(required = True)
 	year = forms.IntegerField(required = True)
 	lecturer = forms.CharField(required = True)
+	description = forms.CharField(widget = forms.Textarea(), required = True)
 	university = forms.ModelChoiceField(queryset = University.objects.all(), required = True)
 	course = forms.ModelChoiceField(queryset = Course.objects.all(), required = True)
 	
 	class Meta:
 		model = Module
-		fields = ('name', 'year', 'lecturer', 'university', 'course',)
+		fields = ('code', 'name', 'year', 'lecturer', 'description', 'university', 'course',)
