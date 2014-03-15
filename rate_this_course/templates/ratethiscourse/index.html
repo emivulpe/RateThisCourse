@@ -14,18 +14,16 @@
                 <tr>
                     <th> Rating </th>
                     <th> Module </th>
-                    <th> Date </th>
                 </tr>
             {% for rating in ratings %}
                 <tr>
                     <td>
-                        {{ rating.value }}
+                        {{ rating.0.value }}
                     </td>
                     <td>
-                        {{ rating.module }}
-                    </td>
-                    <td>
-                        {{ rating.date }}
+                        <a href="/ratethiscourse/university/{{rating.1}}/{{rating.2}}/{{rating.3}}">
+                        {{ rating.0.module }}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -37,18 +35,16 @@
                 <tr>
                     <th> Comment </th>
                     <th> Module </th>
-                    <th> Date </th>
                 </tr>
                 {% for comment in comments %}
                 <tr>
                     <td>
-                        {{ comment.message }}
+                        {{ comment.0.message }}
                     </td>
                     <td>
-                        {{ comment.module }}
-                    </td>
-                    <td>
-                        {{ comment.date }}
+                        <a href="/ratethiscourse/university/{{comment.1}}/{{comment.2}}/{{comment.3}}">
+                        {{ comment.0.module }}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -63,7 +59,7 @@
                 </tr>
                 {% for top in topfive %}
                 <tr>
-                    <td>{{ top.0 }}:{{ top.0.university }}</td>
+                    <td><a href="/ratethiscourse/university/{{top.2}}/{{top.3}}">{{ top.0 }}:{{ top.0.university }}</a></td>
                     <td>{{ top.1 }}</td>
                 </tr>
                 {% endfor %}
@@ -76,7 +72,7 @@
                 </tr>
                 {% for bottom in bottomfive %}
                 <tr>
-                    <td>{{ bottom.0 }}:{{ bottom.0.university }}</td>
+                    <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}:{{ bottom.0.university }}</td>
                     <td>{{ bottom.1 }}</td>
                 </tr>
                 {% endfor %}

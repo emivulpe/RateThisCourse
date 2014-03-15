@@ -26,10 +26,29 @@ def index(request):
 		university.url = university.name.replace(' ', '_')
 		
 	ratings = Rating.objects.all().order_by('-date')[:10]
-	context_dict['ratings'] = ratings;
+	ratingList = []
+	for rating in ratings:
+		ratingInfo = [rating]
+		module = Module.objects.get(id=rating.module.id)
+		ratingInfo.append(str(module.university).replace(' ', '_'))
+		ratingInfo.append(str(module.course).replace(' ', '_'))
+		ratingInfo.append(str(rating.module).replace(' ', '_'))
+		ratingList.append(ratingInfo)
+	print ratingList
+	context_dict['ratings'] = ratingList;
 	
 	comments = Comment.objects.all().order_by('-date')[:10]
-	context_dict['comments'] = comments;
+	commentList = []
+	for comment in comments:
+		commentInfo = [comment]
+		module = Module.objects.get(id=comment.module.id)
+		commentInfo.append(str(module.university).replace(' ', '_'))
+		commentInfo.append(str(module.course).replace(' ', '_'))
+		commentInfo.append(str(comment.module).replace(' ', '_'))
+		commentList.append(commentInfo)
+	
+	print commentList
+	context_dict['comments'] = commentList;
 	
 	courses = Course.objects.all()
 	ratedCourses = []
@@ -57,6 +76,8 @@ def index(request):
 			else:
 				course_rating = "No Ratings"
 			ratedCourse.append(course_rating)
+			ratedCourse.append(str(course.university).replace(' ', '_'))
+			ratedCourse.append(str(course).replace(' ', '_'))
 			ratedCourses.append(ratedCourse)
 	ratedCourses.sort(key=itemgetter(1))
 	ratedCourses.reverse()
