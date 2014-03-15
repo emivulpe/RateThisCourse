@@ -132,6 +132,8 @@ def register(request):
 			#profile.save()
 	
 			registered = True
+			loggedInUser = authenticate(username=request.POST['username'], password=request.POST['password'])
+			login(request, loggedInUser)
 		#invalid form
 		else:
 			print user_form.errors, profile_form.errors
