@@ -1,3 +1,6 @@
 #ignore compiled python files and autobackup files
 *.pyc
 *.*~
+
+#ignore the db
+*.db
