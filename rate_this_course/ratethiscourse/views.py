@@ -9,91 +9,32 @@ from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentF
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from operator import itemgetter
+import dbHelper
 import json
 
 
 def index(request):
-	# Request the context of the request.
-	# The context contains information such as the client's machine details, for example.
 	context = RequestContext(request)
-   
+	context_dict = {}
 	
-	# Construct a dictionary to pass to the template engine as its context.
-	# Note the key boldmessage is the same as {{ boldmessage }} in the template!
-	uni_list = University.objects.order_by('-name')[:30]
-	context_dict = {'universities': uni_list}
-	for university in uni_list:
-		university.url = university.name.replace(' ', '_')
-		
-	ratings = Rating.objects.all().order_by('-date')[:10]
-	ratingList = []
-	for rating in ratings:
-		ratingInfo = [rating]
-		module = Module.objects.get(id=rating.module.id)
-		ratingInfo.append(str(module.university).replace(' ', '_'))
-		ratingInfo.append(str(module.course).replace(' ', '_'))
-		ratingInfo.append(str(rating.module).replace(' ', '_'))
-		ratingList.append(ratingInfo)
-	print ratingList
-	context_dict['ratings'] = ratingList;
-	
-	comments = Comment.objects.all().order_by('-date')[:10]
-	commentList = []
-	for comment in comments:
-		commentInfo = [comment]
-		module = Module.objects.get(id=comment.module.id)
-		commentInfo.append(str(module.university).replace(' ', '_'))
-		commentInfo.append(str(module.course).replace(' ', '_'))
-		commentInfo.append(str(comment.module).replace(' ', '_'))
-		commentList.append(commentInfo)
-	
-	print commentList
-	context_dict['comments'] = commentList;
-	
-	courses = Course.objects.all()
-	ratedCourses = []
-	for course in courses:
-		ratedCourse = [course]
-		course_rating = 0
-		j = 0
-		modules = Module.objects.filter(course=course)
-		if len(modules) > 0:
-			for module in modules:
-				avg_rating = 0
-				i = 0
-				ratings = Rating.objects.filter(module=module)
-				if len(ratings) > 0:
-					for rating in ratings:
-						avg_rating = avg_rating + int(str(rating))
-						i = i+1
-					avg_rating = avg_rating/i
-					course_rating = course_rating + avg_rating
-					j = j+1
-				else:
-					continue
-			if j>0:
-				course_rating = course_rating/j
-			else:
-				course_rating = "No Ratings"
-			ratedCourse.append(course_rating)
-			ratedCourse.append(str(course.university).replace(' ', '_'))
-			ratedCourse.append(str(course).replace(' ', '_'))
-			ratedCourses.append(ratedCourse)
+	## Get n most recent rows from tables and add to the context dict
+	dbHelper.getRecentRows(context_dict, Rating, 'ratings', 10)
+	dbHelper.getRecentRows(context_dict, Comment, 'comments', 10)
+
+	## Get all the courses in the db and their ratings, then sort them by their ratings
+	ratedCourses = dbHelper.getAllCourseRatings()
+	## Sorts all elements in the list using the element at index 1 of each inner list(the rating)
 	ratedCourses.sort(key=itemgetter(1))
-	ratedCourses.reverse()
-	topFive = ratedCourses[:5]
-	bottomFive = ratedCourses[:-6:-1]
+	## Sort will sort from low to high so we select the last 5 elements as the top 5 and first 5 as the botttom 5
+	topFive = ratedCourses[:-6:-1]
+	bottomFive = ratedCourses[:5]
 	
 	context_dict['topfive'] = topFive
 	context_dict['bottomfive'] = bottomFive
-		
-	# Return a rendered response to send to the client.
-	# We make use of the shortcut function to make our lives easier.
-	# Note that the first parameter is the template we wish to use.
+
 	return render_to_response('ratethiscourse/index.html', context_dict, context)
 
 def register(request):
-
 	context = RequestContext(request)
 
 	#boolean for telling the template whether the registration was successful
@@ -149,7 +90,6 @@ def register(request):
 	return render_to_response('ratethiscourse/register.html', {'user_form':user_form, 'profile_form':profile_form, 'registered':registered}, context)
 
 def validate_user(request):
-	
 	context = RequestContext(request)
 	context_dict = {}
 	
@@ -176,7 +116,6 @@ def validate_user(request):
 		return render_to_response('ratethiscourse/validate_user.html', context_dict, context)
 	
 def resend_validation_email(request):
-	
 	context = RequestContext(request)
 	context_dict = {}
 	
@@ -199,8 +138,8 @@ def resend_validation_email(request):
 	return render_to_response('ratethiscourse/resend_validation_email.html', context_dict, context)
 	
 def user_login(request):
-	
 	context = RequestContext(request)
+	
 	if request.method == 'POST':
 		
 		form = LoginForm(request.POST)
@@ -234,7 +173,6 @@ def user_logout(request):
 	return HttpResponseRedirect('/ratethiscourse/')     
 
 def universities(request):
-	
 	context = RequestContext(request)
 	context_dict = {}
 	
@@ -250,130 +188,81 @@ def universities(request):
 	
 
 def university(request, uni_name_url):
-	# Request our context from the request passed to us.
 	context = RequestContext(request)
+	context_dict = {}
 
 	# Change underscores in the category name to spaces.
 	# URLs don't handle spaces well, so we encode them as underscores.
 	# We can then simply replace the underscores with spaces again to get the name.
 	uni_name = uni_name_url.replace('_', ' ')
 
-	# Create a context dictionary which we can pass to the template rendering engine.
-	# We start by containing the name of the category passed by the user.
-	context_dict = {'uni_name': uni_name}
+	context_dict['uni_name'] = uni_name
 	context_dict['uni_name_url'] = uni_name_url
 
 	try:
-		# Can we find a category with the given name?
-		# If we can't, the .get() method raises a DoesNotExist exception.
-		# So the .get() method returns one model instance or raises an exception.
 		university = University.objects.get(name=uni_name)
-
-		# Retrieve all of the associated pages.
-		# Note that filter returns >= 1 model instance.
-		courseList = []
-		for course in Course.objects.filter(university=university):
-			details = [str(course)]
-			details.append(str(course).replace(' ', '_'))
-			courseList.append(details)
+		## Get all ratings for the courses at the university
+		ratedCourses = dbHelper.getUniCourseRatings(university)
 			
-		courses = Course.objects.filter(university=university)
-		ratedCourses = []
-		for course in courses:
-			ratedCourse = [course]
-			ratedCourse.append(str(course).replace(' ', '_'))
-			course_rating = 0
-			j = 0
-			modules = Module.objects.filter(course=course)
-			if len(modules) > 0:
-				for module in modules:
-					avg_rating = 0
-					i = 0
-					ratings = Rating.objects.filter(module=module)
-					if len(ratings) > 0:
-						for rating in ratings:
-							avg_rating = avg_rating + int(str(rating))
-							i = i+1
-						avg_rating = avg_rating/i
-						course_rating = course_rating + avg_rating
-						j = j+1
-					else:
-						continue
-				if j>0:
-					course_rating = course_rating/j
-				else:
-					course_rating = "No ratings"
-			else:
-				course_rating = "No ratings"
-			ratedCourse.append(course_rating)
-			ratedCourses.append(ratedCourse)
-			
-		# Adds our results list to the template context under name pages.
 		context_dict['courses'] = ratedCourses
-		# We also add the category object from the database to the context dictionary.
-		# We'll use this in the template to verify that the category exists.
 		context_dict['university'] = university
 	except University.DoesNotExist:
-		# We get here if we didn't find the specified category.
-		# Don't do anything - the template displays the "no category" message for us.
 		pass
 
-	# Go render the response and return it to the client.
 	return render_to_response('ratethiscourse/university.html', context_dict, context)
 
 def course(request, uni_name_url, course_name_url):
-	
 	context = RequestContext(request)
+	context_dict = {}
+	
 	course_name = course_name_url.replace('_', ' ')
 	uni_name = uni_name_url.replace('_', ' ')
-	context_dict = {'uni_name': uni_name, 'course_name': course_name, 'uni_name_url': uni_name_url, 'course_name_url': course_name_url}
+	context_dict['uni_name'] = uni_name, 
+	context_dict['course_name'] = course_name 
+	context_dict['uni_name_url'] = uni_name_url
+	context_dict['course_name_url'] = course_name_url
 	
 	
 	uni = University.objects.get(name=uni_name)
 	course = Course.objects.get(name=course_name, university=uni)
-	
-	modules = []
-	for module in Module.objects.filter(university=uni, course=course):
-		ratingList = [str(module)]
-		ratingList.append(str(module).replace(' ', '_'))
-		ratings = Rating.objects.filter(module=module)
-		if len(ratings) > 0:
-			avg_rating = 0.0
-			i = 0
-			for rating in ratings:
-				avg_rating = avg_rating + int(str(rating))
-				i = i+1
-			avg_rating = avg_rating/i
-			ratingList.append(avg_rating)
-		else:
-			ratingList.append("No Ratings")
-		modules.append(ratingList)
+	## Get all the ratings for each module in the course at the uni
+	modules = dbHelper.getCourseRatings(uni, course)
 	context_dict['modules'] = modules
+	
 	return render_to_response('ratethiscourse/course.html', context_dict, context)
 	
 def module(request, uni_name_url, course_name_url, module_name_url):
 	
 	context = RequestContext(request)
+	context_dict = {}
+	
 	module_name = module_name_url.replace('_', ' ')
 	course_name = course_name_url.replace('_', ' ')
 	uni_name = uni_name_url.replace('_', ' ')
-	context_dict = {'uni_name': uni_name, 'course_name': course_name, 'module_name': module_name, 'uni_name_url': uni_name_url, 'course_name_url': course_name_url, 'module_name_url': module_name_url}
+	context_dict['uni_name'] = uni_name
+	context_dict['course_name'] = course_name
+	context_dict['module_name'] = module_name
+	context_dict['uni_name_url'] = uni_name_url
+	context_dict['course_name_url'] = course_name_url
+	context_dict['module_name_url'] = module_name_url
 	
 	uni = University.objects.get(name=uni_name)
 	course = Course.objects.get(name=course_name, university=uni)
 	module = Module.objects.get(name=module_name, course=course, university=uni)
 	context_dict['module'] = module
 	user = request.user
+	
+	## Check if user is logged in
 	if not user.is_anonymous():
 		userprofile = UserProfile.objects.get(user=user)
 		context_dict['userprofile'] = userprofile
+		
 		auth = str(userprofile.course) == course_name
 		context_dict['auth'] = auth
 	else:
 		context_dict['auth'] = False
 	
 	if request.method == 'POST':
-		
 		commentform = CommentForm(request.POST)
 		ratingform =  RatingForm(request.POST)
 
@@ -402,21 +291,10 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	
 	comments = Comment.objects.filter(module=module)
 	context_dict['comments'] = comments
-	
-	ratings = Rating.objects.filter(module=module)
-	if len(ratings) > 0:
-		avg_rating = 0.0
-		i = 0
-		for rating in ratings:
-			avg_rating = avg_rating + int(str(rating))
-			i = i+1
-		avg_rating = avg_rating/i
-		context_dict['rating'] = avg_rating
-	else:
-		context_dict['rating'] = "No Ratings"
-	
+	context_dict['rating'] = dbHelper.getModuleRating(module)
 	context_dict['comment_form'] = commentform
 	context_dict['rating_form'] = ratingform
+	
 	return render_to_response('ratethiscourse/module.html', context_dict, context)
 	
 def add_course(request):
@@ -499,7 +377,6 @@ def change_course(request):
 			context_dict['success'] = True
 		else:
 			context_dict['success'] = False
-			print userprofileform.errors
 	
 	else:
 		context_dict['posted'] = False
