@@ -1,15 +1,18 @@
 {% extends 'ratethiscourse/base.html' %}
-
+{% load static %}
 {% block title %}Index{% endblock %}
 
 {% block body_block %}
     <div class="jumbotron">
-        <h1> Welcome </h1>
-        <p> // put stuff here about the website, and how to use it and prerequisites \\ </p>
+     
+	  <p>  <font color="FFFFFF" size="24"> Welcome</font>
+	   	   </p>
+     
     </div>
+	
     <div class="row">
         <div class="col-lg-4">
-            <h1>Latest Ratings</h1>
+            <h3>Latest Ratings</h3>
             <table class="table table-striped">
                 <tr>
                     <th> Rating </th>
@@ -30,11 +33,11 @@
             </table>
         </div>
         <div class="col-lg-4">
-            <h1>Latest Comments</h1>
+            <h3>Latest Comments</h3>
             <table class="table table-striped">
-                <tr>
-                    <th> Comment </th>
-                    <th> Module </th>
+                <tr align="center">
+                    <th align="center"> Comment </th>
+                    <th align="center"> Module </th>
                 </tr>
                 {% for comment in comments %}
                 <tr>
@@ -51,11 +54,13 @@
             </table>
         </div>
         <div class="col-lg-4">
-            <h1>Top Rated Courses</h1>
+		 <div class="carousel">
+            <h3>Top Rated Courses</h3>
+			</div>
             <table class="table table-striped">
                 <tr>
                     <th> Course </th>
-                    <th> Avg Rating </th>
+                    <th> Average Rating </th>
                 </tr>
                 {% for top in topfive %}
                 <tr>
@@ -63,12 +68,13 @@
                     <td>{{ top.1 }}</td>
                 </tr>
                 {% endfor %}
+	
             </table>
-            <h1>Worst Rated Courses</h1>
+            <h3>Worst Rated Courses</h3>
             <table class="table table-striped">
                 <tr>
                     <th> Course </th>
-                    <th> Avg Rating </th>
+                    <th> Average Rating </th>
                 </tr>
                 {% for bottom in bottomfive %}
                 <tr>
