@@ -1,37 +1,33 @@
 {% extends 'ratethiscourse/base.html' %}
 {% load static %}
 {% block title %}Universities{% endblock %}
-
 {% block body_block %}
 <!--  <div class="container-fluid" style="background-color:#55ACEE;">
-         
-	<ul class="nav navbar-nav navbar-left nav-fixed-top" style="margin-left:5px; margin-right:5px;">
-		<li>	<img src="{% static 'avatar3.png' %}" alt="Rate This Course" class="img-rounded"></li>
-		   {% if user.is_authenticated %}
-  <li><h3 style="color:white;"><strong> This is page shows all the universities in the system<p><p><h4> Pick a university </h4></strong></h3></li>
-<!--<li><h3 style="color:white;"><strong> Welcome back <strong style="color:black;"> {{ user.get_username }}</strong><p><p><h4> Hope you are doing well.<p> Time to rate some courses ;)</h4></strong></h3></li>
-	
-	{% else %}
-	    <li><h3 style="color:white;"><strong> Welcome to Rate This Course<p><p><h4>Here you can rate courses from your university <p> Register today and let the rating begin :) </h4></strong></h3></li>
- {% endif %}
-	</ul>
-	</div>  
-
-<p>	-->	
-  <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-
-<ol class="breadcrumb">
-    <li><a href="/ratethiscourse/">Home</a></li>
-    <li class="active">Universities</li>
-</ol>
-	<div class="list-group">
-	{% for university in universities %}
-    			<a href="/ratethiscourse/university/{{university.1}}/" class="list-group-item"> 
-    				<h4> {{ university.0.name }} <small> {{ university.0.location }} </small> </h4>
-    			</a>
-	{% endfor %}
-	</div>
-	</div>
-
+    <ul class="nav navbar-nav navbar-left nav-fixed-top" style="margin-left:5px; margin-right:5px;">
+    	<li>	<img src="{% static 'avatar3.png' %}" alt="Rate This Course" class="img-rounded"></li>
+    	   {% if user.is_authenticated %}
+     <li><h3 style="color:white;"><strong> This is page shows all the universities in the system<p><p><h4> Pick a university </h4></strong></h3></li>
+    <!--<li><h3 style="color:white;"><strong> Welcome back <strong style="color:black;"> {{ user.get_username }}</strong><p><p><h4> Hope you are doing well.<p> Time to rate some courses ;)</h4></strong></h3></li>
+    
+    {% else %}
+        <li><h3 style="color:white;"><strong> Welcome to Rate This Course<p><p><h4>Here you can rate courses from your university <p> Register today and let the rating begin :) </h4></strong></h3></li>
+    {% endif %}
+    </ul>
+    </div>  
+    
+    <p>	-->	
+<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+    border-radius: 5px;">
+    <ol class="breadcrumb">
+        <li><a href="/ratethiscourse/">Home</a></li>
+        <li class="active">Universities</li>
+    </ol>
+    <div class="list-group">
+        {% for university in universities %}
+        <a href="/ratethiscourse/university/{{university.1}}/" class="list-group-item">
+            <h4> {{ university.0.name }} <small> {{ university.0.location }} </small> </h4>
+        </a>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

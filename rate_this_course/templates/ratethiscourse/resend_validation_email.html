@@ -1,32 +1,27 @@
 {% extends 'ratethiscourse/base.html' %}
-
 {% block title %}Add Course{% endblock %}
-
 {% block body_block %}
-
 {% load bootstrap %}
 {% load static %}
-
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li class="active">Resend Validation Email</li>
 </ol>
 <h1> Resend Validation Email </h1>
-        {% if userauth == "anon" %}
-            <div class="alert alert-warning">
-                Please sign in to resend a verification email.
-            </div>
-        {% else %}
-    	   {% if not sent %}
-                <div class="alert alert-warning">
-                	You are already verified, you do not need to reverify.
-                </div>
-    	   {% elif sent %}
-                <div class="alert alert-success">Verification email resent</div>
-    	   {% endif %}
-        {% endif %}
+{% if userauth == "anon" %}
+<div class="alert alert-warning">
+    Please sign in to resend a verification email.
+</div>
+{% else %}
+{% if not sent %}
+<div class="alert alert-warning">
+    You are already verified, you do not need to reverify.
+</div>
+{% elif sent %}
+<div class="alert alert-success">Verification email resent</div>
+{% endif %}
+{% endif %}
 {% endblock %}
-
 {% block page_specific_javascript %}
-    <script src="{% static 'js/ratethiscourse_block_submit_button.js' %}"></script>
+<script src="{% static 'js/ratethiscourse_block_submit_button.js' %}"></script>
 {% endblock %}

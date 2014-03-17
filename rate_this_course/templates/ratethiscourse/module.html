@@ -1,107 +1,110 @@
 {% extends 'ratethiscourse/base.html' %}
-
 {% block title %}{{module_name}}{% endblock %}
-
 {% block body_block %}
-
 {% load bootstrap %}
- <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<ol class="breadcrumb">
-    <li><a href="/ratethiscourse/">Home</a></li>
-    <li><a href="/ratethiscourse/university/">Universities</a></li>
-    <li><a href="/ratethiscourse/university/{{uni_name_url}}/">{{uni_name}}</a></li>
-    <li><a href="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}">{{course_name}}</a></li>
-    <li class="active">{{module_name}}</li>
-</ol>
-
-{% if not module_name %}
+<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+    border-radius: 5px;">
+    <ol class="breadcrumb">
+        <li><a href="/ratethiscourse/">Home</a></li>
+        <li><a href="/ratethiscourse/university/">Universities</a></li>
+        <li><a href="/ratethiscourse/university/{{uni_name_url}}/">{{uni_name}}</a></li>
+        <li><a href="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}">{{course_name}}</a></li>
+        <li class="active">{{module_name}}</li>
+    </ol>
+    {% if not module_name %}
     <div style="color: red;">The specified category does not exist!</div>
-{% else %}
- <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">
- {{ module_name }}</h3>
-      </div></div>
-	  <div class="panel panel-default">
-	 <div class="panel-heading">
-              <h3 class="panel-title">Description </h3>
-            </div>
-            <div class="panel-body">
-			{{ module.description }}
-			</div>
-</div>
-	  <table class="table table-striped">
-  <tr>
-         <td>    <h4> <strong>Code</strong> </h4> </td>
-     <td>      <h4> {{ module.code }} </h4> </td>  </tr>
-   <tr>
-         <td>    <h4> <strong>Year</strong> </h4></td>
-
-         <td>    <h4> {{ module.year }}</h4></td></tr>
- 
-     <tr>
-          <td>   <h4> <strong>Lecturer</strong> </h4></td>
-        
-         <td>    <h4> {{ module.lecturer }}</h4></td></tr>
- 		    
-    <tr>
-         <td>    <h4>  <strong>Average Rating </strong></h4></td>
-        
-         <td>    <h4> {{ rating }}</h4></td></tr>
- 
-   
-	    </table>
-	
-	
-    {% if user.is_authenticated %}
-        {% if userprofile.isActive and auth %}
-            <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
-                
-
-                {% csrf_token %}
-                {% for hiddenrating in rating_form.hidden_fields %}
-                    {{ hiddenrating }}
-                {% endfor %}
-
-                {% for hiddencomment in comment_form.hidden_fields %}
-                    {{ hiddencomment }}
-                {% endfor %}
-                
-                {% for fieldcomment in comment_form.visible_fields %}
-                <div class="form-group">
-                    {{ fieldcomment|bootstrap }}
-                </div>
-                {% endfor %}
-                
-                <input id="rating-system" type="number" class="rating" min="1" max="5" step="1" name="value">
-                <br>
-                <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
-            </form> 
-        {% elif not auth %}
-            <div class="alert alert-warning">
-                You cannot comment on courses you are not part of.
-            </div> 
-        {% else %}
-            <div class="alert alert-warning">
-                You must be verified to add comments or ratings. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
-            </div> 
-        {% endif %}
     {% else %}
-        <div class="alert alert-warning">
-            You must be signed in to comment or rate.
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{ module_name }}
+            </h3>
         </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Description </h3>
+        </div>
+        <div class="panel-body">
+            {{ module.description }}
+        </div>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <td>
+                <h4> <strong>Code</strong> </h4>
+            </td>
+            <td>
+                <h4> {{ module.code }} </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> <strong>Year</strong> </h4>
+            </td>
+            <td>
+                <h4> {{ module.year }}</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> <strong>Lecturer</strong> </h4>
+            </td>
+            <td>
+                <h4> {{ module.lecturer }}</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>  <strong>Average Rating </strong></h4>
+            </td>
+            <td>
+                <h4> {{ rating }}</h4>
+            </td>
+        </tr>
+    </table>
+    {% if user.is_authenticated %}
+    {% if userprofile.isActive and auth %}
+    <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
+        {% csrf_token %}
+        {% for hiddenrating in rating_form.hidden_fields %}
+        {{ hiddenrating }}
+        {% endfor %}
+        {% for hiddencomment in comment_form.hidden_fields %}
+        {{ hiddencomment }}
+        {% endfor %}
+        {% for fieldcomment in comment_form.visible_fields %}
+        <div class="form-group">
+            {{ fieldcomment|bootstrap }}
+        </div>
+        {% endfor %}
+        <input id="rating-system" type="number" class="rating" min="1" max="5" step="1" name="value">
+        <br>
+        <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+    </form>
+    {% elif not auth %}
+    <div class="alert alert-warning">
+        You cannot comment on courses you are not part of.
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        You must be verified to add comments or ratings. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="alert alert-warning">
+        You must be signed in to comment or rate.
+    </div>
     {% endif %}
     <h2> Comments </h2>
     <div class="list-group">
-    {% for comment in comments %}
+        {% for comment in comments %}
         <li class="list-group-item"> {{ comment }} </li>
-    {% endfor %}
+        {% endfor %}
     </div>
-{% endif %}
-  </div>
+    {% endif %}
+</div>
 {% endblock %}
-
 {% block page_specific_javascript %}
-    <script src="bootstrap-rating-input.min.js"></script>
+<script src="bootstrap-rating-input.min.js"></script>
 {% endblock %}

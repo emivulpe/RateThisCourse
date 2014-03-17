@@ -1,40 +1,35 @@
 {% extends 'ratethiscourse/base.html' %}
-
 {% block title %} Sign Up {% endblock %}
-
 {% block body_block %}
-
 {% load bootstrap %}
 {% load static %}
- <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<ol class="breadcrumb">
-    <li><a href="/ratethiscourse/">Home</a></li>
-    <li class="active">Register</li>
-</ol>
- 
-<h1>Register with Rate This Course</h1>
-	{% if registered %}
-	<div class="alert alert-success"> Registration Successful, please check your email to verify your account </div>
-	<a href "/ratethiscourse/">Return to homepage.</a><br />
-	{% else %}
-	<div class="alert alert-info"> Please provide a valid email address as a verification email will be sent to this address and you will not be able to add ratings or comments until it is verified. </div>
-	<div class="row">
-	<form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data" class="form-horizontal">
-		{% csrf_token %}
-		<div class="col-lg-5 col-lg-offset-1">
-		{{ user_form|bootstrap_horizontal }}
-		{{ profile_form|bootstrap_horizontal }}
-		<!-- provide submit button -->
-		<input type="submit" name="submit" value="Register" class="btn btn-primary"/>
-		</div>
-	</form>
-	</div>
-{% endif %}
+<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+    border-radius: 5px;">
+    <ol class="breadcrumb">
+        <li><a href="/ratethiscourse/">Home</a></li>
+        <li class="active">Register</li>
+    </ol>
+    <h1>Register with Rate This Course</h1>
+    {% if registered %}
+    <div class="alert alert-success"> Registration Successful, please check your email to verify your account </div>
+    <a href "/ratethiscourse/">Return to homepage.</a><br />
+    {% else %}
+    <div class="alert alert-info"> Please provide a valid email address as a verification email will be sent to this address and you will not be able to add ratings or comments until it is verified. </div>
+    <div class="row">
+        <form id="user_form" method="post" action="/ratethiscourse/register/" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <div class="col-lg-5 col-lg-offset-1">
+                {{ user_form|bootstrap_horizontal }}
+                {{ profile_form|bootstrap_horizontal }}
+                <!-- provide submit button -->
+                <input type="submit" name="submit" value="Register" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
-
 {% block page_specific_javascript %}
-	<script src="{% static 'js/ratethiscourse_uni_course_dropdown_validation.js' %}"></script>
-	<script src="{% static 'js/ratethiscourse_block_submit_button.js' %}"></script>
+<script src="{% static 'js/ratethiscourse_uni_course_dropdown_validation.js' %}"></script>
+<script src="{% static 'js/ratethiscourse_block_submit_button.js' %}"></script>
 {% endblock %}

@@ -1,33 +1,27 @@
 {% extends 'ratethiscourse/base.html' %}
-
 {% block title %} Sign In {% endblock %}
-
 {% block body_block %}
-
 {% load bootstrap %}
- <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<ol class="breadcrumb">
-    <li><a href="/ratethiscourse/">Home</a></li>
-    <li class="active">Sign In</li>
-</ol>
- 
-<h1>Login to Rate This Course</h1>
-	<form id = "login_form" method="post" action = "/ratethiscourse/login/" class="form-horizontal">
-		{% csrf_token %}
-		{% for hidden in form.hidden_fields %}
-            {{ hidden }}
+<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+    border-radius: 5px;">
+    <ol class="breadcrumb">
+        <li><a href="/ratethiscourse/">Home</a></li>
+        <li class="active">Sign In</li>
+    </ol>
+    <h1>Login to Rate This Course</h1>
+    <form id = "login_form" method="post" action = "/ratethiscourse/login/" class="form-horizontal">
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+        {{ hidden }}
         {% endfor %}
-        
-		{% for field in form.visible_fields %}
-		<div class="form-group">
-			<div class="col-lg-5 col-lg-offset-1">
-				{{ field|bootstrap_horizontal }}
-			</div>
-		</div>
-		{% endfor %}
-
-		<input type = "submit" value="Sign In" class="btn btn-primary"/>
-	</form>
-	</div>
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <div class="col-lg-5 col-lg-offset-1">
+                {{ field|bootstrap_horizontal }}
+            </div>
+        </div>
+        {% endfor %}
+        <input type = "submit" value="Sign In" class="btn btn-primary"/>
+    </form>
+</div>
 {% endblock %}

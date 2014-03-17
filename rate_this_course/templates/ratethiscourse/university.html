@@ -1,56 +1,53 @@
 {% extends 'ratethiscourse/base.html' %}
 {% load static %}
 {% block title %}{{uni_name}}{% endblock %}
-
 {% block body_block %}
- <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<ol class="breadcrumb">
-    <li><a href="/ratethiscourse/">Home</a></li>
-    <li><a href="/ratethiscourse/university/">Universities</a></li>
-    <li class="active">{{uni_name}}</li>
-</ol>
-
-     		<img src="{% static '' %}{{ uni_name_url }}_Logo.jpg" alt="Rate This Course" class="img"style="background-color:black; margin-right:5px; margin-left:5px;">
-      <br>
-			<div class="panel panel-info">
- 
-            <div class="panel-heading">
-              <h3 class="panel-title">Description </h3>
-            </div>
-            <div class="panel-body">
-            {{ university.description }}
-            </div>
-          </div>
-		   <div class="panel panel-info">
- 
-            <div class="panel-heading">
-              <h3 class="panel-title">Degrees</h3> </div>
-     <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-    {% if university %}
-        {% if courses %}
-        <div class="list-group">
-            {% for course in courses %}
-            <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.1 }}/" class="list-group-item">
-                <h4>
-                    {{ course.0 }}
-                    <span class="badge">{{course.2}}/5</span> 
-                </h4>
-            </a>
-            {% endfor %}
+<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+    border-radius: 5px;">
+    <ol class="breadcrumb">
+        <li><a href="/ratethiscourse/">Home</a></li>
+        <li><a href="/ratethiscourse/university/">Universities</a></li>
+        <li class="active">{{uni_name}}</li>
+    </ol>
+    <img src="{% static '' %}{{ uni_name_url }}_Logo.jpg" alt="Rate This Course" class="img"style="background-color:black; margin-right:5px; margin-left:5px;">
+    <br>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Description </h3>
         </div>
-        {% else %}
+        <div class="panel-body">
+            {{ university.description }}
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Degrees</h3>
+        </div>
+        <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+            border-radius: 5px;">
+            {% if university %}
+            {% if courses %}
+            <div class="list-group">
+                {% for course in courses %}
+                <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.1 }}/" class="list-group-item">
+                    <h4>
+                        {{ course.0 }}
+                        <span class="badge">{{course.2}}/5</span> 
+                    </h4>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
             <div class="alert alert-warning">
                 No courses currently in {{ uni_name }}.
             </div>
-        {% endif %}
-    {% else %}
-    <div class="alert alert-danger">
-        The specified university, {{ uni_name }}, does not exist!
+            {% endif %}
+            {% else %}
+            <div class="alert alert-danger">
+                The specified university, {{ uni_name }}, does not exist!
+            </div>
+            {% endif %}
+        </div>
     </div>
-    {% endif %}
-  </div>
-  </div>
-  </div>
+</div>
 {% endblock %}

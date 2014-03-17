@@ -1,54 +1,45 @@
 {% extends 'ratethiscourse/base.html' %}
-
 {% block title %}Add Course{% endblock %}
-
 {% block body_block %}
-
 {% load bootstrap %}
 {% load static %}
- <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<ol class="breadcrumb">
-    <li><a href="/ratethiscourse/">Home</a></li>
-    <li class="active">Add Degree</li>
-</ol>
-
-<h1> Add a new degree </h1>
-        {% if userprofile.isActive %}
-        	{% if not name %}
-                <div class="alert alert-warning">
-                    The course addition was unsuccessful
-                </div>
-    		{% elif name == "NotPosted" %}
-        	
-        	{% else %}
-                <div class="alert alert-success">The course addition was successful</div>
-        	{% endif %}
-
-        	 <form id="add_course_form" method="post" action="/ratethiscourse/add_course/" class="form-horizontal">
-
-                    {% csrf_token %}
-                    {% for hidden in courseform.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
-
-                    {% for field in courseform.visible_fields %}
-                    <div class="form-group">
-                        <div class="col-lg-6 col-lg-offset-1">
-                        {{ field|bootstrap_horizontal }}
-                        </div>
-                    </div>
-                    {% endfor %}    
-                    <input type="submit" name="submit" value="Add Course" class="btn btn-primary"/>
-                </form>
-        {% else %}
-            <div class="alert alert-warning">
-                You must be verified to add courses. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
+<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+    border-radius: 5px;">
+    <ol class="breadcrumb">
+        <li><a href="/ratethiscourse/">Home</a></li>
+        <li class="active">Add Degree</li>
+    </ol>
+    <h1> Add a new degree </h1>
+    {% if userprofile.isActive %}
+    {% if not name %}
+    <div class="alert alert-warning">
+        The course addition was unsuccessful
+    </div>
+    {% elif name == "NotPosted" %}
+    {% else %}
+    <div class="alert alert-success">The course addition was successful</div>
+    {% endif %}
+    <form id="add_course_form" method="post" action="/ratethiscourse/add_course/" class="form-horizontal">
+        {% csrf_token %}
+        {% for hidden in courseform.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        {% for field in courseform.visible_fields %}
+        <div class="form-group">
+            <div class="col-lg-6 col-lg-offset-1">
+                {{ field|bootstrap_horizontal }}
             </div>
-        {% endif %}
-		</div>
+        </div>
+        {% endfor %}    
+        <input type="submit" name="submit" value="Add Course" class="btn btn-primary"/>
+    </form>
+    {% else %}
+    <div class="alert alert-warning">
+        You must be verified to add courses. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
-
 {% block page_specific_javascript %}
-    <script src="{% static 'js/ratethiscourse_user_uni_validation.js' %}"></script>
+<script src="{% static 'js/ratethiscourse_user_uni_validation.js' %}"></script>
 {% endblock %}

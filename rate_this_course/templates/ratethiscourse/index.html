@@ -1,134 +1,140 @@
 {% extends 'ratethiscourse/base.html' %}
 {% load static %}
 {% block title %}Index{% endblock %}
-
 {% block body_block %}
-   <div class="jumbotron" style="background-color:white;">
-        <h1>Welcome to Rate This Course</h1>
-        <p> If you want to start rating courses and writing comments, you must register for the website. </p>
-        <p> However, feel free to browse ratings and see what other students have to say about different degrees or courses. </p>
-        <p> If the degree you are doing isn't listed when signing up, leave the degree box blank. Once you have verified your email and signed in you can click the Add Degree button from the navbar to add your degree, then Change Degree to assign yourself to that degree. Then you can start adding courses in that degree and rating them!</p>
+<div class="jumbotron" style="background-color:white;">
+    <h1>Welcome to Rate This Course</h1>
+    <p> If you want to start rating courses and writing comments, you must register for the website. </p>
+    <p> However, feel free to browse ratings and see what other students have to say about different degrees or courses. </p>
+    <p> If the degree you are doing isn't listed when signing up, leave the degree box blank. Once you have verified your email and signed in you can click the Add Degree button from the navbar to add your degree, then Change Degree to assign yourself to that degree. Then you can start adding courses in that degree and rating them!</p>
+</div>
+<!-- <div class="container-fluid" style="background-color:#55ACEE;">
+    <ul class="nav navbar-nav navbar-left nav-fixed-top" style="margin-left:5px; margin-right:5px;">
+        <li>    <img src="{% static 'avatar2.png' %}" alt="Rate This Course" class="img-rounded"></li>
+           {% if user.is_authenticated %}
+     <li><h3 style="color:white;"><strong> Welcome back friend<p><p><h4> Hope you are doing well.<p> Time to rate some courses ;)</h4></strong></h3></li>
+    <!--<li><h3 style="color:white;"><strong> Welcome back <strong style="color:black;"> {{ user.get_username }}</strong><p><p><h4> Hope you are doing well.<p> Time to rate some courses ;)</h4></strong></h3></li>
+    
+    {% else %}
+        <li><h3 style="color:white;"><strong> Welcome to Rate This Course<p><p><h4>Here you can rate courses from your university <p> Register today and let the rating begin :) </h4></strong></h3></li>
+    {% endif %}
+    </ul>
+    </div>          
+         <p>-->
+<div class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+                border-radius: 5px;">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <strong>Latest Ratings</strong>
+                        </h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th> Rating </th>
+                        <th> Course</th>
+                    </tr>
+                    {% for rating in ratings %}
+                    <tr>
+                        <td>
+                            {{ rating.0.value }}
+                        </td>
+                        <td>
+                            <a href="/ratethiscourse/university/{{rating.1}}/{{rating.2}}/{{rating.3}}">
+                            {{ rating.0.course }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
     </div>
-  <!-- <div class="container-fluid" style="background-color:#55ACEE;">
-         
-	<ul class="nav navbar-nav navbar-left nav-fixed-top" style="margin-left:5px; margin-right:5px;">
-		<li>	<img src="{% static 'avatar2.png' %}" alt="Rate This Course" class="img-rounded"></li>
-		   {% if user.is_authenticated %}
-  <li><h3 style="color:white;"><strong> Welcome back friend<p><p><h4> Hope you are doing well.<p> Time to rate some courses ;)</h4></strong></h3></li>
-<!--<li><h3 style="color:white;"><strong> Welcome back <strong style="color:black;"> {{ user.get_username }}</strong><p><p><h4> Hope you are doing well.<p> Time to rate some courses ;)</h4></strong></h3></li>
-	
-	{% else %}
-	    <li><h3 style="color:white;"><strong> Welcome to Rate This Course<p><p><h4>Here you can rate courses from your university <p> Register today and let the rating begin :) </h4></strong></h3></li>
- {% endif %}
-	</ul>
-	</div>          
-    	 <p>-->
-	<div class="row">
-        <div class="col-lg-4">
-		<div class="panel panel-primary">
-		  <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-            <strong>Latest Ratings</strong></h3></div></div>
-            <table class="table table-striped">
-                <tr>
-                    <th> Rating </th>
-                    <th> Course</th>
-                </tr>
-            {% for rating in ratings %}
-                <tr>
-                    <td>
-                        {{ rating.0.value }}
-                    </td>
-                    <td>
-                        <a href="/ratethiscourse/university/{{rating.1}}/{{rating.2}}/{{rating.3}}">
-                        {{ rating.0.course }}
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </table>
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-body" style="background-color:white;-moz-border-radius: 5px;
+                border-radius: 5px;">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <strong>Latest Comments</strong>
+                        </h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <tr align="center">
+                        <th align="center"> Comment </th>
+                        <th align="center"> Course </th>
+                    </tr>
+                    {% for comment in comments %}
+                    <tr>
+                        <td>
+                            {{ comment.0.message }}
+                        </td>
+                        <td>
+                            <a href="/ratethiscourse/university/{{comment.1}}/{{comment.2}}/{{comment.3}}">
+                            {{ comment.0.course }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-		</div>
-		</div>
-        <div class="col-lg-4">
-		
-		<div class="panel panel-primary">
-		  <div class="panel-body" style="background-color:white;-moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-            <strong>Latest Comments</strong></h3></div></div>
-            <table class="table table-striped">
-                <tr align="center">
-                    <th align="center"> Comment </th>
-                    <th align="center"> Course </th>
-                </tr>
-                {% for comment in comments %}
-                <tr>
-                    <td>
-                        {{ comment.0.message }}
-                    </td>
-                    <td>
-                        <a href="/ratethiscourse/university/{{comment.1}}/{{comment.2}}/{{comment.3}}">
-                        {{ comment.0.course }}
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </table>
-        </div>
-		</div>
-		</div>
-        <div class="col-lg-4">
-		 
-		<div class="panel panel-primary">
-		  <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-<div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-           <strong>Top Rated Courses</strong></h3></div></div>
-			
-            <table class="table table-striped">
-                <tr>
-                    <th> Degree:University </th>
-                    <th> Average Rating </th>
-                </tr>
-                {% for top in topfive %}
-                <tr>
-                    <td><a href="/ratethiscourse/university/{{top.2}}/{{top.3}}">{{ top.0 }}: {{ top.0.university }}</a></td>
-                    <td>{{ top.1 }}</td>
-                </tr>
-                {% endfor %}
-	
-            </table>
-			</div>
-			</div>
-			
-		<div class="panel panel-primary">
-		  <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-  border-radius: 5px;"> 
-  <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-            <strong>Worst Rated Courses</strong></h3></div></div>
-            <table class="table table-striped">
-                <tr>
-                    <th> Degree:University </th>
-                    <th> Average Rating </th>
-                </tr>
-                {% for bottom in bottomfive %}
-                <tr>
-                    <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}: {{ bottom.0.university }}</td>
-                    <td>{{ bottom.1 }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-		</div></div>
     </div>
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+                border-radius: 5px;">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <strong>Top Rated Courses</strong>
+                        </h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th> Degree:University </th>
+                        <th> Average Rating </th>
+                    </tr>
+                    {% for top in topfive %}
+                    <tr>
+                        <td><a href="/ratethiscourse/university/{{top.2}}/{{top.3}}">{{ top.0 }}: {{ top.0.university }}</a></td>
+                        <td>{{ top.1 }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+                border-radius: 5px;">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <strong>Worst Rated Courses</strong>
+                        </h3>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th> Degree:University </th>
+                        <th> Average Rating </th>
+                    </tr>
+                    {% for bottom in bottomfive %}
+                    <tr>
+                        <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}: {{ bottom.0.university }}</a></td>
+                        <td>{{ bottom.1 }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
