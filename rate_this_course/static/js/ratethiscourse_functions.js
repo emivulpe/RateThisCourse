@@ -26,45 +26,45 @@ function syncGetUniAndBlock() {
 };
 
 function asyncGetCourseAndBlock() {
-    $('#id_course option:selected').prop('selected', false);
+    $('#id_degree option:selected').prop('selected', false);
     $.get('/ratethiscourse/get_user_course/', function(data) {
         console.log(data);
-        selectAndDisableElement('#id_course', data);
+        selectAndDisableElement('#id_degree', data);
     });
 };
 
 function syncGetCourseAndBlock() {
-    $('#id_course option:selected').prop('selected', false);
+    $('#id_degree option:selected').prop('selected', false);
     $.ajax({
         url: '/ratethiscourse/get_user_course/',
         type: 'GET',
         async: false,
         success: function(data) {
             console.log(data);
-            selectAndDisableElement('#id_course', data);
+            selectAndDisableElement('#id_degree', data);
         } 
     });
 };
 
 function asyncFilterCourses() {
     var uni_id = $('#id_university').find(":selected").attr("value");
-    var $course = $("#id_course");
-    $course.prop('disabled', true);
+    var $degree = $("#id_degree");
+    $degree.prop('disabled', true);
     $.get('/ratethiscourse/get_courses/', {university_id: uni_id}, function(data) {
     	console.log("second");
     	console.log(data);
-        $course.empty();
+        $degree.empty();
         $.each(data, function(index, value) {
-            $course.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
+            $degree.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
         });
-        $course.prop('disabled', false);
+        $degree.prop('disabled', false);
     });
 };
 
 function syncFilterCourses() {
     var uni_id = $('#id_university').find(":selected").attr("value");
-    var $course = $("#id_course");
-    $course.prop('disabled', true);
+    var $degree = $("#id_degree");
+    $degree.prop('disabled', true);
     var result = null;
     $.ajax({
     	url: '/ratethiscourse/get_courses/',
@@ -73,11 +73,11 @@ function syncFilterCourses() {
         async: false,
         success: function(data) {
         	console.log(data);
-    		$course.empty();
+    		$degree.empty();
         	$.each(data, function(index, value) {
-           		$course.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
+           		$degree.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
         	});
-            $course.prop('disabled', false);
+            $degree.prop('disabled', false);
         } 
     });
     

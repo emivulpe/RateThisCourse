@@ -17,7 +17,7 @@ class University(models.Model):
     class Meta:
         verbose_name_plural = "Universities"
 
-class Course(models.Model):
+class Degree(models.Model):
 
     name = models.CharField(max_length = 128)
     
@@ -29,7 +29,7 @@ class Course(models.Model):
     class Meta:
         unique_together = ("name", "university")
         
-class Module(models.Model):
+class Course(models.Model):
     
     code = models.CharField(max_length = 32)
     name = models.CharField(max_length = 128)
@@ -38,14 +38,14 @@ class Module(models.Model):
     description = models.CharField(max_length = 1024)
 
     university = models.ForeignKey(University)
-    course = models.ForeignKey(Course)
+    degree = models.ForeignKey(Degree)
     students = models.ManyToManyField(User)
     
     def __unicode__(self):
         return self.name
     
     class Meta:
-        unique_together = ("name", "university", "course")
+        unique_together = ("name", "university", "degree")
     
     
 class UserProfile(models.Model):
@@ -54,7 +54,7 @@ class UserProfile(models.Model):
     
     user = models.OneToOneField(User)
     university = models.ForeignKey(University)
-    course = models.ForeignKey(Course, blank = True, null = True)
+    degree = models.ForeignKey(Degree, blank = True, null = True)
 
     def __unicode__(self):  
         return self.user.username
@@ -65,7 +65,7 @@ class Comment(models.Model):
     date = models.DateTimeField(default = datetime.now, blank = True)
 
     #writer = models.ForeignKey(User)
-    module = models.ForeignKey(Module) 
+    course = models.ForeignKey(Course) 
 
     def __unicode__(self):
         return self.message
@@ -76,7 +76,7 @@ class Rating(models.Model):
     date = models.DateTimeField(default = datetime.now, blank = True)
 
     #writer = models.ForeignKey(User)
-    module = models.ForeignKey(Module) 
+    course = models.ForeignKey(Course) 
 
     def __unicode__(self):
         return str(self.value)

@@ -1,5 +1,5 @@
-$("#id_course").ready(asyncGetCourseAndBlock);
+$("#id_degree").ready(asyncGetCourseAndBlock);
 
 $("form").submit(function(){
-    $("#id_course").prop('disabled', false);
+    $("#id_degree").prop('disabled', false);
 });

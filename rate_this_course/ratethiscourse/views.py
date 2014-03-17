@@ -1,11 +1,11 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response 
-from ratethiscourse.models import Course, University, Rating, Comment, Module, UserProfile
+from ratethiscourse.models import University, Rating, Comment, Course, Degree, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
-from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm, ModuleForm, LoginForm
+from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentForm, CourseForm, DegreeForm, LoginForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from operator import itemgetter
@@ -25,7 +25,7 @@ def index(request):
 	dbHelper.getRecentRows(context_dict, Comment, 'comments', 10)
 
 	## Get all the courses in the db and their ratings, then sort them by their ratings
-	ratedCourses = dbHelper.getAllCourseRatings()
+	ratedCourses = dbHelper.getAllDegreeRatings()
 	## Round ratings to 2 decimal places
 	for course in ratedCourses:
 		course[1] = round(course[1], 2)
@@ -210,7 +210,7 @@ def university(request, uni_name_url):
 	try:
 		university = University.objects.get(name=uni_name)
 		## Get all ratings for the courses at the university
-		ratedCourses = dbHelper.getUniCourseRatings(university)
+		ratedCourses = dbHelper.getUniDegreeRatings(university)
 		for course in ratedCourses:
 			course[2] = round(course[2], 2)
 			
@@ -237,9 +237,9 @@ def course(request, uni_name_url, course_name_url):
 	
 	
 	uni = University.objects.get(name=uni_name)
-	course = Course.objects.get(name=course_name, university=uni)
+	course = Degree.objects.get(name=course_name, university=uni)
 	## Get all the ratings for each module in the course at the uni
-	modules = dbHelper.getCourseRatings(uni, course)
+	modules = dbHelper.getDegreeRatings(uni, course)
 	## Round ratings to 2 decimal places
 	for module in modules:
 			module[2] = round(module[2], 2)
@@ -265,9 +265,9 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	context_dict['module_name_url'] = module_name_url
 	
 	uni = University.objects.get(name=uni_name)
-	course = Course.objects.get(name=course_name, university=uni)
-	module = Module.objects.get(name=module_name, course=course, university=uni)
-	context_dict['module'] = module
+	degree = Degree.objects.get(name=course_name, university=uni)
+	course = Course.objects.get(name=module_name, degree=degree, university=uni)
+	context_dict['module'] = course
 	user = request.user
 	
 	## Check if user is logged in
@@ -275,7 +275,7 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 		userprofile = UserProfile.objects.get(user=user)
 		context_dict['userprofile'] = userprofile
 		
-		auth = str(userprofile.course) == course_name
+		auth = str(userprofile.degree) == course_name
 		context_dict['auth'] = auth
 	else:
 		context_dict['auth'] = False
@@ -290,7 +290,7 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 		if commentform.data['message']:
 			if commentform.is_valid():
 				comment = commentform.save(commit=False)
-				comment.module = module
+				comment.course = course
 				comment.save()
 			else:
 				print commentform.errors
@@ -298,7 +298,7 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 		if ratingform.data.has_key('value'):
 			if ratingform.is_valid():
 				rating = ratingform.save(commit=False)
-				rating.module = module
+				rating.course = course
 				rating.save()
 			else:
 				print ratingform.errors
@@ -307,10 +307,10 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 		commentform = CommentForm()
 		ratingform = RatingForm()
 	
-	comments = Comment.objects.filter(module=module)
+	comments = Comment.objects.filter(course=course)
 	context_dict['comments'] = comments
 	## Round ratings to 2 decimal places
-	context_dict['rating'] = round(dbHelper.getModuleRating(module), 2)
+	context_dict['rating'] = round(dbHelper.getCourseRating(course), 2)
 	context_dict['comment_form'] = commentform
 	context_dict['rating_form'] = ratingform
 	
@@ -333,7 +333,7 @@ def add_course(request):
 		name = request.POST['name']
 		university = request.POST['university']
 		
-		courseform = CourseForm(request.POST)
+		courseform = DegreeForm(request.POST)
 		
 		if courseform.is_valid():
 			course = courseform.save()
@@ -342,7 +342,7 @@ def add_course(request):
 			print courseform.errors
 	else:
 		context_dict['name'] = 'NotPosted'
-		courseform = CourseForm()
+		courseform = DegreeForm()
 		
 	context_dict['courseform'] = courseform
 	return render_to_response('ratethiscourse/add_course.html', context_dict, context)
@@ -363,9 +363,9 @@ def add_module(request):
 
 		name = request.POST['name']
 		university = request.POST['university']
-		course = request.POST['course']
+		degree = request.POST['degree']
 		
-		moduleform = ModuleForm(request.POST)
+		moduleform = CourseForm(request.POST)
 		
 		if moduleform.is_valid():
 			module = moduleform.save()
@@ -374,7 +374,7 @@ def add_module(request):
 			print moduleform.errors
 	else:
 		context_dict['name'] = 'NotPosted'
-		moduleform = ModuleForm()
+		moduleform = CourseForm()
 		
 	context_dict['moduleform'] = moduleform
 	return render_to_response('ratethiscourse/add_module.html', context_dict, context)    
@@ -397,7 +397,7 @@ def change_course(request):
 		
 		if userprofileform.is_valid():
 			user = request.user
-			userprofile.course = userprofileform.cleaned_data['course']
+			userprofile.degree = userprofileform.cleaned_data['degree']
 			userprofile.save()
 			context_dict['success'] = True
 		else:
@@ -421,7 +421,7 @@ def get_courses(request):
 	courses = [["", "---------"]]
 	
 	if university_id:
-		for course in Course.objects.filter(university=university_id).values('id', 'name'):
+		for course in Degree.objects.filter(university=university_id).values('id', 'name'):
 			courses.append([course['id'], course['name']])
 		
 	return HttpResponse(json.dumps(courses), content_type="application/json")
@@ -436,7 +436,7 @@ def get_user_uni(request):
 def get_user_course(request):
 	context = RequestContext(request)
 	
-	course_id = ajaxGetHelper.getUserData(request, 'course')
+	course_id = ajaxGetHelper.getUserData(request, 'degree')
 		
 	return HttpResponse(course_id)
 

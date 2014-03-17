@@ -4,10 +4,10 @@
 
 {% block body_block %}
    <div class="jumbotron" style="background-color:white;">
-     
-	  <p style="color:black;">   Welcome to Rate Ths Course</p>
-	   	 
-     
+        <h1>Welcome to Rate This Course</h1>
+        <p> If you want to start rating courses and writing comments, you must register for the website. </p>
+        <p> However, feel free to browse ratings and see what other students have to say about different degrees or courses. </p>
+        <p> If the degree you are doing isn't listed when signing up, leave the degree box blank. Once you have verified your email and signed in you can click the Add Degree button from the navbar to add your degree, then Change Degree to assign yourself to that degree. Then you can start adding courses in that degree and rating them!</p>
     </div>
   <!-- <div class="container-fluid" style="background-color:#55ACEE;">
          
@@ -44,7 +44,7 @@
                     </td>
                     <td>
                         <a href="/ratethiscourse/university/{{rating.1}}/{{rating.2}}/{{rating.3}}">
-                        {{ rating.0.module }}
+                        {{ rating.0.course }}
                         </a>
                     </td>
                 </tr>
@@ -74,7 +74,7 @@
                     </td>
                     <td>
                         <a href="/ratethiscourse/university/{{comment.1}}/{{comment.2}}/{{comment.3}}">
-                        {{ comment.0.module }}
+                        {{ comment.0.course }}
                         </a>
                     </td>
                 </tr>
@@ -100,7 +100,7 @@
                 </tr>
                 {% for top in topfive %}
                 <tr>
-                    <td><a href="/ratethiscourse/university/{{top.2}}/{{top.3}}">{{ top.0 }}:{{ top.0.university }}</a></td>
+                    <td><a href="/ratethiscourse/university/{{top.2}}/{{top.3}}">{{ top.0 }}: {{ top.0.university }}</a></td>
                     <td>{{ top.1 }}</td>
                 </tr>
                 {% endfor %}
@@ -123,7 +123,7 @@
                 </tr>
                 {% for bottom in bottomfive %}
                 <tr>
-                    <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}:{{ bottom.0.university }}</td>
+                    <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}: {{ bottom.0.university }}</td>
                     <td>{{ bottom.1 }}</td>
                 </tr>
                 {% endfor %}

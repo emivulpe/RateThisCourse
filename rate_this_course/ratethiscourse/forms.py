@@ -1,5 +1,5 @@
 from django import forms
-from ratethiscourse.models import University, Course, Comment, Rating, UserProfile, Module
+from ratethiscourse.models import University, Degree, Comment, Rating, UserProfile, Course
 from django.contrib.auth.models import User
 
 class LoginForm(forms.ModelForm):
@@ -23,11 +23,11 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
 	university = forms.ModelChoiceField(queryset = University.objects.all(), required = True)
-	course = forms.ModelChoiceField(queryset = Course.objects.all(), required = False)
+	degree = forms.ModelChoiceField(queryset = Degree.objects.all(), required = False)
 	
 	class Meta:
 		model = UserProfile
-		fields = ('university', 'course', ) #must have comma after, otherwise error (weird)
+		fields = ('university', 'degree', ) #must have comma after, otherwise error (weird)
 
 class RatingForm(forms.ModelForm):
 	value = forms.ChoiceField(widget = forms.RadioSelect(), choices = ( (1, 'One Star'), (2, 'Two Stars'), (3, 'Three Stars'), (4, 'Four Stars'), (5, 'Five Stars') ), required = False)
@@ -43,22 +43,23 @@ class CommentForm(forms.ModelForm):
 		model = Comment
 		fields = ('message',)
 		
-class CourseForm(forms.ModelForm):
+class DegreeForm(forms.ModelForm):
 	name = forms.CharField(required = True)
 	university = forms.ModelChoiceField(queryset = University.objects.all(), required = True)
 	
 	class Meta:
-		model = Course
+		model = Degree
+		fields = ('name', 'university',)
 		
-class ModuleForm(forms.ModelForm):
+class CourseForm(forms.ModelForm):
 	code = forms.CharField(required = True)
 	name = forms.CharField(required = True)
 	year = forms.IntegerField(required = True)
 	lecturer = forms.CharField(required = True)
 	description = forms.CharField(widget = forms.Textarea(), required = True)
 	university = forms.ModelChoiceField(queryset = University.objects.all(), required = True)
-	course = forms.ModelChoiceField(queryset = Course.objects.all(), required = True)
+	degree = forms.ModelChoiceField(queryset = Degree.objects.all(), required = True)
 	
 	class Meta:
-		model = Module
-		fields = ('code', 'name', 'year', 'lecturer', 'description', 'university', 'course',)
+		model = Course
+		fields = ('code', 'name', 'year', 'lecturer', 'description', 'university', 'degree',)
