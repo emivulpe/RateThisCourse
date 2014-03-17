@@ -6,12 +6,14 @@
 
 {% load bootstrap %}
 {% load static %}
-
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+  border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li class="active">Register</li>
 </ol>
-<h1>Register with Rate My Course</h1>
+ 
+<h1>Register with Rate This Course</h1>
 	{% if registered %}
 	<div class="alert alert-success"> Registration Successful, please check your email to verify your account </div>
 	<a href "/ratethiscourse/">Return to homepage.</a><br />
@@ -29,6 +31,7 @@
 	</form>
 	</div>
 {% endif %}
+</div>
 {% endblock %}
 
 {% block page_specific_javascript %}

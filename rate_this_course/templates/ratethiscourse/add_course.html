@@ -6,14 +6,14 @@
 
 {% load bootstrap %}
 {% load static %}
-
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+  border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
-    <li class="active">Add Course</li>
+    <li class="active">Add Degree</li>
 </ol>
 
-    
-<h1> Add a course </h1>
+<h1> Add a new degree </h1>
         {% if userprofile.isActive %}
         	{% if not name %}
                 <div class="alert alert-warning">
@@ -46,6 +46,7 @@
                 You must be verified to add courses. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
             </div>
         {% endif %}
+		</div>
 {% endblock %}
 
 {% block page_specific_javascript %}

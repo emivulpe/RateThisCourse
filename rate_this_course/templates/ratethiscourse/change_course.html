@@ -6,12 +6,13 @@
 
 {% load bootstrap %}
 {% load static %}
-
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+  border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
-    <li class="active">Change Course</li>
+    <li class="active">Change Degree</li>
 </ol>
-<h1> Add a module </h1>
+<h1> Change Degree </h1>
         {% if userprofile.isActive %}
             {% if posted and success %}
             	<div class="alert alert-success">
@@ -45,6 +46,7 @@
                 You must be verified to change courses. Either verify your account with the link provided in your email or <a href="/ratethiscourse/resend_validation_email/">resend the validation email</a>
             </div>
         {% endif %}
+		</div>
 {% endblock %}
 
 {% block page_specific_javascript %}

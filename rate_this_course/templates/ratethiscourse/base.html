@@ -11,66 +11,111 @@
     </head>
 
     <body>
-        <div class="container">
+			
+        <div class="container" style="background-color:#55ACEE;">
+		<br>
 <!--             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4">
                     <img src="{% static 'headerLogo.png' %}" alt="Rate This Course" class="img-rounded">
                 </div>
             </div> -->
-            <div class="header">
-		
-			<div class="container">
-     
-	
-     
+			 <div class="header">
+			   
+<nav class="navbar navbar-default" role="navigation"style="background-color:white;">
+
+  <div class="container-fluid">
+  
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/ratethiscourse/"  style="color:#55ACEE;"><strong>Rate This Course</strong></a>
     </div>
-                <div class="navbar-wrapper"> 
-				  <div class="container">
-				  
-                    <ul class="nav navbar-nav navbar-left">
-					<!--	<li><img src="{% static 'small.png' %}" alt="Rate Buddy" class="img-rounded">  </li>-->
-					     <li><a href="/ratethiscourse/"class="btn btn-warning navbar-btn navbar-right"style="margin-right:5px">Home</a></li>
-                        <li><a href="/ratethiscourse/university/"class="btn btn-warning navbar-btn navbar-right"style="margin-right:5px">Universities</a></li>
+	<!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/ratethiscourse/university/">Universities</a></li>
+		  {% if user.is_authenticated %}
+                  
+        <li><a href="/ratethiscourse/add_course">Add Degree</a></li>
+		<li><a href="/ratethiscourse/add_module">Add Course</a></li>
+		<li><a href="/ratethiscourse/change_course">Change Degree</a></li>
+     <!--   <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>-->
+      </ul>
+   
+      <ul class="nav navbar-nav navbar-right">
+      <li><h5 class="nav navbar-text"style="margin-left:15px;">Signed in as<strong style="color:blue;"> {{ user.get_username }}</strong></h5> </li>
+	<li><a href="/ratethiscourse/logout/">Log Out</a>  </li>
+      </ul>
+	  
+	   {% else %}
+	     </ul>
+	     <ul class="nav navbar-nav navbar-right">
+	<li><a href="/ratethiscourse/register/">Register</a>  </li>
+	
+	<li><a href="/ratethiscourse/login/">Log in</a>  </li>
+      </ul>
+	  {% endif %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+			 
+			 
+			 	  <!--
+				   <li><a href="/ratethiscourse/university/" class="btn btn-default"style="margin-right:5px; margin-left:5px; margin-top:1px;margin-bottom:1px;">Universities</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="/ratethiscourse/add_course"class="btn btn-warning navbar-btn navbar-right"style="margin-right:5px">Add A Course</a></li>
-                        <li><a href="/ratethiscourse/add_module"class="btn btn-warning navbar-btn navbar-right"style="margin-right:5px">Add A Module</a></li>
-                        <li><a href="/ratethiscourse/change_course"class="btn btn-warning navbar-btn navbar-right"style="margin-right:5px">Change Course</a></li>
-   	  </ul>  
-   <a href="/ratethiscourse/logout/" class="btn btn-info navbar-btn navbar-right" style="margin-right:5px">Sign Out</a> 
- 
-                  <p class=" navbar-text navbar-right" style="margin-right:10px">Signed in as {{ user.get_username }}</p> 
-               
+                        <li><a href="/ratethiscourse/add_course"class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Add A Course</a></li>
+                        <li><a href="/ratethiscourse/add_module"class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Add A Module</a></li>
+                        <li><a href="/ratethiscourse/change_course"class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Change Course</a></li>
+
+					
+            
 			              
 				  
-				  <!--    <form class="navbar-form navbar-right navbar-right" style="margin-right:5px" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Search</button>
-                    </form>-->
-					 
+				    
+					  </ul>
                     {% else %}
-                    </ul>
 			
-                  <a href="/ratethiscourse/register/" class="btn btn-info navbar-btn navbar-right" style="margin-right:5px">Register</a>
-                   <a href="/ratethiscourse/login/" class="btn btn-info navbar-btn navbar-right" style="margin-right:5px">Sign In</a>
-               <!--      
+	
+                <li>  <a href="/ratethiscourse/register/" class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Register</a></li> 
+                  <li>  <a href="/ratethiscourse/login/" class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Sign In</a></li>
+   </ul>              
+			  <!--      
 				  <form class="navbar-form navbar-right " style="margin-right:5px" role="search">
                         <div class="form-group" style="margin-left:5px">
                         <input type="text" class="form-control navbar-btn btn btn-default" placeholder="Search ..."> 
                         </div>
                        <button type="submit" class="btn btn-default">Go</button>
-                    </form>-->
+                    </form>
 					
                     {% endif %}
                 </div>
 				</div>
+				
             </div>
-  
+   -->
             {% block body_block %}{% endblock %}
         
         <div class="footer">
-            <p class="text-center">&copy; Team H - University Of Glasgow 2014</p>
+		<br>
+            <p class="text-center"style="color:white;">&copy; Team H - University Of Glasgow 2014</p>
         </div>
 
         </div> <!-- /container -->
