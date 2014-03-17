@@ -14,12 +14,22 @@ class UserForm(forms.ModelForm):
 	username = forms.CharField(required = True)
 	email = forms.EmailField(required = True)
 	password = forms.CharField(widget = forms.PasswordInput(), required = True)
+	confirm_password = forms.CharField(widget = forms.PasswordInput(), required = True)
 	first_name = forms.CharField(required = True)
 	last_name = forms.CharField(required = True)
 
 	class Meta:
 		model = User
-		fields = ('username', 'email', 'password', 'first_name', 'last_name')
+		fields = ('username', 'email', 'password','confirm_password', 'first_name', 'last_name')
+	
+	def clean(self):
+		password1 = self.cleaned_data.get('password')
+		password2 = self.cleaned_data.get('confirm_password')
+
+		if password1 and password1 != password2:
+			raise forms.ValidationError("Passwords don't match")
+
+		return self.cleaned_data
 
 class UserProfileForm(forms.ModelForm):
 	university = forms.ModelChoiceField(queryset = University.objects.all(), required = True)
