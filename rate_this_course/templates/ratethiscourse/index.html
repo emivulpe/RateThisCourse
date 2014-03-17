@@ -41,7 +41,17 @@
                     {% for rating in ratings %}
                     <tr>
                         <td>
-                            {{ rating.0.value }}
+                            {% if rating.0.value == 1 %}
+                            &#9733 &#9734 &#9734 &#9734 &#9734
+                            {% elif rating.0.value == 2 %}
+                            &#9733 &#9733 &#9734 &#9734 &#9734
+                            {% elif rating.0.value == 3 %}
+                            &#9733 &#9733 &#9733 &#9734 &#9734
+                            {% elif rating.0.value == 4 %}
+                            &#9733 &#9733 &#9733 &#9733 &#9734
+                            {% elif rating.0.value == 5 %}
+                            &#9733 &#9733 &#9733 &#9733 &#9733
+                            {% endif %}
                         </td>
                         <td>
                             <a href="/ratethiscourse/university/{{rating.1}}/{{rating.2}}/{{rating.3}}">
@@ -105,7 +115,19 @@
                     {% for top in topfive %}
                     <tr>
                         <td><a href="/ratethiscourse/university/{{top.2}}/{{top.3}}">{{ top.0 }}: {{ top.0.university }}</a></td>
-                        <td>{{ top.1 }}</td>
+                        <td>
+                            {% if top.1 >= 1 and top.1 < 1.5 %}
+                            &#9733 &#9734 &#9734 &#9734 &#9734
+                            {% elif top.1 >= 1.5 and top.1 < 2.5 %}
+                            &#9733 &#9733 &#9734 &#9734 &#9734
+                            {% elif  top.1 >= 2.5 and top.1 < 3.5  %}
+                            &#9733 &#9733 &#9733 &#9734 &#9734
+                            {% elif  top.1 >= 3.5 and top.1 < 4.5 %}
+                            &#9733 &#9733 &#9733 &#9733 &#9734
+                            {% elif  top.1 >= 4.5  %}
+                            &#9733 &#9733 &#9733 &#9733 &#9733
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -128,8 +150,20 @@
                     </tr>
                     {% for bottom in bottomfive %}
                     <tr>
-                        <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}: {{ bottom.0.university }}</a></td>
-                        <td>{{ bottom.1 }}</td>
+                        <td><a href="/ratethiscourse/university/{{bottom.2}}/{{bottom.3}}">{{ bottom.0 }}: {{ bottom.0.university }}</td>
+                        <td>
+                            {% if bottom.1 >= 1 and bottom.1 < 1.5 %}
+                            &#9733 &#9734 &#9734 &#9734 &#9734
+                            {% elif bottom.1 >= 1.5 and bottom.1 < 2.5 %}
+                            &#9733 &#9733 &#9734 &#9734 &#9734
+                            {% elif  bottom.1 >= 2.5 and bottom.1 < 3.5  %}
+                            &#9733 &#9733 &#9733 &#9734 &#9734
+                            {% elif  bottom.1 >= 3.5 and bottom.1 < 4.5 %}
+                            &#9733 &#9733 &#9733 &#9733 &#9734
+                            {% elif  bottom.1 >= 4.5  %}
+                            &#9733 &#9733 &#9733 &#9733 &#9733
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>
