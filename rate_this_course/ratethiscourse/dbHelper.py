@@ -42,7 +42,7 @@ def getAllDegreeRatings():
 			if j>0:
 				degree_rating = degree_rating/j
 			else:
-				degree_rating = "No ratings"
+				degree_rating = "No Ratings"
 				
 			rateddegree.append(degree_rating)
 			rateddegree.append(str(degree.university).replace(' ', '_'))
@@ -61,6 +61,7 @@ def getUniDegreeRatings(uni):
 	degrees = Degree.objects.filter(university=uni)
 	ratedDegrees = []
 	for degree in degrees:
+		print degree
 		rateddegree = [degree]
 		degree_rating = 0
 		j = 0
@@ -75,11 +76,12 @@ def getUniDegreeRatings(uni):
 			if j>0:
 				degree_rating = degree_rating/j
 			else:
-				degree_rating = "No ratings"
-				
-			rateddegree.append(str(degree).replace(' ', '_'))
-			rateddegree.append(degree_rating)
-			ratedDegrees.append(rateddegree)
+				degree_rating = "No Ratings"
+		else:
+			degree_rating = "No Ratings"		
+		rateddegree.append(str(degree).replace(' ', '_'))
+		rateddegree.append(degree_rating)
+		ratedDegrees.append(rateddegree)
 	return ratedDegrees
 
 def getDegreeRatings(uni, degree):
@@ -100,7 +102,7 @@ def getDegreeRatings(uni, degree):
 			courseRatings.append(ratingList)
 		return courseRatings
 	else:
-		return "No ratings"
+		return "No Ratings"
 
 def getCourseRating(course):
 	""" Gets the average rating of the course.
@@ -119,4 +121,4 @@ def getCourseRating(course):
 		avg_rating = avg_rating/i
 		return avg_rating
 	else:
-		return "No ratings"
+		return "No Ratings"

@@ -32,7 +32,11 @@
                 <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.1 }}/" class="list-group-item"style="background-color:white;">
                     <h4>
                         {{ course.0 }}
+                        {% if course.2 == "No Ratings" %}
+                        <span class="badge">{{course.2}}</span>
+                        {% else %}
                         <span class="badge">{{course.2}}/5</span> 
+                        {% endif %}
                     </h4>
                 </a>
                 {% endfor %}
