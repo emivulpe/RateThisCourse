@@ -74,11 +74,7 @@
                 </div>
                 {% endfor %}
                 
-                {% for fieldrating in rating_form.value %}
-                <label class="radio-inline">
-                    {{ fieldrating }}
-                </label>
-                {% endfor %}
+                <input id="rating-system" type="number" class="rating" min="1" max="5" step="1" name="value">
                 <br>
                 <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
             </form> 
@@ -104,4 +100,8 @@
     </div>
 {% endif %}
   </div>
+{% endblock %}
+
+{% block page_specific_javascript %}
+    <script src="bootstrap-rating-input.min.js"></script>
 {% endblock %}
