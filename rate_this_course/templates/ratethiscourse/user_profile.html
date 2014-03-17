@@ -9,8 +9,27 @@
         <li><a href="/ratethiscourse/">Home</a></li>
         <li class="active">User Profile</li>
     </ol>
-    <h1> {{ user.username }} </h1>
-    <h3> Change Degree </h3>
+	<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">User Profile</h3>
+        </div>   </div>
+	<div class="container">
+
+	 
+	 <img src="{% static '' %}user.png" alt="Rate This Course"class="img" align="center" style="margin-bottom:2px;margin-top:2px;margin-left:5px;margin-right:5px;">
+
+	<h4 style="margin-left:5px;margin-right:5px;"><strong>Name:</strong>  {{ user.first_name }} {{ user.last_name }}</h4>
+	<h4 style="margin-left:5px;margin-right:5px;"><strong>E-mail:</strong>  {{ user.email }}</h4>
+	<h4 style="margin-left:5px;margin-right:5px;"><strong>Attends:</strong> The {{ userprofile.university}}</h4>
+<h4 style="margin-left:5px;margin-right:5px;"><strong>Degree:</strong> {{ userprofile.degree}}</h4>
+<br>
+</div> 
+ <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Change Degree </h3>
+        </div>    </div> 
+	
+	
     {% if userprofile.isActive %}
     {% if posted and success %}
     <div class="alert alert-success">
@@ -33,7 +52,7 @@
             </div>
         </div>
         {% endfor %}    
-        <input type="submit" name="submit" value="Change course" class="btn btn-primary"/>
+        <input type="submit" name="submit" value="Change course" class="btn btn-default"/>
     </form>
     {% else %}
     <div class="alert alert-warning">
