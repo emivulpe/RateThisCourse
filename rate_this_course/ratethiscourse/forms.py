@@ -28,7 +28,7 @@ class UserForm(forms.ModelForm):
 			return username
 		raise forms.ValidationError(u'Username "%s" is already in use.' % username)
 
-	def clean_(self):
+	def clean(self):
 		password1 = self.cleaned_data.get('password')
 		password2 = self.cleaned_data.get('confirm_password')
 
