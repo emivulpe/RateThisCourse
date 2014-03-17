@@ -12,6 +12,7 @@ from operator import itemgetter
 import dbHelper, ajaxGetHelper
 import json
 
+token_generator = PasswordResetTokenGenerator()
 
 def index(request):
 	context = RequestContext(request)
@@ -49,7 +50,6 @@ def register(request):
 
 	registered = False
 	if request.method == 'POST':
-		token_generator = PasswordResetTokenGenerator()
 		
 		user_form = UserForm(data=request.POST)
 		profile_form = UserProfileForm(data=request.POST)
@@ -65,15 +65,15 @@ def register(request):
 			profile.user = user
 			profile.isActive = False
 			profile.save()
-			
-			token = token_generator.make_token(user)
-			url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
-			
-			send_mail('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com', [user.email], fail_silently=False)
 	
 			registered = True
 			loggedInUser = authenticate(username=request.POST['username'], password=request.POST['password'])
 			login(request, loggedInUser)
+			
+			token = token_generator.make_token(user)
+			url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
+
+			send_mail('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com', [user.email], fail_silently=False)
 		else:
 			print user_form.errors, profile_form.errors
 
@@ -100,8 +100,6 @@ def validate_user(request):
 		## Check that user and token are in the url
 		if userid and token:
 			user = User.objects.get(id=userid)
-			
-			token_generator = PasswordResetTokenGenerator()
 			verify = token_generator.check_token(user, token)
 			
 			if verify:
@@ -131,7 +129,6 @@ def resend_validation_email(request):
 		return render_to_response('ratethiscourse/resend_validation_email.html', context_dict, context)
 	
 	if (userprofile.isActive == False):
-		token_generator = PasswordResetTokenGenerator()
 		token = token_generator.make_token(user)
 		url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
 		user.email_user('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com')
