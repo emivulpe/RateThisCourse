@@ -2,16 +2,17 @@
 {% load static %}
 {% block title %}{{uni_name}}{% endblock %}
 {% block body_block %}
-<div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+<div class="panel-body" style="background-color:#D52727; -moz-border-radius: 5px;
     border-radius: 5px;">
     <ol class="breadcrumb">
         <li><a href="/ratethiscourse/">Home</a></li>
         <li><a href="/ratethiscourse/university/">Universities</a></li>
         <li class="active">{{uni_name}}</li>
     </ol>
+	 <div class="panel-body" style="background-color:white; -moz-border-radius: 5px; border-radius: 5px;"> 
     <img src="{% static '' %}{{ uni_name_url }}_Logo.jpg" alt="Rate This Course" class="img"style="background-color:black; margin-right:5px; margin-left:5px;">
     <br>
-    <div class="panel panel-info">
+    <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Description </h3>
         </div>
@@ -19,17 +20,16 @@
             {{ university.description }}
         </div>
     </div>
-    <div class="panel panel-info">
-        <div class="panel-heading">
+    <div class="panel panel-info"style=" border-color:#D52727; ">
+        <div class="panel-heading"style="background-color:#D52727; color:white;border-color:#D52727; ">
             <h3 class="panel-title">Degrees</h3>
-        </div>
-        <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-            border-radius: 5px;">
+        </div>   </div>
+
             {% if university %}
             {% if courses %}
             <div class="list-group">
                 {% for course in courses %}
-                <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.1 }}/" class="list-group-item">
+                <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course.1 }}/" class="list-group-item"style="background-color:white;">
                     <h4>
                         {{ course.0 }}
                         <span class="badge">{{course.2}}/5</span> 
@@ -47,7 +47,8 @@
                 The specified university, {{ uni_name }}, does not exist!
             </div>
             {% endif %}
-        </div>
-    </div>
+  
+ 
+</div>
 </div>
 {% endblock %}

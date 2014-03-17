@@ -8,7 +8,9 @@
         <li><a href="/ratethiscourse/">Home</a></li>
         <li class="active">Sign In</li>
     </ol>
-    <h1>Login to Rate This Course</h1>
+     <div class="panel panel-default">
+            <div class="panel-heading" style="background-color:#D52727; color:white;">
+              <h3 class="panel-title">Login to Rate This Course</h3></div></div>
     <form id = "login_form" method="post" action = "/ratethiscourse/login/" class="form-horizontal">
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}

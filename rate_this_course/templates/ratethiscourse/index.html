@@ -2,12 +2,16 @@
 {% load static %}
 {% block title %}Index{% endblock %}
 {% block body_block %}
-<div class="jumbotron" style="background-color:white;">
-    <h1>Welcome to Rate This Course</h1>
-    <p> If you want to start rating courses and writing comments, you must register for the website. </p>
-    <p> However, feel free to browse ratings and see what other students have to say about different degrees or courses. </p>
-    <p> If the degree you are doing isn't listed when signing up, leave the degree box blank. Once you have verified your email and signed in you can click the Add Degree button from the navbar to add your degree, then Change Degree to assign yourself to that degree. Then you can start adding courses in that degree and rating them!</p>
-</div>
+	<div class="jumbotron" style="background-color:#D52727;color:white;">
+		<h1 align="center">Welcome to <strong style="color:black;">Rate This Course</strong></h1>
+			<div class="container">
+				<h4 align="left"> If you want to start rating courses and writing comments, you must register for the website. 
+				However, feel free to browse ratings and see what other students have to say about different degrees or courses.
+				If the degree you are doing isn't listed when signing up, leave the degree box blank.
+				Once you have verified your email and signed in you can click the <strong>Add Degree</strong> button from the navbar to add your degree,
+				then <strong>Change Degree</strong> to assign yourself to that degree. Then you can start adding courses in that degree and rating them!</h4>
+			</div>
+	</div>
 <!-- <div class="container-fluid" style="background-color:#55ACEE;">
     <ul class="nav navbar-nav navbar-left nav-fixed-top" style="margin-left:5px; margin-right:5px;">
         <li>    <img src="{% static 'avatar2.png' %}" alt="Rate This Course" class="img-rounded"></li>
@@ -23,20 +27,19 @@
          <p>-->
 <div class="row">
     <div class="col-lg-4">
-        <div class="panel panel-primary">
-            <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
-                border-radius: 5px;">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
+        <div class="panel panel-primary"style="border-color:white;">
+            <div class="panel-body" style="background-color:#D52727; -moz-border-radius: 5px; border-radius: 5px; border-color:black;">
+                <div class="panel panel-default"style="-moz-border-radius: 5px;border-radius: 5px; ">
+                    <div class="panel-heading"style="background-color:black; color:white;">
                         <h3 class="panel-title">
                             <strong>Latest Ratings</strong>
                         </h3>
                     </div>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered table-condensed"style="border-color:black">
                     <tr>
-                        <th> Rating </th>
-                        <th> Course</th>
+                        <th><h5  align="center"><strong>Rating</strong></h5></th>
+                        <th><h5  align="center"><strong>Course</strong></h5></th>
                     </tr>
                     {% for rating in ratings %}
                     <tr>
@@ -65,20 +68,20 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="panel panel-primary">
-            <div class="panel-body" style="background-color:white;-moz-border-radius: 5px;
+        <div class="panel panel-primary"style="border-color:white;">
+            <div class="panel-body" style="background-color:#D52727;-moz-border-radius: 5px;
                 border-radius: 5px;">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
+                <div class="panel panel-default">
+                    <div class="panel-heading"style="background-color:black; color:white;">
                         <h3 class="panel-title">
                             <strong>Latest Comments</strong>
                         </h3>
                     </div>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered table-condensed">
                     <tr align="center">
-                        <th align="center"> Comment </th>
-                        <th align="center"> Course </th>
+                        <th align="center"><h5  align="center"><strong>Comment</strong></h5></th>
+                        <th align="center"><h5  align="center"><strong>Course</strong></h5></th>
                     </tr>
                     {% for comment in comments %}
                     <tr>
@@ -97,20 +100,20 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="panel panel-primary">
-            <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+        <div class="panel panel-primary"style="border-color:white;">
+            <div class="panel-body" style="background-color:#D52727; -moz-border-radius: 5px;
                 border-radius: 5px;">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
+                <div class="panel panel-default">
+                    <div class="panel-heading"style="background-color:black; color:white;">
                         <h3 class="panel-title">
-                            <strong>Top Rated Courses</strong>
+                            <strong>Top Rated Degrees</strong>
                         </h3>
                     </div>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-striped  table-bordered table-condensed">
                     <tr>
-                        <th> Degree:University </th>
-                        <th> Average Rating </th>
+                        <th><h5  align="center"><strong>Degree:University</strong></h5></th>
+                        <th><h5  align="center"><strong>Average Rating</strong></h5></th>
                     </tr>
                     {% for top in topfive %}
                     <tr>
@@ -133,20 +136,20 @@
                 </table>
             </div>
         </div>
-        <div class="panel panel-primary">
-            <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+        <div class="panel panel-primary"style="border-color:white;">
+            <div class="panel-body" style="background-color:#D52727; -moz-border-radius: 5px;
                 border-radius: 5px;">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
+                <div class="panel panel-default">
+                    <div class="panel-heading"style="background-color:black; color:white;">
                         <h3 class="panel-title">
-                            <strong>Worst Rated Courses</strong>
+                            <strong>Worst Rated Degrees</strong>
                         </h3>
                     </div>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-striped  table-bordered table-condensed">
                     <tr>
-                        <th> Degree:University </th>
-                        <th> Average Rating </th>
+                        <th><h5  align="center"><strong>Degree:University</strong></h5></th>
+                        <th><h5  align="center"><strong>Average Rating</strong></h5></th>
                     </tr>
                     {% for bottom in bottomfive %}
                     <tr>
