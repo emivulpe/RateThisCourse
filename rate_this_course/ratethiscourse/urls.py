@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     url(r'^get_courses/?$', views.get_courses, name='get courses'),
     url(r'^get_user_uni/?$', views.get_user_uni, name='get user uni'),
     url(r'^get_user_course/?$', views.get_user_course, name='get user course'),
+    url(r'^ajax_login/?$', views.ajax_login, name='ajax login'),
     )

@@ -430,3 +430,24 @@ def get_user_course(request):
 	course_id = ajaxGetHelper.getUserData(request, 'course')
 		
 	return HttpResponse(course_id)
+
+def ajax_login(request):
+	context = RequestContext(request)
+	response = None
+	
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		username = form.data['username']
+		password = form.data['password']
+		
+		user = authenticate(username=username, password=password)
+
+		#if object, the details are correct
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return HttpResponse('valid')
+			else:
+				return HttpResponse('inactive')
+		else:
+			return HttpResponse('invalid')

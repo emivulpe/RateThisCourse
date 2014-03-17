@@ -1,11 +1,14 @@
+function selectAndDisableElement(elementID, data) {
+    if (data != "") {
+        $(elementID).val(data).prop('selected', true).prop('disabled', true);
+    }
+}
+
 function asyncGetUniAndBlock() {
 	$('#id_university option:selected').prop('selected', false);
     $.get('/ratethiscourse/get_user_uni/', function(data) {
-    	console.log("first");
     	console.log(data);
-    	if (data != "") {
-    		$('#id_university').val(data).prop('selected', true).prop('disabled', true);
-    	}
+        selectAndDisableElement('#id_university', data);
     });
 };
 
@@ -17,9 +20,7 @@ function syncGetUniAndBlock() {
         async: false,
         success: function(data) {
             console.log(data);
-            if (data != "") {
-                $('#id_university').val(data).prop('selected', true).prop('disabled', true);
-            }
+            selectAndDisableElement('#id_university', data);
         } 
     });
 };
@@ -28,9 +29,7 @@ function asyncGetCourseAndBlock() {
     $('#id_course option:selected').prop('selected', false);
     $.get('/ratethiscourse/get_user_course/', function(data) {
         console.log(data);
-        if (data != "") {
-            $('#id_course').val(data).prop('disabled', true);
-        }
+        selectAndDisableElement('#id_course', data);
     });
 };
 
@@ -42,9 +41,7 @@ function syncGetCourseAndBlock() {
         async: false,
         success: function(data) {
             console.log(data);
-            if (data != "") {
-                $('#id_course').val(data).prop('disabled', true);
-            }
+            selectAndDisableElement('#id_course', data);
         } 
     });
 };
@@ -60,8 +57,8 @@ function asyncFilterCourses() {
         $.each(data, function(index, value) {
             $course.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
         });
+        $course.prop('disabled', false);
     });
-    $course.prop('disabled', false);
 };
 
 function syncFilterCourses() {
@@ -80,13 +77,35 @@ function syncFilterCourses() {
         	$.each(data, function(index, value) {
            		$course.append($("<option></option>").attr("value", data[index][0]).text(data[index][1]));
         	});
+            $course.prop('disabled', false);
         } 
     });
-    $course.prop('disabled', false);
+    
 };
 
 function emptyList() {
     var $course = $('#id_course');
     $course.empty();
     $course.append($("<option></option>").attr("value", "").text("---------"));
+}
+
+function signIn() {
+    $("input:submit").prop('disabled', true);
+    $.ajax({
+        url: '/ratethiscourse/ajax_login',
+        type: 'POST',
+        data: $('#login_form').serialize(),
+        success: function(data) {
+            console.log(data);
+            if (data == 'valid') {
+                $("#loginModalid").modal({"backdrop": "static"});
+                location.reload();
+            } else if (data == 'invalid') {
+                $('#id_invalid_details').prop('hidden', false);
+            } else if (data == 'inactive') {
+                $('#id_inactive_details').prop('hidden', false);
+            }
+            $("input:submit").prop('disabled', false);
+        }
+    });
 }
