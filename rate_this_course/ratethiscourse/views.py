@@ -9,13 +9,16 @@ from ratethiscourse.forms import UserForm, UserProfileForm, RatingForm, CommentF
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from operator import itemgetter
-import dbHelper
+import dbHelper, ajaxGetHelper
 import json
 
 
 def index(request):
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 	
 	## Get n most recent rows from tables and add to the context dict
 	dbHelper.getRecentRows(context_dict, Rating, 'ratings', 10)
@@ -36,24 +39,21 @@ def index(request):
 
 def register(request):
 	context = RequestContext(request)
+	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 
-	#boolean for telling the template whether the registration was successful
-	#set to False initially
 	registered = False
-
-	#if http post, process form data
 	if request.method == 'POST':
 		token_generator = PasswordResetTokenGenerator()
 		
-		#attempt to grab info from form
 		user_form = UserForm(data=request.POST)
 		profile_form = UserProfileForm(data=request.POST)
 
 		#if the 2 forms are valid
 		if user_form.is_valid() and profile_form.is_valid():
-			#save user form data to db
 			user = user_form.save()
-
 			#hash pwd with set_password with the set_password method
 			user.set_password(user.password)
 			user.save()
@@ -67,44 +67,42 @@ def register(request):
 			url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
 			
 			send_mail('Rate This Course User Verification', 'Please verify your account by clicking this link.\n%s\nThis link will only last 1 day. If you did not request this email please ignore it.'%url, 'gucsteamh@gmail.com', [user.email], fail_silently=False)
-			#process profile photo if user provides one
-			#if 'picture' in request.FILES:
-			#   profile.picture = request.FILES['picture']
-			#profile.save()
 	
 			registered = True
 			loggedInUser = authenticate(username=request.POST['username'], password=request.POST['password'])
 			login(request, loggedInUser)
-		#invalid form
 		else:
 			print user_form.errors, profile_form.errors
-
-	#not http, render form with 2 model form instances
-	#forms will be blank, ready for input
 
 	else:
 		user_form = UserForm()
 		profile_form = UserProfileForm()
 
-	#render template depending on context
-	return render_to_response('ratethiscourse/register.html', {'user_form':user_form, 'profile_form':profile_form, 'registered':registered}, context)
+	context_dict['user_form'] = user_form
+	context_dict['profile_form'] = profile_form
+	context_dict['registered'] = registered
+	return render_to_response('ratethiscourse/register.html', context_dict, context)
 
 def validate_user(request):
 	context = RequestContext(request)
 	context_dict = {}
 	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
+	
 	if request.method == 'GET':
 		userid = request.GET.get('user')
 		token = request.GET.get('token')
 		
+		## Check that user and token are in the url
 		if userid and token:
 			user = User.objects.get(id=userid)
 			
 			token_generator = PasswordResetTokenGenerator()
-			
 			verify = token_generator.check_token(user, token)
 			
 			if verify:
+				## Set the user to be active when validated
 				userprofile = UserProfile.objects.get(user=userid)
 				userprofile.isActive = True
 				userprofile.save()
@@ -119,6 +117,9 @@ def resend_validation_email(request):
 	context = RequestContext(request)
 	context_dict = {}
 	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
+	
 	user = request.user
 	if not user.is_anonymous():
 		userprofile = UserProfile.objects.get(user=user)
@@ -126,7 +127,7 @@ def resend_validation_email(request):
 		context_dict['userauth'] = 'anon'
 		return render_to_response('ratethiscourse/resend_validation_email.html', context_dict, context)
 	
-	if(userprofile.isActive == False):
+	if (userprofile.isActive == False):
 		token_generator = PasswordResetTokenGenerator()
 		token = token_generator.make_token(user)
 		url = 'http://gucsteamh.pythonanywhere.com/ratethiscourse/validate_user?user=%(user)s&token=%(token)s'%{'user': user.id, 'token': token}
@@ -139,35 +140,33 @@ def resend_validation_email(request):
 	
 def user_login(request):
 	context = RequestContext(request)
+	context_dict = {}
 	
 	if request.method == 'POST':
 		
-		form = LoginForm(request.POST)
+		loginForm = LoginForm(request.POST)
 		username = form.data['username']
 		password = form.data['password']
-
-		#use Django to see if user + pass is valid, return object if it is
+		
 		user = authenticate(username=username, password=password)
 
 		#if object, the details are correct
 		if user is not None:
-			#is account active?
 			if user.is_active:
 				login(request, user)
 				return HttpResponseRedirect('/ratethiscourse/')
 			else:
 				return HttpResponse("Your Rango account is disabled")
 		else:
-			#bad login details
-			return render_to_response('ratethiscourse/login.html', {'form': form}, context)
+			context_dict['form'] = form
+			return render_to_response('ratethiscourse/login.html', context_dict, context)
 
 	else:
 		form = LoginForm()
-		return render_to_response('ratethiscourse/login.html', {'form': form}, context)
-
+		context_dict['form'] = form
+		return render_to_response('ratethiscourse/login.html', context_dict, context)
+		
 def user_logout(request):
-
-	#we know user is logged in, we can just logout
 	logout(request)
 
 	return HttpResponseRedirect('/ratethiscourse/')     
@@ -175,6 +174,9 @@ def user_logout(request):
 def universities(request):
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 	
 	universities = University.objects.all().order_by('name')
 	univerisityList = []
@@ -190,6 +192,9 @@ def universities(request):
 def university(request, uni_name_url):
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 
 	# Change underscores in the category name to spaces.
 	# URLs don't handle spaces well, so we encode them as underscores.
@@ -215,6 +220,9 @@ def course(request, uni_name_url, course_name_url):
 	context = RequestContext(request)
 	context_dict = {}
 	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
+	
 	course_name = course_name_url.replace('_', ' ')
 	uni_name = uni_name_url.replace('_', ' ')
 	context_dict['uni_name'] = uni_name, 
@@ -232,9 +240,11 @@ def course(request, uni_name_url, course_name_url):
 	return render_to_response('ratethiscourse/course.html', context_dict, context)
 	
 def module(request, uni_name_url, course_name_url, module_name_url):
-	
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 	
 	module_name = module_name_url.replace('_', ' ')
 	course_name = course_name_url.replace('_', ' ')
@@ -298,9 +308,11 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	return render_to_response('ratethiscourse/module.html', context_dict, context)
 	
 def add_course(request):
-	
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 	
 	user = request.user
 	if not user.is_anonymous():
@@ -327,9 +339,11 @@ def add_course(request):
 	return render_to_response('ratethiscourse/add_course.html', context_dict, context)
 	
 def add_module(request):
-	
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 	
 	user = request.user
 	if not user.is_anonymous():
@@ -357,9 +371,11 @@ def add_module(request):
 	return render_to_response('ratethiscourse/add_module.html', context_dict, context)    
 
 def change_course(request):
-	
 	context = RequestContext(request)
 	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
 	
 	user = request.user
 	if not user.is_anonymous():
@@ -387,12 +403,11 @@ def change_course(request):
 		
 
 def get_courses(request):
-	
 	context = RequestContext(request)
 	university_id = None
 	
 	if request.method == 'GET':
-		university_id = request.GET['university_id']
+		university_id = request.GET.get('university_id')
 		
 	courses = [["", "---------"]]
 	
@@ -405,48 +420,13 @@ def get_courses(request):
 def get_user_uni(request):
 	context = RequestContext(request)
 	
-	university_id = None
-	university = None
+	university_id = ajaxGetHelper.getUserData(request, 'university')
 	
-	if request.method == 'GET':
-		try:
-			user = request.user
-			user_profile = UserProfile.objects.filter(user=user).values('university')
-			if (len(user_profile) > 0):
-				university_id = user_profile[0]['university']
-			else:
-				university_id = None
-		except (UserProfile.DoesNotExist) as e:
-			university_id = None
-	
-	if university_id:
-		university_id = str(university_id)
-	else:
-		university_id = ""
-		
 	return HttpResponse(university_id)
 
 def get_user_course(request):
 	context = RequestContext(request)
 	
-	course_id = None
-	course = None
-	
-	if request.method == 'GET':
-		user = request.user
-		if not user.is_anonymous():
-			user = request.user
-			user_profile = UserProfile.objects.filter(user=user).values('course')
-			if (len(user_profile) > 0):
-				course_id = user_profile[0]['course']
-			else:
-				course_id = None
-		else:
-			course_id = None
-	
-	if course_id:
-		course_id = str(course_id)
-	else:
-		course_id = ""
+	course_id = ajaxGetHelper.getUserData(request, 'course')
 		
 	return HttpResponse(course_id)

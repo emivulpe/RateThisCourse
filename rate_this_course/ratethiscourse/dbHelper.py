@@ -1,4 +1,4 @@
-from ratethiscourse.models import Course, University, Rating, Comment, Module, UserProfile
+from ratethiscourse.models import Course, Rating, Module
 
 def getRecentRows(context_dict, table, context_dict_label, rowCount):
 	""" Gets rowCount most recent entries to table and adds to context_dict
