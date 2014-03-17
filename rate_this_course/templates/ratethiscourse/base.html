@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 {% load static %}
+{% load bootstrap %}
 
 <html>
     <head>
@@ -61,56 +62,58 @@
       </ul>
    
       <ul class="nav navbar-nav navbar-right">
-      <li><h5 class="nav navbar-text"style="margin-left:15px;">Signed in as<strong style="color:blue;"> {{ user.get_username }}</strong></h5> </li>
-	<li><a href="/ratethiscourse/logout/">Log Out</a>  </li>
+        <li><h5 class="nav navbar-text"style="margin-left:15px;">Signed in as<strong style="color:blue;"> {{ user.get_username }}</strong></h5> </li>
+        <!-- <li><a href="/ratethiscourse/logout/">Log Out</a>  </li> -->
+        <li><a href="" id="logout_button_id">Log Out</a>  </li>
       </ul>
 	  
 	   {% else %}
 	     </ul>
 	     <ul class="nav navbar-nav navbar-right">
-	<li><a href="/ratethiscourse/register/">Register</a>  </li>
-	
-	<li><a href="/ratethiscourse/login/">Log in</a>  </li>
+	       <li><a href="/ratethiscourse/register/">Register</a>  </li>
+        <li><a href="" data-toggle="modal" data-target="#loginModalid">Log in</a></li>
+	<!-- <li><a href="/ratethiscourse/login/">Log in</a>  </li> -->
       </ul>
 	  {% endif %}
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-			 
-			 
-			 	  <!--
-				   <li><a href="/ratethiscourse/university/" class="btn btn-default"style="margin-right:5px; margin-left:5px; margin-top:1px;margin-bottom:1px;">Universities</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="/ratethiscourse/add_course"class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Add A Course</a></li>
-                        <li><a href="/ratethiscourse/add_module"class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Add A Module</a></li>
-                        <li><a href="/ratethiscourse/change_course"class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Change Course</a></li>
 
-					
-            
-			              
-				  
-				    
-					  </ul>
-                    {% else %}
-			
-	
-                <li>  <a href="/ratethiscourse/register/" class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Register</a></li> 
-                  <li>  <a href="/ratethiscourse/login/" class="btn btn-default"style="margin-right:5px; margin-left:5px;margin-top:1px;margin-bottom:1px;">Sign In</a></li>
-   </ul>              
-			  <!--      
-				  <form class="navbar-form navbar-right " style="margin-right:5px" role="search">
-                        <div class="form-group" style="margin-left:5px">
-                        <input type="text" class="form-control navbar-btn btn btn-default" placeholder="Search ..."> 
+<!-- Modal fade -->
+<div class="modal fade" id="loginModalid" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Sign In</h4>
                         </div>
-                       <button type="submit" class="btn btn-default">Go</button>
-                    </form>
-					
-                    {% endif %}
+                        <div class="modal-body">
+                            <div class="alert alert-danger" id="id_invalid_details" hidden>
+                                Username/Password incorrect
+                            </div>
+                            <div class="alert alert-danger" id="id_invalid_details" hidden>
+                                Account is disabled
+                            </div>
+                            <form id = "login_form" method="post" class="form-horizontal">
+                                {% csrf_token %}
+                                {% for loginhidden in loginform.hidden_fields %}
+                                    {{ loginhidden }}
+                                {% endfor %}
+                                
+                                {% for loginfield in loginform.visible_fields %}
+                                <div class="form-group">
+                                        {{ loginfield|bootstrap_horizontal }}
+                                </div>
+                                {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                                <input type = "submit" value="Sign In" class="btn btn-primary"/>
+                            </form> 
+                        </div>
+                    </div>
                 </div>
-				</div>
-				
-            </div>
-   -->
+        </div>
+
             {% block body_block %}{% endblock %}
         
         <div class="footer">
@@ -123,6 +126,7 @@
         <script src="{% static 'js/jquery-2.1.0.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/ratethiscourse_functions.js' %}"></script>
+        <script src="{% static 'js/ratethiscourse_sign_in_sign_out.js' %}"></script>
         {% block page_specific_javascript %} {% endblock %}
     </body>
 </html>

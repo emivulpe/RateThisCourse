@@ -225,7 +225,7 @@ def course(request, uni_name_url, course_name_url):
 	
 	course_name = course_name_url.replace('_', ' ')
 	uni_name = uni_name_url.replace('_', ' ')
-	context_dict['uni_name'] = uni_name, 
+	context_dict['uni_name'] = uni_name 
 	context_dict['course_name'] = course_name 
 	context_dict['uni_name_url'] = uni_name_url
 	context_dict['course_name_url'] = course_name_url
@@ -451,3 +451,8 @@ def ajax_login(request):
 				return HttpResponse('inactive')
 		else:
 			return HttpResponse('invalid')
+			
+def ajax_logout(request):
+	logout(request)
+	
+	return HttpResponse(True)

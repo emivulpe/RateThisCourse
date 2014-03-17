@@ -92,7 +92,7 @@ function emptyList() {
 function signIn() {
     $("input:submit").prop('disabled', true);
     $.ajax({
-        url: '/ratethiscourse/ajax_login',
+        url: '/ratethiscourse/ajax_login/',
         type: 'POST',
         data: $('#login_form').serialize(),
         success: function(data) {
@@ -108,4 +108,14 @@ function signIn() {
             $("input:submit").prop('disabled', false);
         }
     });
+}
+
+function signOut() {
+    $.ajax({
+        url: '/ratethiscourse/ajax_logout/',
+        type: 'GET',
+        success: function(data) {
+            location.reload();
+        }
+    })
 }
