@@ -169,7 +169,38 @@ def user_login(request):
 def user_logout(request):
 	logout(request)
 
-	return HttpResponseRedirect('/ratethiscourse/')     
+	return HttpResponseRedirect('/ratethiscourse/')
+	
+def user_profile(request):
+	context = RequestContext(request)
+	context_dict = {}
+	
+	loginForm = LoginForm()
+	context_dict['loginform'] = loginForm
+	
+	user = request.user
+	if not user.is_anonymous():
+		userprofile = UserProfile.objects.get(user=user)
+		context_dict['userprofile'] = userprofile
+		
+	if request.method == 'POST':
+		context_dict['posted'] = True
+		userprofileform = UserProfileForm(request.POST)
+		
+		if userprofileform.is_valid():
+			user = request.user
+			userprofile.degree = userprofileform.cleaned_data['degree']
+			userprofile.save()
+			context_dict['success'] = True
+		else:
+			context_dict['success'] = False
+	
+	else:
+		context_dict['posted'] = False
+		userprofileform = UserProfileForm()
+	
+	context_dict['userprofileform'] = userprofileform
+	return render_to_response('ratethiscourse/user_profile.html', context_dict, context)
 
 def universities(request):
 	context = RequestContext(request)
@@ -374,39 +405,7 @@ def add_module(request):
 		moduleform = CourseForm()
 		
 	context_dict['moduleform'] = moduleform
-	return render_to_response('ratethiscourse/add_module.html', context_dict, context)    
-
-def change_course(request):
-	context = RequestContext(request)
-	context_dict = {}
-	
-	loginForm = LoginForm()
-	context_dict['loginform'] = loginForm
-	
-	user = request.user
-	if not user.is_anonymous():
-		userprofile = UserProfile.objects.get(user=user)
-		context_dict['userprofile'] = userprofile
-	
-	if request.method == 'POST':
-		context_dict['posted'] = True
-		userprofileform = UserProfileForm(request.POST)
-		
-		if userprofileform.is_valid():
-			user = request.user
-			userprofile.degree = userprofileform.cleaned_data['degree']
-			userprofile.save()
-			context_dict['success'] = True
-		else:
-			context_dict['success'] = False
-	
-	else:
-		context_dict['posted'] = False
-		userprofileform = UserProfileForm()
-	
-	context_dict['userprofileform'] = userprofileform
-	return render_to_response('ratethiscourse/change_course.html', context_dict, context)
-		
+	return render_to_response('ratethiscourse/add_module.html', context_dict, context)    	
 
 def get_courses(request):
 	context = RequestContext(request)
