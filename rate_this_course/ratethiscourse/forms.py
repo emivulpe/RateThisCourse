@@ -11,7 +11,7 @@ class LoginForm(forms.ModelForm):
 		fields = ('username', 'password', )
 
 class UserForm(forms.ModelForm):
-	username = forms.CharField(required = True)
+	username = forms.CharField(required =True)
 	email = forms.EmailField(required = True)
 	password = forms.CharField(widget = forms.PasswordInput(), required = True)
 	confirm_password = forms.CharField(widget = forms.PasswordInput(), required = True)
@@ -21,8 +21,14 @@ class UserForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ('username', 'email', 'password','confirm_password', 'first_name', 'last_name')
+		
+	def clean_username(self):
+		username = self.cleaned_data.get('username')
+		if (User.objects.filter(username=username).count() == 0):
+			return username
+		raise forms.ValidationError(u'Username "%s" is already in use.' % username)
 
-	def clean_password(self):
+	def clean_(self):
 		password1 = self.cleaned_data.get('password')
 		password2 = self.cleaned_data.get('confirm_password')
 
