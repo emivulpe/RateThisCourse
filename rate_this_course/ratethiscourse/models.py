@@ -39,7 +39,6 @@ class Course(models.Model):
 
     university = models.ForeignKey(University)
     degree = models.ForeignKey(Degree)
-    students = models.ManyToManyField(User)
     
     def __unicode__(self):
         return self.name

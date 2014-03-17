@@ -89,7 +89,7 @@ def populate():
     psych1b = add_course(university = glasgow_university,
         degree = psychology,
         code = "PSYCH1002",
-        name = "Psychology 1B: Social, Developmental and Individual Differences",
+        name = "Psychology 1B Social Developmental and Individual Differences",
         year = 1,
     lecturer = "Ben",
     description = "The aim is to introduce students to core material in the area of social and developmental psychology and individual differences")
