@@ -59,7 +59,6 @@ def getUniCourseRatings(uni):
 			Or "No ratings" if there are no modules in the course
 	"""
 	courses = Course.objects.filter(university=uni)
-	courses = Course.objects.all()
 	ratedCourses = []
 	for course in courses:
 		ratedCourse = [course]
