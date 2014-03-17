@@ -12,59 +12,55 @@ def populate():
     
     dim = add_course(university = glasgow_university,
         degree = computing_science,
-        code = "DIM3",
+        code = "COMPSCI4048",
         name = "Distributed Information Management",
         year = 3,
 	lecturer = "Leif",
-    description = "A course designed to teach you django or something")
+    description = "The aims of the course are to:\
+            introduce students to modern software development methods and techniques for building and maintaining large systems\
+            provide an opportunity for the students to apply these methods and techniques presented to them in the context of an extended group-based software development exercise\
+            make the students aware of the professional, social and ethical dimensions of software development.\
+            instil in the students a professional attitude towards software development.")
 
     psd = add_course(university = glasgow_university,
         degree = computing_science,
-        code = "PSD3",
+        code = "COMPSCI4015",
         name = "Professional Software Development 3",
         year = 3,
 	lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
+    description = "The aim of this course is to provide students with a comprehensive overview of web application development. It will provide students with the skills to design and development distributed web applications in a disciplined manner, and strengthen their understanding of the context and rationale of distributed systems.")
 
 
     db = add_course(university = glasgow_university,
         degree = computing_science,
-        code = "DB3",
+        code = "COMPSCI4013",
         name = "Database Systems 3",
         year = 3,
 	lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
+    description = "From the basic skills derived in Information Management 2, to develop the software engineering and database administration skills required for designing, creating, running and developing a relational database application and its associated application software suite. This will include extension of pre-existing systems and arrangements for extending operational systems;\
+            Understanding of how conventional programming languages interact with databases;\
+            Understanding of the fundamental concepts, theories and methods of the relational data model;\
+            Introduction to Information Retrieval concepts and techniques.")
 
     add_comment(message = "Very good course. Love the lecturer", course = dim)
     add_comment(message = "Fun course!", course = dim)
+    add_comment(message = "WEBDEV IS 2 HARD", course = dim)
     add_comment(message = "It's very good and entertaining", course = dim)
     add_comment(message = "I really like this course", course = dim)
     add_comment(message = "Learning lots in this module!", course = dim)
     add_comment(message = "Django is amazing!", course = dim)
+    add_comment(message = "Django; literally the best!", course = dim)
+    add_comment(message = "Learn some useful stuff in this course and the lectures are a blast", course = dim)
     
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
         add_rating(value = rating, course = dim)
     
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
         add_rating(value = rating, course = db)
         
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
         add_rating(value = rating, course = psd)
     
@@ -73,189 +69,169 @@ def populate():
     psychology = add_degree(university = glasgow_university,
         name = "Psychology")
     
-    dim = add_course(university = glasgow_university,
+    psych2b = add_course(university = glasgow_university,
         degree = psychology,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
+        code = "PSYCH2011",
+        name = "Psychology 2B",
+        year = 2,
+    lecturer = "Bill",
+    description = "The aim is to broaden and, especially, to deepen knowledge of the subject area by building on the foundations laid in Psychology 1A, 1B, 2A.")
 
-    psd = add_course(university = glasgow_university,
+    psych2a = add_course(university = glasgow_university,
         degree = psychology,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
+        code = "PSYCH2010",
+        name = "Psychology 2A",
+        year = 2,
+    lecturer = "Bob",
+    description = "The aim is to broaden and, especially, to deepen knowledge of the subject area by building on the foundations laid in Psychology 1A and 1B")
 
 
-    db = add_course(university = glasgow_university,
+    psych1b = add_course(university = glasgow_university,
         degree = psychology,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
+        code = "PSYCH1002",
+        name = "Psychology 1B: Social, Developmental and Individual Differences",
+        year = 1,
+    lecturer = "Ben",
+    description = "The aim is to introduce students to core material in the area of social and developmental psychology and individual differences")
+    
+    for i in range(20):
+        rating = randint(1,5)
+        add_rating(value = rating, course = psych1b)
+    
+    for i in range(20):
+        rating = randint(1,5)
+        add_rating(value = rating, course = psych2a)
+        
+    for i in range(20):
+        rating = randint(1,5)
+        add_rating(value = rating, course = psych2b)
+        
+        
+    ## LAW
+    LAW = add_degree(university = glasgow_university,
+        name = "Law")
+    
+    buslaw = add_course(university = glasgow_university,
+        degree = LAW,
+        code = "LAW1001",
+        name = "Business Law",
+        year = 1,
+    lecturer = "Amanda",
+    description = "The aim of the course is to provide students with a knowledge of modern Business law in theory and practice.")
+
+    famlaw = add_course(university = glasgow_university,
+        degree = LAW,
+        code = "LAW1004",
+        name = "Family Law",
+        year = 1,
+    lecturer = "Jerry",
+    description = "Family Law is designed to provide a grounding in the key elements of Family Law and to develop certain key skills.")
+
+
+    busorg = add_course(university = glasgow_university,
+        degree = LAW,
+        code = "LAW2001",
+        name = "Business Organisations",
+        year = 2,
     lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
+    description = "The aim of the course is to enable students to acquire an understanding of the legal framework for business organisations. The course is structured so as to meet the relevant professional requirements of the Law Society of Scotland.")
 
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
     
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
-        add_rating(value = rating, course = dim)
+        add_rating(value = rating, course = buslaw)
     
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
-        add_rating(value = rating, course = db)
+        add_rating(value = rating, course = famlaw)
         
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
-        add_rating(value = rating, course = psd)
-        
-        
-    ## BUSINESS
-    BUSINESS = add_degree(university = glasgow_university,
-        name = "Business")
-    
-    dim = add_course(university = glasgow_university,
-        degree = BUSINESS,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
-
-    psd = add_course(university = glasgow_university,
-        degree = BUSINESS,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
-
-
-    db = add_course(university = glasgow_university,
-        degree = BUSINESS,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
-    lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
-
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = dim)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = db)
-        
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = psd)
+        add_rating(value = rating, course = busorg)
 
 
     ## Maths
     Maths = add_degree(university = glasgow_university,
         name = "Maths")
     
-    dim = add_course(university = glasgow_university,
+    maths1r = add_course(university = glasgow_university,
         degree = Maths,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
+        code = "MATHS1001",
+        name = "Mathematics 1R",
+        year = 1,
+    lecturer = "Jim",
+    description = "Mathematics 1R is intended to provide a half-year's Mathematics course leading on from the level of SCE Higher Mathematics.")
 
-    psd = add_course(university = glasgow_university,
+    maths1s = add_course(university = glasgow_university,
         degree = Maths,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
+        code = "MATHS1002",
+        name = "Mathematics 1S",
+        year = 1,
+    lecturer = "John",
+    description = "Mathematics 1S is intended to build on Mathematics 1R and to provide a further half-year's Mathematics course both for students who intend to specialize in Mathematics and for others.")
 
 
-    db = add_course(university = glasgow_university,
+    maths1x = add_course(university = glasgow_university,
         degree = Maths,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
-    lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
-
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
+        code = "MATHS1004",
+        name = "Mathematics 1X",
+        year = 1,
+    lecturer = "Jill",
+    description = "To present an interesting level-1 course for well-qualified students which will enhance their mathematical knowledge, insights, skills and enjoyment as well as enhancing the transferable skills of reasoning, handling of abstract concepts, problem solving, communication, and clarity of presentation.")
     
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
-        add_rating(value = rating, course = dim)
+        add_rating(value = rating, course = maths1r)
     
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
-        add_rating(value = rating, course = db)
+        add_rating(value = rating, course = maths1s)
         
-    for i in range(10):
+    for i in range(20):
         rating = randint(1,5)
-        add_rating(value = rating, course = psd)
+        add_rating(value = rating, course = maths1x)
+        
+    ## Chemistry
+    Chemistry = add_degree(university = glasgow_university,
+        name = "Chemistry")
+    
+    orgchem = add_course(university = glasgow_university,
+        degree = Chemistry,
+        code = "CHEM3012",
+        name = "Organic Chemistry 3",
+        year = 3,
+    lecturer = "Jim",
+    description = "Organic Chemistry course for students at level 3")
+
+    inorgchem = add_course(university = glasgow_university,
+        degree = Chemistry,
+        code = "CHEM3010",
+        name = "Inorganic Chemistry 3",
+        year = 3,
+    lecturer = "John",
+    description = "Inorganic Chemistry course for students at level 3")
+
+
+    chem2x = add_course(university = glasgow_university,
+        degree = Chemistry,
+        code = "CHEM2001",
+        name = "Chemistry 2X",
+        year = 2,
+    lecturer = "Jill",
+    description = "Following on from Chemistry 1, this course covers further topics and consolidates the basic theories of chemistry and develops laboratory and problem-solving skills.")
+    
+    for i in range(20):
+        rating = randint(1,5)
+        add_rating(value = rating, course = orgchem)
+    
+    for i in range(20):
+        rating = randint(1,5)
+        add_rating(value = rating, course = inorgchem)
+        
+    for i in range(20):
+        rating = randint(1,5)
+        add_rating(value = rating, course = chem2x)
+
         
 
 
@@ -265,255 +241,19 @@ def populate():
 
     ## COMPUTING SCIENCE
     computing_science = add_degree(university = strathclyde_university,
-        name = "Computing Science")
-    
-    dim = add_course(university = strathclyde_university,
-        degree = computing_science,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
-
-    psd = add_course(university = strathclyde_university,
-        degree = computing_science,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
-
-
-    db = add_course(university = strathclyde_university,
-        degree = computing_science,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
-    lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
-
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = dim)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = db)
-        
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = psd)
-    
+        name = "Computing Science")    
     
     ## PSYCHOLOGY
     psychology = add_degree(university = strathclyde_university,
         name = "Psychology")
-    
-    dim = add_course(university = strathclyde_university,
-        degree = psychology,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
-
-    psd = add_course(university = strathclyde_university,
-        degree = psychology,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
-
-
-    db = add_course(university = strathclyde_university,
-        degree = psychology,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
-    lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
-
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = dim)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = db)
         
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = psd)
-        
-    
     ## BUSINESS
     BUSINESS = add_degree(university = strathclyde_university,
         name = "Business")
-    
-    dim = add_course(university = strathclyde_university,
-        degree = BUSINESS,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
-
-    psd = add_course(university = strathclyde_university,
-        degree = BUSINESS,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
-
-
-    db = add_course(university = strathclyde_university,
-        degree = BUSINESS,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
-    lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
-
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = dim)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = db)
-        
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = psd)
-
 
     ## Maths
     Maths = add_degree(university = strathclyde_university,
         name = "Maths")
-    
-    dim = add_course(university = strathclyde_university,
-        degree = Maths,
-        code = "DIM3",
-        name = "Distributed Information Management",
-        year = 3,
-    lecturer = "Leif",
-    description = "A course designed to teach you django or something")
-
-    psd = add_course(university = strathclyde_university,
-        degree = Maths,
-        code = "PSD3",
-        name = "Professional Software Development 3",
-        year = 3,
-    lecturer = "Jeremy",
-    description = "A cours teaching you about theory and practices of software development and the software development lifecycle.")
-
-
-    db = add_course(university = strathclyde_university,
-        degree = Maths,
-        code = "DB3",
-        name = "Database Systems 3",
-        year = 3,
-    lecturer = "Iadh",
-    description = "A course about advanced SQL techniques as well as using api's like JDBC to communicate with databases in application code.")
-
-    add_comment(message = "Very good course. Love the lecturer", course = dim)
-    add_comment(message = "Fun course!", course = dim)
-    add_comment(message = "It's very good and entertaining", course = dim)
-    add_comment(message = "I really like this course", course = dim)
-    add_comment(message = "Learning lots in this module!", course = dim)
-    add_comment(message = "Django is amazing!", course = dim)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = psd)
-    add_comment(message = "Fun course!", course = psd)
-    add_comment(message = "It's very good and entertaining", course = psd)
-    add_comment(message = "I really like this course", course = psd)
-    add_comment(message = "Learning lots in this module!", course = psd)
-    add_comment(message = "Django is amazing!", course = psd)
-    
-    add_comment(message = "Very good course. Love the lecturer", course = db)
-    add_comment(message = "Fun course!", course = db)
-    add_comment(message = "It's very good and entertaining", course = db)
-    add_comment(message = "I really like this course", course = db)
-    add_comment(message = "Learning lots in this module!", course = db)
-    add_comment(message = "Django is amazing!", course = db)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = dim)
-    
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = db)
-        
-    for i in range(10):
-        rating = randint(1,5)
-        add_rating(value = rating, course = psd)
-
 
     # Print out what we have added to the user.
     for u in University.objects.all():
