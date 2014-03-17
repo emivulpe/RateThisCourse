@@ -26,6 +26,9 @@ def index(request):
 
 	## Get all the courses in the db and their ratings, then sort them by their ratings
 	ratedCourses = dbHelper.getAllCourseRatings()
+	## Round ratings to 2 decimal places
+	for course in ratedCourses:
+		course[1] = round(course[1], 2)
 	## Sorts all elements in the list using the element at index 1 of each inner list(the rating)
 	ratedCourses.sort(key=itemgetter(1))
 	## Sort will sort from low to high so we select the last 5 elements as the top 5 and first 5 as the botttom 5
@@ -208,6 +211,8 @@ def university(request, uni_name_url):
 		university = University.objects.get(name=uni_name)
 		## Get all ratings for the courses at the university
 		ratedCourses = dbHelper.getUniCourseRatings(university)
+		for course in ratedCourses:
+			course[2] = round(course[2], 2)
 			
 		context_dict['courses'] = ratedCourses
 		context_dict['university'] = university
@@ -235,6 +240,9 @@ def course(request, uni_name_url, course_name_url):
 	course = Course.objects.get(name=course_name, university=uni)
 	## Get all the ratings for each module in the course at the uni
 	modules = dbHelper.getCourseRatings(uni, course)
+	## Round ratings to 2 decimal places
+	for module in modules:
+			module[2] = round(module[2], 2)
 	context_dict['modules'] = modules
 	
 	return render_to_response('ratethiscourse/course.html', context_dict, context)
@@ -301,7 +309,8 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	
 	comments = Comment.objects.filter(module=module)
 	context_dict['comments'] = comments
-	context_dict['rating'] = dbHelper.getModuleRating(module)
+	## Round ratings to 2 decimal places
+	context_dict['rating'] = round(dbHelper.getModuleRating(module), 2)
 	context_dict['comment_form'] = commentform
 	context_dict['rating_form'] = ratingform
 	
