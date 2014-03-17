@@ -3,7 +3,7 @@ from random import randint
 
 def populate():
     ## GLASGOW UNI
-    glasgow_university = add_university(name = "University of Glasgow", location = "Glasgow", uni_domain_code = "gla")
+    glasgow_university = add_university(name = "University of Glasgow", location = "Glasgow", uni_domain_code = "gla", description="The University of Glasgow is the fourth-oldest university in the English-speaking world and one of Scotland's four ancient universities.")
 
 
     ## COMPUTING SCIENCE
@@ -260,7 +260,7 @@ def populate():
 
 
     ## STRATHCLYDE UNI
-    strathclyde_university = add_university(name = "University of Strathclyde", location = "Glasgow", uni_domain_code = "strath")
+    strathclyde_university = add_university(name = "University of Strathclyde", location = "Glasgow", uni_domain_code = "strath", description="The University of Strathclyde is a Scottish public research university located in Glasgow, Scotland. It is Glasgow's second university by age, being founded in 1796 as the Andersonian Institute, and receiving its Royal Charter in 1964 as the UK's first technological university. It takes its name from the historic Kingdom of Strathclyde.")
 
 
     ## COMPUTING SCIENCE
@@ -529,8 +529,8 @@ def add_course(university, name):
     c = Course.objects.get_or_create(university = university, name = name)[0]
     return c
 
-def add_university(name, location, uni_domain_code):
-    u = University.objects.get_or_create(name = name, location = location, uni_domain_code=uni_domain_code)[0]
+def add_university(name, location, uni_domain_code, description):
+    u = University.objects.get_or_create(name = name, location = location, uni_domain_code=uni_domain_code, description=description)[0]
     return u
 
 def add_comment(message, module):

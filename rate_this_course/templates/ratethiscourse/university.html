@@ -11,49 +11,18 @@
     <li class="active">{{uni_name}}</li>
 </ol>
 
-      {% if uni_name == "University of Glasgow" %}
-     		 <img src="{% static 'UoG_logo.jpg' %}" alt="Rate This Course" class="img"style="background-color:black; margin-right:5px; margin-left:5px;">
-                <br>
+     		<img src="{% static '' %}{{ uni_name_url }}_Logo.jpg" alt="Rate This Course" class="img"style="background-color:black; margin-right:5px; margin-left:5px;">
+      <br>
 			<div class="panel panel-info">
  
             <div class="panel-heading">
               <h3 class="panel-title">Description </h3>
             </div>
             <div class="panel-body">
-            The University of Glasgow is the fourth-oldest university in the English-speaking world and one of Scotland's four ancient universities.
+            {{ university.description }}
             </div>
           </div>
 		   <div class="panel panel-info">
-		   {% elif uni_name == "University of Strathclyde" %}
- 
-<img src="{% static 'UoS_logo.jpg' %}" alt="Rate This Course" class="img" style="background-color:black;">
-                <br>
-				  <br>
-<div class="panel panel-danger">
- 
-            <div class="panel-heading">
-              <h3 class="panel-title">Description </h3>
-            </div>
-            <div class="panel-body">
-		 The University of Strathclyde is a Scottish public research university located in Glasgow, Scotland.
- </div>
-          </div>	
-<div class="panel panel-danger">		  
- {% else %} 
-<div class="panel panel-primary">
-            <div class="panel-heading">
-              <h1 class="panel-title">{{ uni_name }} </h1>
-            </div></div> 
- <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">Description </h3>
-            </div>
-            <div class="panel-body">
-			Information not currently available
-		   </div>
-          </div>
- <div class="panel panel-primary">
- {% endif %}
  
             <div class="panel-heading">
               <h3 class="panel-title">Degrees</h3> </div>

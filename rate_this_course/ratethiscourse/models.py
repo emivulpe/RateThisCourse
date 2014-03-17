@@ -9,6 +9,7 @@ class University(models.Model):
     name = models.CharField(max_length = 128, unique = True)
     location = models.CharField(max_length = 256)
     uni_domain_code = models.CharField(max_length = 128, unique = True)
+    description = models.CharField(max_length = 2048)
 
     def __unicode__(self):
         return self.name
