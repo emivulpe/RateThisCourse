@@ -5,6 +5,8 @@
 {% block body_block %}
 
 {% load bootstrap %}
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+  border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li><a href="/ratethiscourse/university/">Universities</a></li>
@@ -17,60 +19,39 @@
     <div style="color: red;">The specified category does not exist!</div>
 {% else %}
 <div class="page-header">
-
-  <h1>{{ module_name }}</h1>
+ <h2>{{ module_name }}</h2>
       </div>
-      <div class="well">
+	  <div class="panel panel-default">
+	 <div class="panel-heading">
+              <h3 class="panel-title">Description </h3>
+            </div>
+            <div class="panel-body">
+			{{ module.description }}
+			</div>
+</div>
+	  <table class="table table-striped">
+  <tr>
+         <td>    <h4> <strong>Code</strong> </h4> </td>
+     <td>      <h4> {{ module.code }} </h4> </td>  </tr>
+   <tr>
+         <td>    <h4> <strong>Year</strong> </h4></td>
 
-    <div class="row">
-        <div class="col-lg-3">
-            <h4> Module Code </h4>
-        </div>
-        <div class="col-lg-4">
-            <h4> {{ module.code }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">
-            <h4> Module Name </h4>
-        </div>
-        <div class="col-lg-4">
-            <h4> {{ module.name }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">
-            <h4> Module Year </h4>
-        </div>
-        <div class="col-lg-4">
-            <h4> {{ module.year }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">
-            <h4> Module Lecturer </h4>
-        </div>
-        <div class="col-lg-4">
-            <h4> {{ module.lecturer }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">
-            <h4> Module Description </h4>
-        </div>
-        <div class="col-lg-4">
-            <h4> {{ module.description }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">
-            <h4> Average Rating </h4>
-        </div>
-        <div class="col-lg-4">
-            <h4> {{ rating }}
-        </div>
-    </div>
-	</div>
+         <td>    <h4> {{ module.year }}</h4></td></tr>
+ 
+     <tr>
+          <td>   <h4> <strong>Lecturer</strong> </h4></td>
+        
+         <td>    <h4> {{ module.lecturer }}</h4></td></tr>
+ 		    
+    <tr>
+         <td>    <h4>  <strong>Average Rating </strong></h4></td>
+        
+         <td>    <h4> {{ rating }}</h4></td></tr>
+ 
+   
+	    </table>
+	
+	
     {% if user.is_authenticated %}
         {% if userprofile.isActive and auth %}
             <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
@@ -120,4 +101,5 @@
     {% endfor %}
     </div>
 {% endif %}
+  </div>
 {% endblock %}

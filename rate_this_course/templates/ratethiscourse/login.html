@@ -5,10 +5,13 @@
 {% block body_block %}
 
 {% load bootstrap %}
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+  border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li class="active">Sign In</li>
 </ol>
+ 
 <h1>Login to Rate This Course</h1>
 	<form id = "login_form" method="post" action = "/ratethiscourse/login/" class="form-horizontal">
 		{% csrf_token %}
@@ -26,4 +29,5 @@
 
 		<input type = "submit" value="Sign In" class="btn btn-primary"/>
 	</form>
+	</div>
 {% endblock %}

@@ -3,13 +3,20 @@
 {% block title %}{{course_name}}{% endblock %}
 
 {% block body_block %}
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px;
+  border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li><a href="/ratethiscourse/university/">Universities</a></li>
     <li><a href="/ratethiscourse/university/{{uni_name_url}}/">{{uni_name}}</a></li>
     <li class="active">{{course_name}}</li>
 </ol>
-    <h1>{{ uni_name }}</h1>
+ <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+  {{course_name}}</h3>
+      </div> </div>
+      <div class="well">
     {% if course_name %}
         {% if modules %}
         <div class="list-group">
@@ -36,4 +43,6 @@
         The specified course, {{ course_name }}, does not exist!
     </div>
     {% endif %}
+	    </div>
+		  </div>
 {% endblock %}
