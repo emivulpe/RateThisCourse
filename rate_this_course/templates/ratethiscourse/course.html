@@ -16,12 +16,11 @@
             </h3>
         </div>
     </div>
-    <div class="well">
         {% if course_name %}
         {% if modules %}
         <div class="list-group">
             {% for module in modules %}
-            <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course_name_url }}/{{ module.1 }}" class="list-group-item">
+            <a href="/ratethiscourse/university/{{ uni_name_url }}/{{ course_name_url }}/{{ module.1 }}" class="list-group-item" style="background-color:white;">
                 <h4>
                     {{ module.0 }}
                     {% if module.2 == "No Ratings" %}
@@ -43,6 +42,5 @@
             The specified course, {{ course_name }}, does not exist!
         </div>
         {% endif %}
-    </div>
 </div>
 {% endblock %}

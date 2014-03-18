@@ -240,7 +240,10 @@ def university(request, uni_name_url):
 		## Get all ratings for the courses at the university
 		ratedCourses = dbHelper.getUniDegreeRatings(university)
 		for course in ratedCourses:
-			course[2] = round(course[2], 2)
+			if isinstance(course[2], str):
+				continue
+			else:
+				course[2] = round(course[2], 2)
 			
 		context_dict['courses'] = ratedCourses
 		context_dict['university'] = university
@@ -269,9 +272,13 @@ def course(request, uni_name_url, course_name_url):
 	## Get all the ratings for each module in the course at the uni
 	modules = dbHelper.getDegreeRatings(uni, course)
 	## Round ratings to 2 decimal places
-	for module in modules:
-			module[2] = round(module[2], 2)
-	context_dict['modules'] = modules
+	if not isinstance(modules, str):	
+		for module in modules:
+			if isinstance(module[2], str):
+				continue
+			else:
+				module[2] = round(module[2], 2)
+		context_dict['modules'] = modules
 	
 	return render_to_response('ratethiscourse/course.html', context_dict, context)
 	
@@ -338,7 +345,11 @@ def module(request, uni_name_url, course_name_url, module_name_url):
 	comments = Comment.objects.filter(course=course)
 	context_dict['comments'] = comments
 	## Round ratings to 2 decimal places
-	context_dict['rating'] = round(dbHelper.getCourseRating(course), 2)
+	rating = dbHelper.getCourseRating(course)
+	if isinstance(rating, str):
+		context_dict['rating'] = rating
+	else:
+		context_dict['rating'] = round(rating, 2)
 	context_dict['comment_form'] = commentform
 	context_dict['rating_form'] = ratingform
 	

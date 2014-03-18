@@ -3,11 +3,16 @@
 {% block body_block %}
 {% load bootstrap %}
 {% load static %}
+ <div class="panel-body" style="background-color:white; -moz-border-radius: 5px; border-radius: 5px;"> 
 <ol class="breadcrumb">
     <li><a href="/ratethiscourse/">Home</a></li>
     <li class="active">Resend Validation Email</li>
 </ol>
-<h1> Resend Validation Email </h1>
+<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"> Resend Validation Email</h3>
+			</div>
+</div>
 {% if userauth == "anon" %}
 <div class="alert alert-warning">
     Please sign in to resend a verification email.
@@ -21,6 +26,7 @@
 <div class="alert alert-success">Verification email resent</div>
 {% endif %}
 {% endif %}
+</div>
 {% endblock %}
 {% block page_specific_javascript %}
 <script src="{% static 'js/ratethiscourse_block_submit_button.js' %}"></script>

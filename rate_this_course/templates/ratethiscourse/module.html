@@ -29,6 +29,7 @@
             {{ module.description }}
         </div>
     </div>
+	  <div class="well">
     <table class="table table-striped">
         <tr>
             <td>
@@ -58,11 +59,28 @@
             <td>
                 <h4>  <strong>Average Rating </strong></h4>
             </td>
-            <td>
-                <h4> {{ rating }}</h4>
+            <td style="color:#FF9900;">
+         <h4>
+                            {% if rating >= 1 and rating < 1.5 %}
+                            &#9733 &#9734 &#9734 &#9734 &#9734
+                            {% elif rating >= 1.5 and rating < 2.5 %}
+                            &#9733 &#9733 &#9734 &#9734 &#9734
+                            {% elif  rating >= 2.5 and rating < 3.5  %}
+                            &#9733 &#9733 &#9733 &#9734 &#9734
+                            {% elif  rating >= 3.5 and rating < 4.5 %}
+                            &#9733 &#9733 &#9733 &#9733 &#9734
+                            {% elif  rating >= 4.5  %}
+                            &#9733 &#9733 &#9733 &#9733 &#9733
+                            {% endif %}</4>
+                       
             </td>
         </tr>
     </table>
+	</div>
+	
+	  <div class="well">
+	 
+        
     {% if user.is_authenticated %}
     {% if userprofile.isActive and auth %}
     <form id="rating_form" method="post" action="/ratethiscourse/university/{{uni_name_url}}/{{course_name_url}}/{{module_name_url}}/">
@@ -80,7 +98,7 @@
         {% endfor %}
         <input id="rating-system" type="number" class="rating" min="1" max="5" step="1" name="value">
         <br>
-        <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+        <input type="submit" name="submit" value="Submit" class="btn btn-default" />
     </form>
     {% elif not auth %}
     <div class="alert alert-warning">
@@ -96,13 +114,17 @@
         You must be signed in to comment or rate.
     </div>
     {% endif %}
-    <h2> Comments </h2>
+	<br>
+   <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"> Comments </h3></div></div>
     <div class="list-group">
         {% for comment in comments %}
         <li class="list-group-item"> {{ comment }} </li>
         {% endfor %}
     </div>
     {% endif %}
+</div>
 </div>
 {% endblock %}
 {% block page_specific_javascript %}

@@ -30,8 +30,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/ratethiscourse/"  style="color:#55ACEE;"><strong>Rate This Course</strong></a>
-                    </div>
+                          <a class="navbar-brand" href="/ratethiscourse/">
+     		<img src="{% static '' %}blacklogo.png" alt="Rate This Course" class="img" style="margin-top:-14px;">
+ </a>  </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
@@ -55,9 +56,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <p class="nav navbar-text" style="margin-left:15px;">Signed in as <strong style="color:blue;"><a href='/ratethiscourse/user_profile'>{{ user.get_username }} </a></strong></p>
+
                             </li>
                             <!-- <li><a href="/ratethiscourse/logout/">Log Out</a>  </li> -->
-                            <li><a href="" id="logout_button_id">Log Out</a>  </li>
+                            <li><a href="" id="logout_button_id"style="">Log Out</a>  </li>
                         </ul>
                         {% else %}
                         </ul>

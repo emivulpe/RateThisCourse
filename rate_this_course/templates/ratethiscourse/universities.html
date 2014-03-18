@@ -24,8 +24,8 @@
     </ol>
     <div class="list-group">
         {% for university in universities %}
-        <a href="/ratethiscourse/university/{{university.1}}/" class="list-group-item">
-            <h4> {{ university.0.name }} <small> {{ university.0.location }} </small> </h4>
+        <a href="/ratethiscourse/university/{{university.1}}/" class="list-group-item"style="background-color:white; color:black;">
+            <h4> {{ university.0.name }} <small style="color:#55ACEE;"> {{ university.0.location }} </small> </h4>
         </a>
         {% endfor %}
     </div>
