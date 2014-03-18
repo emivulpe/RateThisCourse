@@ -20,7 +20,7 @@
     {% else %}
     <div class="alert alert-success">The course addition was successful</div>
     {% endif %}
-    <form id="add_course_form" method="post" action="/ratethiscourse/add_course/" class="form-horizontal">
+    <form id="add_course_form" method="post" action="/ratethiscourse/add_degree/" class="form-horizontal">
         {% csrf_token %}
         {% for hidden in courseform.hidden_fields %}
         {{ hidden }}
