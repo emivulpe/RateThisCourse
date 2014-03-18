@@ -115,7 +115,8 @@ function signOut() {
         url: '/ratethiscourse/ajax_logout/',
         type: 'GET',
         success: function(data) {
-            location.reload();
+            window.location.href = "http://gucsteamh.pythonanywhere.com/ratethiscourse/";
+            // location.reload();
         }
     })
 }
