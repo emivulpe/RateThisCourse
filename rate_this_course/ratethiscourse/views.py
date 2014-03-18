@@ -272,12 +272,13 @@ def course(request, uni_name_url, course_name_url):
 	## Get all the ratings for each module in the course at the uni
 	modules = dbHelper.getDegreeRatings(uni, course)
 	## Round ratings to 2 decimal places
-	for module in modules:
-		if isinstance(module[2], str):
-			continue
-		else:
-			module[2] = round(module[2], 2)
-	context_dict['modules'] = modules
+	if not isinstance(modules, str):	
+		for module in modules:
+			if isinstance(module[2], str):
+				continue
+			else:
+				module[2] = round(module[2], 2)
+		context_dict['modules'] = modules
 	
 	return render_to_response('ratethiscourse/course.html', context_dict, context)
 	
