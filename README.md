@@ -1,3 +1,5 @@
+MAIN BUILD IS IN THE BLUE BRANCH NOT THE MASTER
+
 TEAM-H-RateThisCourse
 =====================
 Project: Rate This Course
