@@ -4,3 +4,4 @@
 
 #ignore the db
 *.db
+rate_this_course/static/Thumbs.db
